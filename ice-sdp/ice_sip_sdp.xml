@@ -660,12 +660,7 @@ This grammar encodes the primary information about a candidate: its IP address, 
           <list style="hanging">
             <t hangText="&lt;connection-address&gt;:">
 is taken from RFC 4566 <xref target="RFC4566"/>.
-It is the IP address of the candidate, allowing for IPv4 addresses, IPv6 addresses, and fully qualified domain names (FQDNs).
-When parsing this field, an agent can differentiate an IPv4 address and an IPv6 address by presence of a colon in its value&#8201;&#8212;&#8201;the presence of a colon indicates IPv6.
-An agent MUST ignore candidate lines that include candidates with IP address versions that are not supported or recognized.
-An IP address SHOULD be used, but an FQDN MAY be used in place of an IP address.
-In that case, when receiving an offer or answer containing an FQDN in an a=candidate attribute, the FQDN is looked up in the DNS first using an AAAA record (assuming the agent supports IPv6), and if no result is found or the agent only supports IPv4, using an A record.
-If the DNS query returns more than one IP address, one is chosen, and then used for the remainder of ICE processing.
+It is the IP address of the candidate. When parsing this field, an agent can differentiate an IPv4 address and an IPv6 address by presence of a colon in its value&#8201;&#8212;&#8201;the presence of a colon indicates IPv6. An agent MUST ignore candidate lines that include candidates with IP address versions that are not supported or recognized.
 </t>
             <t hangText="&lt;port&gt;:">
 is also taken from RFC 4566 <xref target="RFC4566"/>.
@@ -679,16 +674,14 @@ However, extensibility is provided to allow for future transport protocols to be
             <t hangText="&lt;foundation&gt;:">
 is composed of 1 to 32 &lt;ice-char&gt;s.
 It is an identifier that is equivalent for two candidates that are of the same type, share the same base, and come from the same STUN server.
-The foundation is used to optimize ICE performance in the Frozen algorithm.
-</t>
+The foundation is used to optimize ICE performance in the Frozen algorithm as described in section 5.1.3 of <xref target="ICE-BIS"/></t>
             <t hangText="&lt;component-id&gt;:">
 is a positive integer between 1 and 256 that identifies the specific component of the media stream for which this is a candidate.
-It MUST start at 1 and MUST increment by 1 for each component of a particular candidate.
-For media streams based on RTP, candidates for the actual RTP media MUST have a component ID of 1, and candidates for RTCP MUST have a component ID of 2.
+It MUST start at 1 and MUST increment by 1 for each component of a particular candidate. For media streams based on RTP, candidates for the actual RTP media MUST have a component ID of 1, and candidates for RTCP MUST have a component ID of 2.
 See section 10 in <xref target="ICE-BIS"/> for additional discussion on extending ICE to new media streams.
 </t>
             <t hangText="&lt;priority&gt;:">
-is a positive integer between 1 and (2**31 - 1).
+is a positive integer between 1 and (2**31 - 1). The procedures for computing candidate&#8217;s priority is described in section 4.1.2 of <xref target="ICE-BIS"/>.
 </t>
             <t hangText="&lt;cand-type&gt;:">
 encodes the type of candidate.
