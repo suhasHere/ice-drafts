@@ -227,7 +227,7 @@ This number is used in connectivity checks to detect and repair this case, as de
           <t>
 When ICE is used with SIP, forking may result in a single offer generating a multiplicity of answers.
 In that case, ICE proceeds completely in parallel and independently for each answer, treating the combination of its offer and each answer as an independent offer/answer exchange, with its own set of local candidates, pairs, check lists, states, and so on.
-The only case in which processing of one pair impacts another is freeing of candidates, discussed below in <xref target="sec-freeing"/>.
+The only case in which processing of one pair impacts another is freeing of candidates, discussed below in <xref target="sec-conclude"/>.
 </t>
           <t>
 On receiving the SDP answer,the offerer performs steps similar to answerer&#8217;s processing of the offer.
@@ -257,29 +257,17 @@ Also both full and lite agents MUST utilize the ICE-CONTROLLED and ICE-CONTROLLI
         </section>
         <section anchor="sec-conclude" title="Concluding ICE">
           <t>
-Once all of the media streams are completed, the controlling endpoint sends an updated offer if the transport destination in the "m=" and "c=" lines for the media stream (called the DEFAULT CANDIDATES) don&#8217;t match ICE&#8217;s selected candidates.
-</t>
-          <section title="Procedures for Full Implementations">
-            <section title="Updating states">
-              <t>
 Once the state of each check list is Completed, If an agent is controlling, it examines the highest-priority nominated candidate pair for each component of each media stream.
 If any of those candidate pairs differ from the default candidate pairs in the most recent offer/answer exchange, the controlling agent MUST generate an updated offer as described in <xref target="sec-subsequent"/>.
 </t>
-            </section>
-          </section>
-          <section anchor="sec-freeing" title="Freeing Candidates">
-            <section title="Full Implementation Procedures">
-              <t>
+          <t>
 When ICE is used with SIP, and an offer is forked to multiple recipients, ICE proceeds in parallel and independently with each answerer, all using the same local candidates.
-Once ICE processing has reached the Completed state for all peers for media streams using those candidates, the agent SHOULD wait an additional three seconds, and then it MAY cease responding to checks or generating triggered checks on that candidate.
-It MAY free the candidate at that time.
+Once ICE processing has reached the Completed state for all peers for media streams using those candidates, the agent SHOULD wait an additional three seconds, and then it MAY cease responding to checks or generating triggered checks on that candidate. It MAY free the candidate at that time.
 </t>
-              <t>
+          <t>
 Freeing of server reflexive candidates is never explicit; it happens by lack of a keepalive.
 The three-second delay handles cases when aggressive nomination is used, and the selected pairs can quickly change after ICE has completed.
 </t>
-            </section>
-          </section>
         </section>
       </section>
       <section anchor="sec-subsequent" title="Subsequent Offer/Answer Exchanges">
@@ -558,40 +546,21 @@ With the B2BUA being ICE-unaware, that answer would not include ICE candidates.
 Receiving an answer without ICE attributes in this situation might be unexpected, but would not necessarily impair the user experience.
 </t>
           <t>
-In addition to procedures for the expected answer, the following sections advice on how to recover from the unexpected situation.
+In addition to procedures for the expected answer, the following section advices on how to recover from the unexpected situation.
 </t>
           <section title="Procedures for All Implementations">
             <t>
 When receiving an answer within an existing session for a subsequent offer as specified in <xref target="sec-exist-comp"/>, an agent MUST verify ICE support as specified in <xref target="sec-overify"/>.
 </t>
-            <section title="ICE Restarts">
-              <t>
-If ICE support is indicated in the SDP answer, the agent MUST perform ICE restart procedures as specified in <xref target="sec-updating"/>.
+            <t>
+If ICE support is indicated in the SDP answer and the offer was a restart, the agent MUST perform ICE restart procedures as specified in <xref target="sec-updating"/>. If ICE support is no longer indicated in the SDP answer, the agent MUST fall-back to <xref target="RFC3264"/> procedures and SHOULD NOT drop the dialog just because of missing ICE support. If the agent sends a new offer later on, it SHOULD perform an ICE restart as specified in <xref target="sec-suboffer-restarts"/>.
 </t>
-              <t>
-If ICE support is no longer indicated in the SDP answer, the agent MUST fall-back to RFC 3264 procedures and SHOULD NOT drop the dialog just because of missing ICE support.
-If the agent sends a new offer later on it SHOULD perform an ICE restart as specified in <xref target="sec-suboffer-restarts"/>.
+            <t>
+If ICE support is indicated in the SDP answer and ICE is running, the agent MUST continue ICE procedures as specified in <xref target="sec-updating-continuing"/>. If ICE support is no longer indicated in the SDP answer, the agent MUST abort the ongoing ICE processing and fall-back to <xref target="RFC3264"/> procedures. The agent SHOULD NOT drop the dialog just because of missing ICE support. If the agent sends a new offer later on, it SHOULD perform an ICE restart as specified in <xref target="sec-suboffer-restarts"/>.
 </t>
-            </section>
-            <section title="Existing Media Streams with ICE Running">
-              <t>
-If ICE support is indicated in the SDP answer, the agent MUST continue ICE procedures as specified in <xref target="sec-updating-continuing"/>.
+            <t>
+If ICE support is indicated in the SDP answer and if ICE is completed and the answer conforms to <xref target="sec-full-existing"/>, the agent MUST remain in the ICE Completed state. If ICE support is no longer indicated in the SDP answer, the agent MUST fall-back to <xref target="RFC3264"/> procedures and SHOULD NOT drop the dialog just because of this unexpected answer. Once the agent sends a new offer later on it MUST perform an ICE restart.
 </t>
-              <t>
-If ICE support is no longer indicated in the SDP answer, the agent MUST abort the ongoing ICE processing and fall-back to RFC 3264 procedures.
-The agent SHOULD NOT drop the dialog just because of missing ICE support.
-If the agent sends a new offer later on, it SHOULD perform an ICE restart as specified in <xref target="sec-suboffer-restarts"/>.
-</t>
-            </section>
-            <section title="Existing Media Streams with ICE Completed">
-              <t>
-If ICE support is indicated in the SDP answer and if the answer conforms to <xref target="sec-full-existing"/>, the agent MUST remain in the ICE Completed state.
-</t>
-              <t>
-If ICE support is no longer indicated in the SDP answer, the agent MUST fall-back to RFC 3264 procedures and SHOULD NOT drop the dialog just because of this unexpected answer.
-Once the agent sends a new offer later on it MUST perform an ICE restart.
-</t>
-            </section>
           </section>
         </section>
         <section anchor="sec-updating" title="Updating the Check and Valid Lists">
@@ -695,7 +664,7 @@ It is the IP address of the candidate, allowing for IPv4 addresses, IPv6 address
 When parsing this field, an agent can differentiate an IPv4 address and an IPv6 address by presence of a colon in its value&#8201;&#8212;&#8201;the presence of a colon indicates IPv6.
 An agent MUST ignore candidate lines that include candidates with IP address versions that are not supported or recognized.
 An IP address SHOULD be used, but an FQDN MAY be used in place of an IP address.
-In that case, when receiving an offer or answer containing an FQDN in an a=candidate attribute, the FQDN is looked up in the DNS first using an AAAA record (assuming the agent supports IPv6), and if no result is found or the agent only supports IPv4, using an A.
+In that case, when receiving an offer or answer containing an FQDN in an a=candidate attribute, the FQDN is looked up in the DNS first using an AAAA record (assuming the agent supports IPv6), and if no result is found or the agent only supports IPv4, using an A record.
 If the DNS query returns more than one IP address, one is chosen, and then used for the remainder of ICE processing.
 </t>
             <t hangText="&lt;port&gt;:">
@@ -705,7 +674,7 @@ It is the port of the candidate.
             <t hangText="&lt;transport&gt;:">
 indicates the transport protocol for the candidate.
 This specification only defines UDP.
-However, extensibility is provided to allow for future transport protocols to be used with ICE, such as TCP or the Datagram Congestion Control Protocol (DCCP) <xref target="RFC4340"/>.
+However, extensibility is provided to allow for future transport protocols to be used with ICE, such as the Datagram Congestion Control Protocol (DCCP) <xref target="RFC4340"/>.
 </t>
             <t hangText="&lt;foundation&gt;:">
 is composed of 1 to 32 &lt;ice-char&gt;s.
@@ -730,7 +699,7 @@ The set of candidate types is extensible for the future.
 convey transport addresses related to the candidate, useful for diagnostics and other purposes.
 &lt;rel-addr&gt; and &lt;rel-port&gt; MUST be present for server reflexive, peer reflexive, and relayed candidates.
 If a candidate is server or peer reflexive, &lt;rel-addr&gt; and &lt;rel-port&gt; are equal to the base for that server or peer reflexive candidate.
-If the candidate is relayed, &lt;rel-addr&gt; and &lt;rel-port&gt; is equal to the mapped address in the Allocate response that provided the client with that relayed candidate (see section Appendix B.3 of <xref target="ICE-BIS"/> for a discussion of its purpose).
+If the candidate is relayed, &lt;rel-addr&gt; and &lt;rel-port&gt; are equal to the mapped address in the Allocate response that provided the client with that relayed candidate (see section Appendix B.3 of <xref target="ICE-BIS"/> for a discussion of its purpose).
 If the candidate is a host candidate, &lt;rel-addr&gt; and &lt;rel-port&gt; MUST be omitted.
 </t>
             <t hangText="">
@@ -747,12 +716,12 @@ An implementation MUST ignore any name/value pairs it doesn&#8217;t understand.
       </section>
       <section title="&quot;remote-candidates&quot; Attribute">
         <t>
-The syntax of the "remote-candidates" attribute is defined using Augmented BNF as defined in <xref target="RFC5234">RFC 5234</xref>.
+The syntax of the "remote-candidates" attribute is defined using Augmented BNF as defined in <xref target="RFC5234"/>.
 The remote-candidates attribute is a media-level attribute only.
 </t>
         <figure>
           <artwork><![CDATA[
-remote-candidate-att = "remote-candidates" ":" remote-candidate
+remote-candidate-att = "remote-candidates:" remote-candidate
                          0*(SP remote-candidate)
 remote-candidate = component-ID SP connection-address SP port
 ]]></artwork>
@@ -770,7 +739,7 @@ The syntax of the "ice-lite" and "ice-mismatch" attributes, both of which are fl
 </t>
         <figure>
           <artwork><![CDATA[
-ice-lite      = "ice-lite"
+ice-lite               = "ice-lite"
 ice-mismatch           = "ice-mismatch"
 ]]></artwork>
         </figure>
@@ -786,8 +755,8 @@ Their syntax is:
 </t>
         <figure>
           <artwork><![CDATA[
-ice-pwd-att  = "ice-pwd" ":" password
-ice-ufrag-att         = "ice-ufrag" ":" ufrag
+ice-pwd-att           = "ice-pwd:" password
+ice-ufrag-att         = "ice-ufrag:" ufrag
 password              = 22*256ice-char
 ufrag                 = 4*256ice-char
 ]]></artwork>
@@ -802,7 +771,7 @@ If two media streams have identical ice-ufrag&#8217;s, they MUST have identical 
         <t>
 The ice-ufrag and ice-pwd attributes MUST be chosen randomly at the beginning of a session.
 The ice-ufrag attribute MUST contain at least 24 bits of randomness, and the ice-pwd attribute MUST contain at least 128 bits of randomness.
-This means that the ice-ufrag attribute will be at least 4 characters long, and the ice-pwd at least 22 characters long, since the grammar for these attributes allows for 6 bits of randomness per character.
+This means that the ice-ufrag attribute will be at least 4 characters long, and the ice-pwd at least 22 characters long, since the grammar for these attributes allows for 6 bits of information per character.
 The attributes MAY be longer than 4 and 22 characters, respectively, of course, up to 256 characters.
 The upper limit allows for buffer sizing in implementations.
 Its large upper limit allows for increased amounts of randomness to be added over time.
@@ -816,7 +785,7 @@ The syntax is:
 </t>
         <figure>
           <artwork><![CDATA[
-ice-pacing-att   = "ice-pacing" ":" pacing-value
+ice-pacing-att            = "ice-pacing:" pacing-value
 pacing-value              = 1*10DIGIT
 ]]></artwork>
         </figure>
@@ -829,7 +798,7 @@ Its grammar is:
 </t>
         <figure>
           <artwork><![CDATA[
-ice-options  = "ice-options" ":" ice-option-tag
+ice-options           = "ice-options:" ice-option-tag
                           0*(SP ice-option-tag)
 ice-option-tag        = 1*ice-char
 ]]></artwork>
