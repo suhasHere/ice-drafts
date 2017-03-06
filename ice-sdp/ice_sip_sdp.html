@@ -409,27 +409,28 @@
 <link href="#rfc.section.8.3" rel="Chapter" title="8.3 Interactions with Forking"/>
 <link href="#rfc.section.8.4" rel="Chapter" title="8.4 Interactions with Preconditions"/>
 <link href="#rfc.section.8.5" rel="Chapter" title="8.5 Interactions with Third Party Call Control"/>
-<link href="#rfc.section.9" rel="Chapter" title="9 Setting Ta and RTO for RTP Media Streams"/>
-<link href="#rfc.section.10" rel="Chapter" title="10 Security Considerations"/>
-<link href="#rfc.section.10.1" rel="Chapter" title="10.1 Attacks on the Offer/Answer Exchanges"/>
-<link href="#rfc.section.10.2" rel="Chapter" title="10.2 Insider Attacks"/>
-<link href="#rfc.section.10.2.1" rel="Chapter" title="10.2.1 The Voice Hammer Attack"/>
-<link href="#rfc.section.10.2.2" rel="Chapter" title="10.2.2 Interactions with Application Layer Gateways and SIP"/>
-<link href="#rfc.section.11" rel="Chapter" title="11 IANA Considerations"/>
-<link href="#rfc.section.11.1" rel="Chapter" title="11.1 SDP Attributes"/>
-<link href="#rfc.section.11.1.1" rel="Chapter" title="11.1.1 candidate Attribute"/>
-<link href="#rfc.section.11.1.2" rel="Chapter" title="11.1.2 remote-candidates Attribute"/>
-<link href="#rfc.section.11.1.3" rel="Chapter" title="11.1.3 ice-lite Attribute"/>
-<link href="#rfc.section.11.1.4" rel="Chapter" title="11.1.4 ice-mismatch Attribute"/>
-<link href="#rfc.section.11.1.5" rel="Chapter" title="11.1.5 ice-pwd Attribute"/>
-<link href="#rfc.section.11.1.6" rel="Chapter" title="11.1.6 ice-ufrag Attribute"/>
-<link href="#rfc.section.11.1.7" rel="Chapter" title="11.1.7 ice-pacing Attribute"/>
-<link href="#rfc.section.11.1.8" rel="Chapter" title="11.1.8 ice-options Attribute"/>
-<link href="#rfc.section.11.2" rel="Chapter" title="11.2 Interactive Connectivity Establishment (ICE) Options Registry"/>
-<link href="#rfc.section.12" rel="Chapter" title="12 Acknowledgments"/>
-<link href="#rfc.references" rel="Chapter" title="13 References"/>
-<link href="#rfc.references.1" rel="Chapter" title="13.1 Normative References"/>
-<link href="#rfc.references.2" rel="Chapter" title="13.2 Informative References"/>
+<link href="#rfc.section.9" rel="Chapter" title="9 Relationship with ANAT"/>
+<link href="#rfc.section.10" rel="Chapter" title="10 Setting Ta and RTO for RTP Media Streams"/>
+<link href="#rfc.section.11" rel="Chapter" title="11 Security Considerations"/>
+<link href="#rfc.section.11.1" rel="Chapter" title="11.1 Attacks on the Offer/Answer Exchanges"/>
+<link href="#rfc.section.11.2" rel="Chapter" title="11.2 Insider Attacks"/>
+<link href="#rfc.section.11.2.1" rel="Chapter" title="11.2.1 The Voice Hammer Attack"/>
+<link href="#rfc.section.11.2.2" rel="Chapter" title="11.2.2 Interactions with Application Layer Gateways and SIP"/>
+<link href="#rfc.section.12" rel="Chapter" title="12 IANA Considerations"/>
+<link href="#rfc.section.12.1" rel="Chapter" title="12.1 SDP Attributes"/>
+<link href="#rfc.section.12.1.1" rel="Chapter" title="12.1.1 candidate Attribute"/>
+<link href="#rfc.section.12.1.2" rel="Chapter" title="12.1.2 remote-candidates Attribute"/>
+<link href="#rfc.section.12.1.3" rel="Chapter" title="12.1.3 ice-lite Attribute"/>
+<link href="#rfc.section.12.1.4" rel="Chapter" title="12.1.4 ice-mismatch Attribute"/>
+<link href="#rfc.section.12.1.5" rel="Chapter" title="12.1.5 ice-pwd Attribute"/>
+<link href="#rfc.section.12.1.6" rel="Chapter" title="12.1.6 ice-ufrag Attribute"/>
+<link href="#rfc.section.12.1.7" rel="Chapter" title="12.1.7 ice-pacing Attribute"/>
+<link href="#rfc.section.12.1.8" rel="Chapter" title="12.1.8 ice-options Attribute"/>
+<link href="#rfc.section.12.2" rel="Chapter" title="12.2 Interactive Connectivity Establishment (ICE) Options Registry"/>
+<link href="#rfc.section.13" rel="Chapter" title="13 Acknowledgments"/>
+<link href="#rfc.references" rel="Chapter" title="14 References"/>
+<link href="#rfc.references.1" rel="Chapter" title="14.1 Normative References"/>
+<link href="#rfc.references.2" rel="Chapter" title="14.2 Informative References"/>
 <link href="#rfc.appendix.A" rel="Chapter" title="A Examples"/>
 <link href="#rfc.appendix.B" rel="Chapter" title="B The remote-candidates Attribute"/>
 <link href="#rfc.appendix.C" rel="Chapter" title="C Why Is the Conflict Resolution Mechanism Needed?"/>
@@ -462,15 +463,15 @@
   <td class="right">Impedance Mismatch</td>
 </tr>
 <tr>
-  <td class="left">Intended status: Standards Track</td>
+  <td class="left">Obsoletes: 5245 (if approved)</td>
   <td class="right">A. Keranen</td>
 </tr>
 <tr>
-  <td class="left">Expires: July 27, 2017</td>
+  <td class="left">Intended status: Standards Track</td>
   <td class="right">Ericsson</td>
 </tr>
 <tr>
-  <td class="left"></td>
+  <td class="left">Expires: July 27, 2017</td>
   <td class="right">S. Nandakumar</td>
 </tr>
 <tr>
@@ -547,27 +548,28 @@
 <li>8.3.   <a href="#rfc.section.8.3">Interactions with Forking</a></li>
 <li>8.4.   <a href="#rfc.section.8.4">Interactions with Preconditions</a></li>
 <li>8.5.   <a href="#rfc.section.8.5">Interactions with Third Party Call Control</a></li>
-<li>9.   <a href="#rfc.section.9">Setting Ta and RTO for RTP Media Streams</a></li>
-<li>10.   <a href="#rfc.section.10">Security Considerations</a></li>
-<li>10.1.   <a href="#rfc.section.10.1">Attacks on the Offer/Answer Exchanges</a></li>
-<li>10.2.   <a href="#rfc.section.10.2">Insider Attacks</a></li>
-<li>10.2.1.   <a href="#rfc.section.10.2.1">The Voice Hammer Attack</a></li>
-<li>10.2.2.   <a href="#rfc.section.10.2.2">Interactions with Application Layer Gateways and SIP</a></li>
-<li>11.   <a href="#rfc.section.11">IANA Considerations</a></li>
-<li>11.1.   <a href="#rfc.section.11.1">SDP Attributes</a></li>
-<li>11.1.1.   <a href="#rfc.section.11.1.1">candidate Attribute</a></li>
-<li>11.1.2.   <a href="#rfc.section.11.1.2">remote-candidates Attribute</a></li>
-<li>11.1.3.   <a href="#rfc.section.11.1.3">ice-lite Attribute</a></li>
-<li>11.1.4.   <a href="#rfc.section.11.1.4">ice-mismatch Attribute</a></li>
-<li>11.1.5.   <a href="#rfc.section.11.1.5">ice-pwd Attribute</a></li>
-<li>11.1.6.   <a href="#rfc.section.11.1.6">ice-ufrag Attribute</a></li>
-<li>11.1.7.   <a href="#rfc.section.11.1.7">ice-pacing Attribute</a></li>
-<li>11.1.8.   <a href="#rfc.section.11.1.8">ice-options Attribute</a></li>
-<li>11.2.   <a href="#rfc.section.11.2">Interactive Connectivity Establishment (ICE) Options Registry</a></li>
-<li>12.   <a href="#rfc.section.12">Acknowledgments</a></li>
-<li>13.   <a href="#rfc.references">References</a></li>
-<li>13.1.   <a href="#rfc.references.1">Normative References</a></li>
-<li>13.2.   <a href="#rfc.references.2">Informative References</a></li>
+<li>9.   <a href="#rfc.section.9">Relationship with ANAT</a></li>
+<li>10.   <a href="#rfc.section.10">Setting Ta and RTO for RTP Media Streams</a></li>
+<li>11.   <a href="#rfc.section.11">Security Considerations</a></li>
+<li>11.1.   <a href="#rfc.section.11.1">Attacks on the Offer/Answer Exchanges</a></li>
+<li>11.2.   <a href="#rfc.section.11.2">Insider Attacks</a></li>
+<li>11.2.1.   <a href="#rfc.section.11.2.1">The Voice Hammer Attack</a></li>
+<li>11.2.2.   <a href="#rfc.section.11.2.2">Interactions with Application Layer Gateways and SIP</a></li>
+<li>12.   <a href="#rfc.section.12">IANA Considerations</a></li>
+<li>12.1.   <a href="#rfc.section.12.1">SDP Attributes</a></li>
+<li>12.1.1.   <a href="#rfc.section.12.1.1">candidate Attribute</a></li>
+<li>12.1.2.   <a href="#rfc.section.12.1.2">remote-candidates Attribute</a></li>
+<li>12.1.3.   <a href="#rfc.section.12.1.3">ice-lite Attribute</a></li>
+<li>12.1.4.   <a href="#rfc.section.12.1.4">ice-mismatch Attribute</a></li>
+<li>12.1.5.   <a href="#rfc.section.12.1.5">ice-pwd Attribute</a></li>
+<li>12.1.6.   <a href="#rfc.section.12.1.6">ice-ufrag Attribute</a></li>
+<li>12.1.7.   <a href="#rfc.section.12.1.7">ice-pacing Attribute</a></li>
+<li>12.1.8.   <a href="#rfc.section.12.1.8">ice-options Attribute</a></li>
+<li>12.2.   <a href="#rfc.section.12.2">Interactive Connectivity Establishment (ICE) Options Registry</a></li>
+<li>13.   <a href="#rfc.section.13">Acknowledgments</a></li>
+<li>14.   <a href="#rfc.references">References</a></li>
+<li>14.1.   <a href="#rfc.references.1">Normative References</a></li>
+<li>14.2.   <a href="#rfc.references.2">Informative References</a></li>
 <li>Appendix A.   <a href="#rfc.appendix.A">Examples</a></li>
 <li>Appendix B.   <a href="#rfc.appendix.B">The remote-candidates Attribute</a></li>
 <li>Appendix C.   <a href="#rfc.appendix.C">Why Is the Conflict Resolution Mechanism Needed?</a></li>
@@ -657,7 +659,7 @@ a=candidate:2 1 UDP 1694498815 192.0.2.3 45664 typ srflx raddr
 <p id="rfc.section.4.1.3.p.3">If the offerer had included the "ice2" ICE Option in the offer and the SDP answer also includes a similar session level ICE option, then the peers are <a href="#ICE-BIS">[ICE-BIS]</a> compliant implementations.  On the other hand, if the SDP Answer lacks such a ICE option, the offerer defaults to the procedures that are backward compatible with the <a href="#RFC5245">[RFC5245]</a> specification.  </p>
 <h1 id="rfc.section.4.1.3.1"><a href="#rfc.section.4.1.3.1">4.1.3.1.</a> <a href="#sec-overify" id="sec-overify">Verifying ICE Support</a></h1>
 <p id="rfc.section.4.1.3.1.p.1">The logic at the offerer is identical to that of the answerer as described in section 5.1.1 of <a href="#ICE-BIS">[ICE-BIS]</a>, with the exception that an offerer would not ever generate a=ice-mismatch attributes in an SDP.  </p>
-<p id="rfc.section.4.1.3.1.p.2">In some cases, the answer may omit a=candidate attributes for the media streams, and instead include an a=ice-mismatch attribute for one or more of the media streams in the SDP.  This signals to the offerer that the answerer supports ICE, but that ICE processing was not used for the session because a signaling intermediary modified the default destination for media components without modifying the corresponding candidate attributes.  See <a href="#sec-alg-sip">Section 10.2.2</a> for a discussion of cases where this can happen.  This specification provides no guidance on how an agent should proceed in such a failure case.  </p>
+<p id="rfc.section.4.1.3.1.p.2">In some cases, the answer may omit a=candidate attributes for the media streams, and instead include an a=ice-mismatch attribute for one or more of the media streams in the SDP.  This signals to the offerer that the answerer supports ICE, but that ICE processing was not used for the session because a signaling intermediary modified the default destination for media components without modifying the corresponding candidate attributes.  See <a href="#sec-alg-sip">Section 11.2.2</a> for a discussion of cases where this can happen.  This specification provides no guidance on how an agent should proceed in such a failure case.  </p>
 <h1 id="rfc.section.4.1.4"><a href="#rfc.section.4.1.4">4.1.4.</a> <a href="#sec-connectivity_check" id="sec-connectivity_check">Performing Connectivity Checks</a></h1>
 <p id="rfc.section.4.1.4.p.1">The possibility for role conflicts described in section 6.1.3.1.1 of <a href="#ICE-BIS">[ICE-BIS]</a> applies to this usage and hence all full agents MUST implement the role conflict repairing mechanism.  Also both full and lite agents MUST utilize the ICE-CONTROLLED and ICE-CONTROLLING attributes as described in section 6.1.2.3 of <a href="#ICE-BIS">[ICE-BIS]</a>.  </p>
 <h1 id="rfc.section.4.1.5"><a href="#rfc.section.4.1.5">4.1.5.</a> <a href="#sec-conclude" id="sec-conclude">Concluding ICE</a></h1>
@@ -917,21 +919,24 @@ ice-option-tag        = 1*ice-char
 <h1 id="rfc.section.8.5"><a href="#rfc.section.8.5">8.5.</a> Interactions with Third Party Call Control</h1>
 <p id="rfc.section.8.5.p.1">ICE works with Flows I, III, and IV as described in <a href="#RFC3725">[RFC3725]</a>.  Flow I works without the controller supporting or being aware of ICE.  Flow IV will work as long as the controller passes along the ICE attributes without alteration.  Flow II is fundamentally incompatible with ICE; each agent will believe itself to be the answerer and thus never generate a re-INVITE.  </p>
 <p id="rfc.section.8.5.p.2">The flows for continued operation, as described in Section 7 of <a href="#RFC3725">[RFC3725]</a>, require additional behavior of ICE implementations to support.  In particular, if an agent receives a mid-dialog re-INVITE that contains no offer, it MUST restart ICE for each media stream and go through the process of gathering new candidates.  Furthermore, that list of candidates SHOULD include the ones currently being used for media.  </p>
-<h1 id="rfc.section.9"><a href="#rfc.section.9">9.</a> Setting Ta and RTO for RTP Media Streams</h1>
-<p id="rfc.section.9.p.1">During the gathering phase of ICE (section 4.1.1 <a href="#ICE-BIS">[ICE-BIS]</a>) and while ICE is performing connectivity checks (section 6 <a href="#ICE-BIS">[ICE-BIS]</a>), an agent sends STUN and TURN transactions.  These transactions are paced at a rate of one every Ta milliseconds, and utilize a specific RTO.  See Section 11 of <a href="#ICE-BIS">[ICE-BIS]</a> for details on how the values of Ta and RTO are computed with a real-time media stream of known maximum bandwidth to rate-control the ICE exchanges.  </p>
-<h1 id="rfc.section.10"><a href="#rfc.section.10">10.</a> Security Considerations</h1>
-<h1 id="rfc.section.10.1"><a href="#rfc.section.10.1">10.1.</a> Attacks on the Offer/Answer Exchanges</h1>
-<p id="rfc.section.10.1.p.1">An attacker that can modify or disrupt the offer/answer exchanges themselves can readily launch a variety of attacks with ICE.  They could direct media to a target of a DoS attack, they could insert themselves into the media stream, and so on.  These are similar to the general security considerations for offer/answer exchanges, and the security considerations in <a href="#RFC3264">[RFC3264]</a> apply.  These require techniques for message integrity and encryption for offers and answers, which are satisfied by the TLS mechanism <a href="#RFC3261">[RFC3261]</a> when SIP is used.  As such, the usage of TLS with ICE is RECOMMENDED.  </p>
-<h1 id="rfc.section.10.2"><a href="#rfc.section.10.2">10.2.</a> Insider Attacks</h1>
-<p id="rfc.section.10.2.p.1">In addition to attacks where the attacker is a third party trying to insert fake offers, answers, or STUN messages, there are several attacks possible with ICE when the attacker is an authenticated and valid participant in the ICE exchange.  </p>
-<h1 id="rfc.section.10.2.1"><a href="#rfc.section.10.2.1">10.2.1.</a> <a href="#sec-voice-hammer" id="sec-voice-hammer">The Voice Hammer Attack</a></h1>
-<p id="rfc.section.10.2.1.p.1">The voice hammer attack is an amplification attack.  In this attack, the attacker initiates sessions to other agents, and maliciously includes the IP address and port of a DoS target as the destination for media traffic signaled in the SDP.  This causes substantial amplification; a single offer/answer exchange can create a continuing flood of media packets, possibly at high rates (consider video sources).  This attack is not specific to ICE, but ICE can help provide remediation.  </p>
-<p id="rfc.section.10.2.1.p.2">Specifically, if ICE is used, the agent receiving the malicious SDP will first perform connectivity checks to the target of media before sending media there.  If this target is a third-party host, the checks will not succeed, and media is never sent.  </p>
-<p id="rfc.section.10.2.1.p.3">Unfortunately, ICE doesn&#8217;t help if it&#8217;s not used, in which case an attacker could simply send the offer without the ICE parameters.  However, in environments where the set of clients is known, and is limited to ones that support ICE, the server can reject any offers or answers that don&#8217;t indicate ICE support.  </p>
-<p id="rfc.section.10.2.1.p.4">User Agents that are not willing to receive non-ICE answers MUST include an "ice" Option Tag in the Require Header Field in their offer.  Clients that rejects non-ICE offers SHOULD use a 421 response code, together with an Option Tag "ice" in the Require Header Field in the response.  </p>
-<h1 id="rfc.section.10.2.2"><a href="#rfc.section.10.2.2">10.2.2.</a> <a href="#sec-alg-sip" id="sec-alg-sip">Interactions with Application Layer Gateways and SIP</a></h1>
-<p id="rfc.section.10.2.2.p.1">Application Layer Gateways (ALGs) are functions present in a Network Address Translation (NAT) device that inspect the contents of packets and modify them, in order to facilitate NAT traversal for application protocols.  Session Border Controllers (SBCs) are close cousins of ALGs, but are less transparent since they actually exist as application-layer SIP intermediaries.  ICE has interactions with SBCs and ALGs.  </p>
-<p id="rfc.section.10.2.2.p.2">If an ALG is SIP aware but not ICE aware, ICE will work through it as long as the ALG correctly modifies the SDP.  A correct ALG implementation behaves as follows: </p>
+<h1 id="rfc.section.9"><a href="#rfc.section.9">9.</a> Relationship with ANAT</h1>
+<p><a href="#RFC4091">[RFC4091]</a>, the Alternative Network Address Types (ANAT) Semantics for the SDP grouping framework, and <a href="#RFC4092">[RFC4092]</a>, its usage with SIP, define a mechanism for indicating that an agent can support both IPv4 and IPv6 for a media stream, and it does so by including two "m=" lines, one for v4 and one for v6.  This is similar to ICE, which allows for an agent to indicate multiple transport addresses using the candidate attribute.  However, ANAT relies on static selection to pick between choices, rather than a dynamic connectivity check used by ICE.  </p>
+<p id="rfc.section.9.p.2">It is RECOMMENDED that ICE be used in realizing the dual-stack use-cases in agents that support ICE.  </p>
+<h1 id="rfc.section.10"><a href="#rfc.section.10">10.</a> Setting Ta and RTO for RTP Media Streams</h1>
+<p id="rfc.section.10.p.1">During the gathering phase of ICE (section 4.1.1 <a href="#ICE-BIS">[ICE-BIS]</a>) and while ICE is performing connectivity checks (section 6 <a href="#ICE-BIS">[ICE-BIS]</a>), an agent sends STUN and TURN transactions.  These transactions are paced at a rate of one every Ta milliseconds, and utilize a specific RTO.  See Section 11 of <a href="#ICE-BIS">[ICE-BIS]</a> for details on how the values of Ta and RTO are computed with a real-time media stream of known maximum bandwidth to rate-control the ICE exchanges.  </p>
+<h1 id="rfc.section.11"><a href="#rfc.section.11">11.</a> Security Considerations</h1>
+<h1 id="rfc.section.11.1"><a href="#rfc.section.11.1">11.1.</a> Attacks on the Offer/Answer Exchanges</h1>
+<p id="rfc.section.11.1.p.1">An attacker that can modify or disrupt the offer/answer exchanges themselves can readily launch a variety of attacks with ICE.  They could direct media to a target of a DoS attack, they could insert themselves into the media stream, and so on.  These are similar to the general security considerations for offer/answer exchanges, and the security considerations in <a href="#RFC3264">[RFC3264]</a> apply.  These require techniques for message integrity and encryption for offers and answers, which are satisfied by the TLS mechanism <a href="#RFC3261">[RFC3261]</a> when SIP is used.  As such, the usage of TLS with ICE is RECOMMENDED.  </p>
+<h1 id="rfc.section.11.2"><a href="#rfc.section.11.2">11.2.</a> Insider Attacks</h1>
+<p id="rfc.section.11.2.p.1">In addition to attacks where the attacker is a third party trying to insert fake offers, answers, or STUN messages, there are several attacks possible with ICE when the attacker is an authenticated and valid participant in the ICE exchange.  </p>
+<h1 id="rfc.section.11.2.1"><a href="#rfc.section.11.2.1">11.2.1.</a> <a href="#sec-voice-hammer" id="sec-voice-hammer">The Voice Hammer Attack</a></h1>
+<p id="rfc.section.11.2.1.p.1">The voice hammer attack is an amplification attack.  In this attack, the attacker initiates sessions to other agents, and maliciously includes the IP address and port of a DoS target as the destination for media traffic signaled in the SDP.  This causes substantial amplification; a single offer/answer exchange can create a continuing flood of media packets, possibly at high rates (consider video sources).  This attack is not specific to ICE, but ICE can help provide remediation.  </p>
+<p id="rfc.section.11.2.1.p.2">Specifically, if ICE is used, the agent receiving the malicious SDP will first perform connectivity checks to the target of media before sending media there.  If this target is a third-party host, the checks will not succeed, and media is never sent.  </p>
+<p id="rfc.section.11.2.1.p.3">Unfortunately, ICE doesn&#8217;t help if it&#8217;s not used, in which case an attacker could simply send the offer without the ICE parameters.  However, in environments where the set of clients is known, and is limited to ones that support ICE, the server can reject any offers or answers that don&#8217;t indicate ICE support.  </p>
+<p id="rfc.section.11.2.1.p.4">User Agents that are not willing to receive non-ICE answers MUST include an "ice" Option Tag in the Require Header Field in their offer.  Clients that rejects non-ICE offers SHOULD use a 421 response code, together with an Option Tag "ice" in the Require Header Field in the response.  </p>
+<h1 id="rfc.section.11.2.2"><a href="#rfc.section.11.2.2">11.2.2.</a> <a href="#sec-alg-sip" id="sec-alg-sip">Interactions with Application Layer Gateways and SIP</a></h1>
+<p id="rfc.section.11.2.2.p.1">Application Layer Gateways (ALGs) are functions present in a Network Address Translation (NAT) device that inspect the contents of packets and modify them, in order to facilitate NAT traversal for application protocols.  Session Border Controllers (SBCs) are close cousins of ALGs, but are less transparent since they actually exist as application-layer SIP intermediaries.  ICE has interactions with SBCs and ALGs.  </p>
+<p id="rfc.section.11.2.2.p.2">If an ALG is SIP aware but not ICE aware, ICE will work through it as long as the ALG correctly modifies the SDP.  A correct ALG implementation behaves as follows: </p>
 <p/>
 
 <ul>
@@ -940,13 +945,13 @@ ice-option-tag        = 1*ice-char
 </ul>
 
 <p> </p>
-<p id="rfc.section.10.2.2.p.4">Unfortunately, many ALGs are known to work poorly in these corner cases.  ICE does not try to work around broken ALGs, as this is outside the scope of its functionality.  ICE can help diagnose these conditions, which often show up as a mismatch between the set of candidates and the "m=" and "c=" lines and rtcp attributes.  The ice-mismatch attribute is used for this purpose.  </p>
-<p id="rfc.section.10.2.2.p.5">ICE works best through ALGs when the signaling is run over TLS.  This prevents the ALG from manipulating the SDP messages and interfering with ICE operation.  Implementations that are expected to be deployed behind ALGs SHOULD provide for TLS transport of the SDP.  </p>
-<p id="rfc.section.10.2.2.p.6">If an SBC is SIP aware but not ICE aware, the result depends on the behavior of the SBC.  If it is acting as a proper Back-to-Back User Agent (B2BUA), the SBC will remove any SDP attributes it doesn&#8217;t understand, including the ICE attributes.  Consequently, the call will appear to both endpoints as if the other side doesn&#8217;t support ICE.  This will result in ICE being disabled, and media flowing through the SBC, if the SBC has requested it.  If, however, the SBC passes the ICE attributes without modification, yet modifies the default destination for media (contained in the "m=" and "c=" lines and rtcp attribute), this will be detected as an ICE mismatch, and ICE processing is aborted for the call.  It is outside of the scope of ICE for it to act as a tool for "working around" SBCs.  If one is present, ICE will not be used and the SBC techniques take precedence.  </p>
-<h1 id="rfc.section.11"><a href="#rfc.section.11">11.</a> <a href="#iana" id="iana">IANA Considerations</a></h1>
-<h1 id="rfc.section.11.1"><a href="#rfc.section.11.1">11.1.</a> SDP Attributes</h1>
-<p id="rfc.section.11.1.p.1">The original ICE specification defined seven new SDP attributes per the procedures of Section 8.2.4 of <a href="#RFC4566">[RFC4566]</a>.  The registration information is reproduced here.  </p>
-<h1 id="rfc.section.11.1.1"><a href="#rfc.section.11.1.1">11.1.1.</a> candidate Attribute</h1>
+<p id="rfc.section.11.2.2.p.4">Unfortunately, many ALGs are known to work poorly in these corner cases.  ICE does not try to work around broken ALGs, as this is outside the scope of its functionality.  ICE can help diagnose these conditions, which often show up as a mismatch between the set of candidates and the "m=" and "c=" lines and rtcp attributes.  The ice-mismatch attribute is used for this purpose.  </p>
+<p id="rfc.section.11.2.2.p.5">ICE works best through ALGs when the signaling is run over TLS.  This prevents the ALG from manipulating the SDP messages and interfering with ICE operation.  Implementations that are expected to be deployed behind ALGs SHOULD provide for TLS transport of the SDP.  </p>
+<p id="rfc.section.11.2.2.p.6">If an SBC is SIP aware but not ICE aware, the result depends on the behavior of the SBC.  If it is acting as a proper Back-to-Back User Agent (B2BUA), the SBC will remove any SDP attributes it doesn&#8217;t understand, including the ICE attributes.  Consequently, the call will appear to both endpoints as if the other side doesn&#8217;t support ICE.  This will result in ICE being disabled, and media flowing through the SBC, if the SBC has requested it.  If, however, the SBC passes the ICE attributes without modification, yet modifies the default destination for media (contained in the "m=" and "c=" lines and rtcp attribute), this will be detected as an ICE mismatch, and ICE processing is aborted for the call.  It is outside of the scope of ICE for it to act as a tool for "working around" SBCs.  If one is present, ICE will not be used and the SBC techniques take precedence.  </p>
+<h1 id="rfc.section.12"><a href="#rfc.section.12">12.</a> <a href="#iana" id="iana">IANA Considerations</a></h1>
+<h1 id="rfc.section.12.1"><a href="#rfc.section.12.1">12.1.</a> SDP Attributes</h1>
+<p id="rfc.section.12.1.p.1">The original ICE specification defined seven new SDP attributes per the procedures of Section 8.2.4 of <a href="#RFC4566">[RFC4566]</a>.  The registration information is reproduced here.  </p>
+<h1 id="rfc.section.12.1.1"><a href="#rfc.section.12.1.1">12.1.1.</a> candidate Attribute</h1>
 <p/>
 
 <dl>
@@ -967,7 +972,7 @@ ice-option-tag        = 1*ice-char
 </dl>
 
 <p> </p>
-<h1 id="rfc.section.11.1.2"><a href="#rfc.section.11.1.2">11.1.2.</a> remote-candidates Attribute</h1>
+<h1 id="rfc.section.12.1.2"><a href="#rfc.section.12.1.2">12.1.2.</a> remote-candidates Attribute</h1>
 <p/>
 
 <dl>
@@ -988,7 +993,7 @@ ice-option-tag        = 1*ice-char
 </dl>
 
 <p> </p>
-<h1 id="rfc.section.11.1.3"><a href="#rfc.section.11.1.3">11.1.3.</a> ice-lite Attribute</h1>
+<h1 id="rfc.section.12.1.3"><a href="#rfc.section.12.1.3">12.1.3.</a> ice-lite Attribute</h1>
 <p/>
 
 <dl>
@@ -1009,7 +1014,7 @@ ice-option-tag        = 1*ice-char
 </dl>
 
 <p> </p>
-<h1 id="rfc.section.11.1.4"><a href="#rfc.section.11.1.4">11.1.4.</a> ice-mismatch Attribute</h1>
+<h1 id="rfc.section.12.1.4"><a href="#rfc.section.12.1.4">12.1.4.</a> ice-mismatch Attribute</h1>
 <p/>
 
 <dl>
@@ -1030,7 +1035,7 @@ ice-option-tag        = 1*ice-char
 </dl>
 
 <p> </p>
-<h1 id="rfc.section.11.1.5"><a href="#rfc.section.11.1.5">11.1.5.</a> ice-pwd Attribute</h1>
+<h1 id="rfc.section.12.1.5"><a href="#rfc.section.12.1.5">12.1.5.</a> ice-pwd Attribute</h1>
 <p/>
 
 <dl>
@@ -1051,7 +1056,7 @@ ice-option-tag        = 1*ice-char
 </dl>
 
 <p> </p>
-<h1 id="rfc.section.11.1.6"><a href="#rfc.section.11.1.6">11.1.6.</a> ice-ufrag Attribute</h1>
+<h1 id="rfc.section.12.1.6"><a href="#rfc.section.12.1.6">12.1.6.</a> ice-ufrag Attribute</h1>
 <p/>
 
 <dl>
@@ -1072,7 +1077,7 @@ ice-option-tag        = 1*ice-char
 </dl>
 
 <p> </p>
-<h1 id="rfc.section.11.1.7"><a href="#rfc.section.11.1.7">11.1.7.</a> ice-pacing Attribute</h1>
+<h1 id="rfc.section.12.1.7"><a href="#rfc.section.12.1.7">12.1.7.</a> ice-pacing Attribute</h1>
 <p/>
 
 <dl>
@@ -1093,7 +1098,7 @@ ice-option-tag        = 1*ice-char
 </dl>
 
 <p> </p>
-<h1 id="rfc.section.11.1.8"><a href="#rfc.section.11.1.8">11.1.8.</a> ice-options Attribute</h1>
+<h1 id="rfc.section.12.1.8"><a href="#rfc.section.12.1.8">12.1.8.</a> ice-options Attribute</h1>
 <p/>
 
 <dl>
@@ -1114,13 +1119,13 @@ ice-option-tag        = 1*ice-char
 </dl>
 
 <p> </p>
-<h1 id="rfc.section.11.2"><a href="#rfc.section.11.2">11.2.</a> Interactive Connectivity Establishment (ICE) Options Registry</h1>
-<p id="rfc.section.11.2.p.1">IANA maintains a registry for ice-options identifiers under the Specification Required policy as defined in "Guidelines for Writing an IANA Considerations Section in RFCs" <a href="#RFC5226">[RFC5226]</a>.  </p>
-<p id="rfc.section.11.2.p.2">ICE options are of unlimited length according to the syntax in <a href="#sec-ice-options">Section 5.6</a>; however, they are RECOMMENDED to be no longer than 20 characters.  This is to reduce message sizes and allow for efficient parsing.  </p>
-<p id="rfc.section.11.2.p.3">In <a href="#RFC5245">[RFC5245]</a> ICE options could only be defined at the session level.  ICE options can now also be defined at the media level.  This can be used when aggregating between different ICE agents in the same endpoint, but future options may require to be defined at the media-level.  To ensure compatibility with legacy implementation, the media-level ICE options MUST be aggregated into a session-level ICE option.  Because aggregation rules depend on the specifics of each option, all new ICE options MUST also define in their specification how the media-level ICE option values are aggregated to generate the value of the session-level ICE option.  </p>
+<h1 id="rfc.section.12.2"><a href="#rfc.section.12.2">12.2.</a> Interactive Connectivity Establishment (ICE) Options Registry</h1>
+<p id="rfc.section.12.2.p.1">IANA maintains a registry for ice-options identifiers under the Specification Required policy as defined in "Guidelines for Writing an IANA Considerations Section in RFCs" <a href="#RFC5226">[RFC5226]</a>.  </p>
+<p id="rfc.section.12.2.p.2">ICE options are of unlimited length according to the syntax in <a href="#sec-ice-options">Section 5.6</a>; however, they are RECOMMENDED to be no longer than 20 characters.  This is to reduce message sizes and allow for efficient parsing.  </p>
+<p id="rfc.section.12.2.p.3">In <a href="#RFC5245">[RFC5245]</a> ICE options could only be defined at the session level.  ICE options can now also be defined at the media level.  This can be used when aggregating between different ICE agents in the same endpoint, but future options may require to be defined at the media-level.  To ensure compatibility with legacy implementation, the media-level ICE options MUST be aggregated into a session-level ICE option.  Because aggregation rules depend on the specifics of each option, all new ICE options MUST also define in their specification how the media-level ICE option values are aggregated to generate the value of the session-level ICE option.  </p>
 <p><a href="#RFC6679">[RFC6679]</a> defines the "rtp+ecn" ICE option.  The aggregation rule for this ICE option is that if all aggregated media using ICE contain a media-level "rtp+ecn" ICE option then an "rtp+ecn" ICE option MUST be inserted at the session-level.  If one of the media does not contain the option, then it MUST NOT be inserted at the session-level.  </p>
-<p id="rfc.section.11.2.p.5">Section 7 of <a href="#ICE-BIS">[ICE-BIS]</a> defines "ice2" ICE option.  Since "ice2" is a session level ICE option, no aggregation rules apply.  </p>
-<p id="rfc.section.11.2.p.6">A registration request MUST include the following information: </p>
+<p id="rfc.section.12.2.p.5">Section 7 of <a href="#ICE-BIS">[ICE-BIS]</a> defines "ice2" ICE option.  Since "ice2" is a session level ICE option, no aggregation rules apply.  </p>
+<p id="rfc.section.12.2.p.6">A registration request MUST include the following information: </p>
 <p/>
 
 <ul>
@@ -1132,13 +1137,13 @@ ice-option-tag        = 1*ice-char
 </ul>
 
 <p> </p>
-<h1 id="rfc.section.12"><a href="#rfc.section.12">12.</a> Acknowledgments</h1>
-<p id="rfc.section.12.p.1">A large part of the text in this document was taken from <a href="#RFC5245">[RFC5245]</a>, authored by Jonathan Rosenberg.  </p>
-<p id="rfc.section.12.p.2">Some of the text in this document was taken from <a href="#RFC6336">[RFC6336]</a>, authored by Magnus Westerlund and Colin Perkins.  </p>
-<p id="rfc.section.12.p.3">Thanks to Thomas Stach for the text in <a href="#sec-answer-subsequent">Section 4.2.3</a> and Roman Shpount for suggesting RTCP candidate handling in <a href="#sec-encoding">Section 4.1.1.2</a></p>
-<p id="rfc.section.12.p.4">Thanks to following experts for their review and constructive feedback: Christer Holmberg.  </p>
-<h1 id="rfc.references"><a href="#rfc.references">13.</a> References</h1>
-<h1 id="rfc.references.1"><a href="#rfc.references.1">13.1.</a> Normative References</h1>
+<h1 id="rfc.section.13"><a href="#rfc.section.13">13.</a> Acknowledgments</h1>
+<p id="rfc.section.13.p.1">A large part of the text in this document was taken from <a href="#RFC5245">[RFC5245]</a>, authored by Jonathan Rosenberg.  </p>
+<p id="rfc.section.13.p.2">Some of the text in this document was taken from <a href="#RFC6336">[RFC6336]</a>, authored by Magnus Westerlund and Colin Perkins.  </p>
+<p id="rfc.section.13.p.3">Thanks to Thomas Stach for the text in <a href="#sec-answer-subsequent">Section 4.2.3</a> and Roman Shpount for suggesting RTCP candidate handling in <a href="#sec-encoding">Section 4.1.1.2</a></p>
+<p id="rfc.section.13.p.4">Thanks to following experts for their review and constructive feedback: Christer Holmberg.  </p>
+<h1 id="rfc.references"><a href="#rfc.references">14.</a> References</h1>
+<h1 id="rfc.references.1"><a href="#rfc.references.1">14.1.</a> Normative References</h1>
 <table>
   <tbody>
     <tr>
@@ -1194,6 +1199,18 @@ ice-option-tag        = 1*ice-char
         <b id="RFC4032">[RFC4032]</b>
       </td>
       <td class="top"><a>Camarillo, G.</a> and <a>P. Kyzivat</a>, "<a href="http://tools.ietf.org/html/rfc4032">Update to the Session Initiation Protocol (SIP) Preconditions Framework</a>", RFC 4032, DOI 10.17487/RFC4032, March 2005.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC4091">[RFC4091]</b>
+      </td>
+      <td class="top"><a>Camarillo, G.</a> and <a>J. Rosenberg</a>, "<a href="http://tools.ietf.org/html/rfc4091">The Alternative Network Address Types (ANAT) Semantics for the Session Description Protocol (SDP) Grouping Framework</a>", RFC 4091, June 2005.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC4092">[RFC4092]</b>
+      </td>
+      <td class="top"><a>Camarillo, G.</a> and <a>J. Rosenberg</a>, "<a href="http://tools.ietf.org/html/rfc4092">Usage of the Session Description Protocol (SDP) Alternative Network Address Types (ANAT) Semantics in the Session Initiation Protocol (SIP)</a>", RFC 4092, June 2005.</td>
     </tr>
     <tr>
       <td class="reference">
@@ -1257,7 +1274,7 @@ ice-option-tag        = 1*ice-char
     </tr>
   </tbody>
 </table>
-<h1 id="rfc.references.2"><a href="#rfc.references.2">13.2.</a> Informative References</h1>
+<h1 id="rfc.references.2"><a href="#rfc.references.2">14.2.</a> Informative References</h1>
 <table>
   <tbody>
     <tr>
