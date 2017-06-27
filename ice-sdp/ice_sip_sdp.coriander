@@ -1,9 +1,8 @@
-// FIXME the original xml file forced "Session" and "Initiation" to be on the same line.
-= Using Interactive Connectivity Establishment (ICE) with Session Description Protocol (SDP) offer/answer and Session Initiation Protocol (SIP)
+= Session Description Protocol (SDP) Offer/Answer procedures for Interactive Connectivity Establishment (ICE)
 Marc Petit-Huguenin <marc@petit-huguenin.org>; Ari Keranen <ari.keranen@ericsson.com>; Suhas Nandakumar <snandaku@cisco.com>
-12, 2017-03-13: draft-ietf-mmusic-ice-sip-sdp
+13, 2017-06-18: draft-ietf-mmusic-ice-sip-sdp
 :backend: rfc
-:abbrev: ICE SIP/SDP Usage
+:abbrev: ICE SDP Usage
 :rfc-obsoletes: 5245
 :rfc-category: std
 :rfc-ipr: pre5378Trust200902
@@ -13,17 +12,15 @@ Marc Petit-Huguenin <marc@petit-huguenin.org>; Ari Keranen <ari.keranen@ericsson
 :sectnumlevels: 5
 :docinfo:
 
-This document describes how Interactive Connectivity Establishment (ICE) is used with Session Description Protocol (SDP) offer/answer and Session Initiation Protocol (SIP).
+This document describes Session Description Protocol (SDP) Offer/Answer procedures for carrying out Interactive Connectivity Establishment (ICE) between the agents.
 
 :sectnums:
 
 [[intro]]
 == Introduction
 
-This document describes how Interactive Connectivity Establishment (ICE) is used with Session Description Protocol (SDP) offer/answer <<RFC3264>> and Session Initiation Protocol (SIP).
-The ICE specification <<ICE-BIS>> describes procedures that are common to all usages of ICE and this document gives the additional details needed to use ICE with SDP offer/answer and SIP.
+This document describes how Interactive Connectivity Establishment (ICE) is used with Session Description Protocol (SDP) offer/answer <<RFC3264>>. The ICE specification <<ICE-BIS>> describes procedures that are common to all usages of ICE and this document gives the additional details needed to use ICE with SDP offer/answer.
 
-Note that ICE is not intended for NAT traversal for SIP, which is assumed to be provided via another mechanism <<RFC5626>>.
 
 == Terminology
 
@@ -33,15 +30,11 @@ Readers should be familiar with the terminology defined in <<RFC3264>>, in <<RFC
 
 [horizontal]
 Default Destination/Candidate: ::
-The default destination for a component of a media stream is the transport address that would be used by an agent that is not ICE aware.
-A default candidate for a component is one whose transport address matches the default destination for that component.
-For the RTP component, the default IP address is in the "c=" line of the SDP, and the port is in the "m=" line.
-For the RTCP component, the address and port are indicated using the "a=rtcp" attribute defined in <<RFC3605>>, if present; otherwise, the RTCP component address is same as the address of the RTP component, and its port is one greater than the port of the RTP component.
+The default destination for a component of a media stream is the transport address that would be used by an agent that is not ICE aware. A default candidate for a component is one whose transport address matches the default destination for that component. For the RTP component, the default IP address is in the "c=" line of the SDP, and the port is in the "m=" line. For the RTCP component, the address and port are indicated using the "a=rtcp" attribute defined in <<RFC3605>>, if present; otherwise, the RTCP component address is same as the address of the RTP component, and its port is one greater than the port of the RTP component.
 
 == ICE Candidate Exchange and Offer/Answer Mapping
 
-<<ICE-BIS>> defines ICE candidate exchange as the process for ICE agents (Initiator and Responder) to exchange their candidate information required for ICE processing at the agents.
-For the purposes of this specification, the candidate exchange process corresponds to the <<RFC3264>> Offer/Answer protocol and the terminologies offerer and answerer correspond to the initiator and responder terminologies from <<ICE-BIS>> respectively.
+<<ICE-BIS>> defines ICE candidate exchange as the process for ICE agents (Initiator and Responder) to exchange their candidate information required for ICE processing at the agents. For the purposes of this specification, the candidate exchange process corresponds to the <<RFC3264>> Offer/Answer protocol and the terminologies offerer and answerer correspond to the initiator and responder terminologies from <<ICE-BIS>> respectively.
 
 == SDP Offer/Answer Procedures
 
@@ -49,23 +42,19 @@ For the purposes of this specification, the candidate exchange process correspon
 
 ==== Sending the Initial Offer
 
-The offerer shall follow the procedures defined in section 4 of <<ICE-BIS>> to gather, prioritize and eliminate the redundant candidates.
-It then chooses the default candidates and encodes them in the SDP to be sent to its peer, the answerer.
+The offerer shall follow the procedures defined in section 4 of <<ICE-BIS>> to gather, prioritize and eliminate the redundant candidates. It then chooses the default candidates and encodes them in the SDP to be sent to its peer, the answerer.
 
 [[sec-inuse]]
 ===== Choosing Default Candidates
 
-A candidate is said to be default if it would be the target of media from a non-ICE peer; that target is called the DEFAULT DESTINATION.
-If the default candidates are not selected by the ICE algorithm when communicating with an ICE-aware peer, an updated offer/answer will be required after ICE processing completes in order to "fix up" the SDP so that the default destination for media matches the candidates selected by ICE.
-If ICE happens to select the default candidates, no updated offer/answer is required.
+A candidate is said to be default if it would be the target of media from a non-ICE peer; that target is called the DEFAULT DESTINATION. If the default candidates are not selected by the ICE algorithm when communicating with an ICE-aware peer, an updated offer/answer will be required after ICE processing completes in order to "fix up" the SDP so that the default destination for media matches the candidates selected by ICE. If ICE happens to select the default candidates, no updated offer/answer is required.
 
 An agent MUST choose a set of candidates, one for each component of each in-use media stream, to be default. A media stream is in-use if it does not have a port of zero (which is used in RFC 3264 to reject a media stream). Consequently, a media stream is in-use even if it is marked as a=inactive <<RFC4566>> or has a bandwidth value of zero.
 
 
 An ageny may choose any type of the candidate as the default, if the chosen candidates increases the likelihood of success with the peer that is being contacted if ICE is not being used. 
 
-It is RECOMMENDED that default candidates be chosen based on the likelihood of those candidates to work with the peer that is being contacted if ICE is not being used. Many factors may influence such a decision in a given agent. In scenarios where the agent is fully aware of its peer's location and can reach the peer directly, choosing the host candidates as the default may well be sufficient. If the network configuration under which the agents operates is static and known beforehand, either the host or the server reflexives candidates can serve as the default candidates (depending on if a given agent is behind NAT and their reachability). If the agent is completely unaware of the peer's location or no assumptions can be made of network characteristics and the connectivity, the relayed candidates might be the only option as the default candidate. Having the decision of choosing the default candidate as a configurable option in the implementations might provide agents the flexibility to take into account the 
-aforementioned criteria. Barring such configuration flexibility, it is RECOMMENDED that the default candidates be the relayed candidates (if relayed candidates are available), server reflexive candidates (if server reflexive candidates are available), and finally host candidates.
+It is RECOMMENDED that default candidates be chosen based on the likelihood of those candidates to work with the peer that is being contacted if ICE is not being used. Many factors may influence such a decision in a given agent. In scenarios where the agent is fully aware of its peer's location and can reach the peer directly, choosing the host candidates as the default may well be sufficient. If the network configuration under which the agents operates is static and known beforehand, either the host or the server reflexives candidates can serve as the default candidates (depending on if a given agent is behind NAT and their reachability). If the agent is completely unaware of the peer's location or no assumptions can be made of network characteristics and the connectivity, the relayed candidates might be the only option as the default candidate. Having the decision of choosing the default candidate as a configurable option in the implementations might provide agents the flexibility to take into account the aforementioned criteria. Barring such configuration flexibility, it is RECOMMENDED that the default candidates be the relayed candidates (if relayed candidates are available), server reflexive candidates (if server reflexive candidates are available), and finally host candidates.
 
 [[sec-encoding]]
 ===== Encoding the SDP
@@ -160,10 +149,6 @@ This number is used in connectivity checks to detect and repair this case, as de
 
 ==== Receipt of the Initial Answer
 
-When ICE is used with SIP, forking may result in a single offer generating a multiplicity of answers.
-In that case, ICE proceeds completely in parallel and independently for each answer, treating the combination of its offer and each answer as an independent offer/answer exchange, with its own set of local candidates, pairs, check lists, states, and so on.
-The only case in which processing of one pair impacts another is freeing of candidates, discussed below in <<sec-conclude>>.
-
 On receiving the SDP answer,the offerer performs steps similar to answerer's processing of the offer.
 The offerer verifies the answerer's ICE support determines, its role, and processes the answerer's candidates to schedule the connectivity checks (section 6 of <<ICE-BIS>>).
 
@@ -191,12 +176,6 @@ Also both full and lite agents MUST utilize the ICE-CONTROLLED and ICE-CONTROLLI
 
 Once the state of each check list is Completed, If an agent is controlling, it examines the highest-priority nominated candidate pair for each component of each media stream.
 If any of those candidate pairs differ from the default candidate pairs in the most recent offer/answer exchange, the controlling agent MUST generate an updated offer as described in <<sec-subsequent>>.
-
-When ICE is used with SIP, and an offer is forked to multiple recipients, ICE proceeds in parallel and independently with each answerer, all using the same local candidates.
-Once ICE processing has reached the Completed state for all peers for media streams using those candidates, the agent SHOULD wait an additional three seconds, and then it MAY cease responding to checks or generating triggered checks on that candidate. It MAY free the candidate at that time.
-
-Freeing of server reflexive candidates is never explicit; it happens by lack of a keepalive.
-The three-second delay handles cases when aggressive nomination is used, and the selected pairs can quickly change after ICE has completed.
 
 
 [[sec-subsequent]]
@@ -638,8 +617,7 @@ ice-options           = "ice-options:" ice-option-tag
 ice-option-tag        = 1*ice-char
 ....
 
-The existence of an ice-option can indicate that a certain extension is supported by the agent and will be used or that the extension is used only if the other agent is willing to use it too.
-In order to avoid ambiguity, documents defining new options must indicate which case applies to the defined extensions.
+The existence of an ice-option in an offer indicates that a certain extension is supported by the agent and is willing to use it if the peer agent also includes the same extension in the answer. There might be further extension specific negotiations needed between the agents that determine how the extensions gets used in a given session.
 
 ....
 Example shows 'rtp+ecn' ice-option SDP line from <<RFC6679>>:
@@ -675,7 +653,15 @@ section 9.1.3 of <<ICE-BIS>> defines procedures for sending media common across 
 
 See section 9.2 of <<ICE-BIS>> for procedures on receiving media.
 
-== Usage with SIP
+== SIP Considerations
+
+Note that ICE is not intended for NAT traversal for SIP, which is assumed to be provided via another mechanism <<RFC5626>>.
+
+When ICE is used with SIP, forking may result in a single offer generating a multiplicity of answers. In that case, ICE proceeds completely in parallel and independently for each answer, treating the combination of its offer and each answer as an independent offer/answer exchange, with its own set of local candidates, pairs, check lists, states, and so on. 
+
+Once ICE processing has reached the Completed state for all peers for media streams using those candidates, the agent SHOULD wait an additional three seconds, and then it MAY cease responding to checks or generating triggered checks on that candidate. It MAY free the candidate at that time.
+Freeing of server reflexive candidates is never explicit; it happens by lack of a keepalive. The three-second delay handles cases when aggressive nomination is used, and the selected pairs can quickly change after ICE has completed.
+
 
 [[sec-latency]]
 === Latency Guidelines
@@ -982,7 +968,7 @@ Adam Roach.
 == Normative References
 
 [[ICE-BIS]]
-[oldbibentry]
+[.oldbibentry]
 ++++
 <front>
 <title>Interactive Connectivity Establishment (ICE): A Protocol for Network Address Translator (NAT) Traversal for Offer/Answer Protocols</title>
@@ -1013,7 +999,7 @@ ICE can be used by any protocol utilizing the offer/answer model, such as the Se
 ++++
 
 [[RFC2119]]
-[oldbibentry,target="http://www.rfc-editor.org/info/rfc2119"]
+[.oldbibentry,target="http://www.rfc-editor.org/info/rfc2119"]
 ++++
         <front>
           <title>Key words for use in RFCs to Indicate Requirement Levels</title>
@@ -1031,7 +1017,7 @@ ICE can be used by any protocol utilizing the offer/answer model, such as the Se
 ++++
 
 [[RFC3261]]
-[oldbibentry,target="http://www.rfc-editor.org/info/rfc3261"]
+[.oldbibentry,target="http://www.rfc-editor.org/info/rfc3261"]
 ++++
 <front>
 <title>SIP: Session Initiation Protocol</title>
@@ -1051,7 +1037,7 @@ ICE can be used by any protocol utilizing the offer/answer model, such as the Se
 ++++
 
 [[RFC3262]]
-[oldbibentry,target="http://www.rfc-editor.org/info/rfc3262"]
+[.oldbibentry,target="http://www.rfc-editor.org/info/rfc3262"]
 ++++
 <front>
 <title>Reliability of Provisional Responses in Session Initiation Protocol (SIP)</title>
@@ -1065,7 +1051,7 @@ ICE can be used by any protocol utilizing the offer/answer model, such as the Se
 ++++
 
 [[RFC3264]]
-[oldbibentry,target="http://www.rfc-editor.org/info/rfc3264"]
+[.oldbibentry,target="http://www.rfc-editor.org/info/rfc3264"]
 ++++
 <front>
 <title>An Offer/Answer Model with Session Description Protocol (SDP)</title>
@@ -1079,7 +1065,7 @@ ICE can be used by any protocol utilizing the offer/answer model, such as the Se
 ++++
 
 [[RFC3312]]
-[oldbibentry,target="http://www.rfc-editor.org/info/rfc3312"]
+[.oldbibentry,target="http://www.rfc-editor.org/info/rfc3312"]
 ++++
 <front>
 <title>Integration of Resource Management and Session Initiation Protocol (SIP)</title>
@@ -1093,7 +1079,7 @@ ICE can be used by any protocol utilizing the offer/answer model, such as the Se
 ++++
 
 [[RFC3556]]
-[oldbibentry,target="http://www.rfc-editor.org/info/rfc3556"]
+[.oldbibentry,target="http://www.rfc-editor.org/info/rfc3556"]
 ++++
 <front>
 <title>Session Description Protocol (SDP) Bandwidth Modifiers for RTP Control Protocol (RTCP) Bandwidth</title>
@@ -1106,7 +1092,7 @@ ICE can be used by any protocol utilizing the offer/answer model, such as the Se
 ++++
 
 [[RFC3605]]
-[oldbibentry,target="http://www.rfc-editor.org/info/rfc3605"]
+[.oldbibentry,target="http://www.rfc-editor.org/info/rfc3605"]
 ++++
 <front>
 <title>Real Time Control Protocol (RTCP) attribute in Session Description Protocol (SDP)</title>
@@ -1119,7 +1105,7 @@ ICE can be used by any protocol utilizing the offer/answer model, such as the Se
 ++++
 
 [[RFC4032]]
-[oldbibentry,target="http://www.rfc-editor.org/info/rfc4032"]
+[.oldbibentry,target="http://www.rfc-editor.org/info/rfc4032"]
 ++++
 <front>
 <title>Update to the Session Initiation Protocol (SIP) Preconditions Framework</title>
@@ -1133,7 +1119,7 @@ ICE can be used by any protocol utilizing the offer/answer model, such as the Se
 ++++
 
 [[RFC4091]]
-[oldbibentry,target="http://www.rfc-editor.org/info/rfc4091"]
+[.oldbibentry,target="http://www.rfc-editor.org/info/rfc4091"]
 ++++
 <front>
 <title>The Alternative Network Address Types (ANAT) Semantics for the Session Description Protocol (SDP) Grouping Framework</title>
@@ -1146,7 +1132,7 @@ ICE can be used by any protocol utilizing the offer/answer model, such as the Se
 ++++
 
 [[RFC4092]]
-[oldbibentry,target="http://www.rfc-editor.org/info/rfc4092"]
+[.oldbibentry,target="http://www.rfc-editor.org/info/rfc4092"]
 ++++
 <front>
 <title>Usage of the Session Description Protocol (SDP) Alternative Network Address Types (ANAT) Semantics in the Session Initiation Protocol (SIP)</title>
@@ -1159,7 +1145,7 @@ ICE can be used by any protocol utilizing the offer/answer model, such as the Se
 ++++
 
 [[RFC4566]]
-[oldbibentry,target="http://www.rfc-editor.org/info/rfc4566"]
+[.oldbibentry,target="http://www.rfc-editor.org/info/rfc4566"]
 ++++
 <front>
 <title>SDP: Session Description Protocol</title>
@@ -1174,7 +1160,7 @@ ICE can be used by any protocol utilizing the offer/answer model, such as the Se
 ++++
 
 [[RFC5226]]
-[oldbibentry,target="http://www.rfc-editor.org/info/rfc5226"]
+[.oldbibentry,target="http://www.rfc-editor.org/info/rfc5226"]
 ++++
 <front>
 <title>Guidelines for Writing an IANA Considerations Section in RFCs</title>
@@ -1189,7 +1175,7 @@ ICE can be used by any protocol utilizing the offer/answer model, such as the Se
 ++++
 
 [[RFC5234]]
-[oldbibentry,target="http://www.rfc-editor.org/info/rfc5234"]
+[.oldbibentry,target="http://www.rfc-editor.org/info/rfc5234"]
 ++++
 <front>
 <title>Augmented BNF for Syntax Specifications: ABNF</title>
@@ -1204,7 +1190,7 @@ ICE can be used by any protocol utilizing the offer/answer model, such as the Se
 ++++
 
 [[RFC5245]]
-[oldbibentry,target="http://www.rfc-editor.org/info/rfc5245"]
+[.oldbibentry,target="http://www.rfc-editor.org/info/rfc5245"]
 ++++
 <front>
 <title>Interactive Connectivity Establishment (ICE): A Protocol for Network Address Translator (NAT) Traversal for Offer/Answer Protocols</title>
@@ -1217,7 +1203,7 @@ ICE can be used by any protocol utilizing the offer/answer model, such as the Se
 ++++
 
 [[RFC5389]]
-[oldbibentry,target="http://www.rfc-editor.org/info/rfc5389"]
+[.oldbibentry,target="http://www.rfc-editor.org/info/rfc5389"]
 ++++
 <front>
 <title>Session Traversal Utilities for NAT (STUN)</title>
@@ -1233,7 +1219,7 @@ ICE can be used by any protocol utilizing the offer/answer model, such as the Se
 ++++
 
 [[RFC5768]]
-[oldbibentry,target="http://www.rfc-editor.org/info/rfc5768"]
+[.oldbibentry,target="http://www.rfc-editor.org/info/rfc5768"]
 ++++
 <front>
 <title>Indicating Support for Interactive Connectivity Establishment (ICE) in the Session Initiation Protocol (SIP)</title>
@@ -1246,7 +1232,7 @@ ICE can be used by any protocol utilizing the offer/answer model, such as the Se
 ++++
 
 [[RFC6336]]
-[oldbibentry,target="http://www.rfc-editor.org/info/rfc6336"]
+[.oldbibentry,target="http://www.rfc-editor.org/info/rfc6336"]
 ++++
 <front>
 <title>IANA Registry for Interactive Connectivity Establishment (ICE) Options</title>
@@ -1264,7 +1250,7 @@ ICE can be used by any protocol utilizing the offer/answer model, such as the Se
 ++++
 
 [[RFC6679]]
-[oldbibentry,target="http://www.rfc-editor.org/info/rfc6679"]
+[.oldbibentry,target="http://www.rfc-editor.org/info/rfc6679"]
 ++++
 <front>
 <title>Explicit Congestion Notification (ECN) for RTP over UDP</title>
@@ -1281,7 +1267,7 @@ ICE can be used by any protocol utilizing the offer/answer model, such as the Se
 ++++
 
 [[RFC6724]]
-[oldbibentry,target="http://www.rfc-editor.org/info/rfc6724"]
+[.oldbibentry,target="http://www.rfc-editor.org/info/rfc6724"]
 ++++
 <front>
 <title>Default Address Selection for Internet Protocol Version 6 (IPv6)</title>
@@ -1299,7 +1285,7 @@ ICE can be used by any protocol utilizing the offer/answer model, such as the Se
 
 
 [[RFC7092]]
-[oldbibentry,target="http://www.rfc-editor.org/info/rfc7092"]
+[.oldbibentry,target="http://www.rfc-editor.org/info/rfc7092"]
 ++++
 <front>
 <title>A Taxonomy of Session Initiation Protocol (SIP) Back-to-Back User Agents</title>
@@ -1313,7 +1299,7 @@ ICE can be used by any protocol utilizing the offer/answer model, such as the Se
 ++++
 
 [[RFC7656]]
-[oldbibentry,target="http://www.rfc-editor.org/info/rfc7656"]
+[.oldbibentry,target="http://www.rfc-editor.org/info/rfc7656"]
 ++++
 <front>
 <title>A Taxonomy of Semantics and Mechanisms for Real-Time Transport Protocol (RTP) Sources</title>
@@ -1333,7 +1319,7 @@ ICE can be used by any protocol utilizing the offer/answer model, such as the Se
 == Informative References
 
 [[RFC3725]]
-[oldbibentry,target="http://www.rfc-editor.org/info/rfc3725"]
+[.oldbibentry,target="http://www.rfc-editor.org/info/rfc3725"]
 ++++
 <front>
 <title>Best Current Practices for Third Party Call Control (3pcc) in the Session Initiation Protocol (SIP)</title>
@@ -1350,7 +1336,7 @@ ICE can be used by any protocol utilizing the offer/answer model, such as the Se
 ++++
 
 [[RFC3960]]
-[oldbibentry,target="http://www.rfc-editor.org/info/rfc3960"]
+[.oldbibentry,target="http://www.rfc-editor.org/info/rfc3960"]
 ++++
 <front>
 <title>Early Media and Ringing Tone Generation in the Session Initiation Protocol (SIP)</title>
@@ -1364,7 +1350,7 @@ ICE can be used by any protocol utilizing the offer/answer model, such as the Se
 ++++
 
 [[RFC4340]]
-[oldbibentry,target="http://www.rfc-editor.org/info/rfc4340"]
+[.oldbibentry,target="http://www.rfc-editor.org/info/rfc4340"]
 ++++
 <front>
 <title>Datagram Congestion Control Protocol (DCCP)</title>
@@ -1379,7 +1365,7 @@ ICE can be used by any protocol utilizing the offer/answer model, such as the Se
 ++++
 
 [[RFC5626]]
-[oldbibentry,target="http://www.rfc-editor.org/info/rfc5626"]
+[.oldbibentry,target="http://www.rfc-editor.org/info/rfc5626"]
 ++++
 <front>
 <title>Managing Client-Initiated Connections in the Session Initiation Protocol (SIP)</title>
@@ -1394,7 +1380,7 @@ ICE can be used by any protocol utilizing the offer/answer model, such as the Se
 ++++
 
 [[RFC5898]]
-[oldbibentry,target="http://www.rfc-editor.org/info/rfc5898"]
+[.oldbibentry,target="http://www.rfc-editor.org/info/rfc5898"]
 ++++
 <front>
 <title>Connectivity Preconditions for Session Description Protocol (SDP) Media Streams</title>
