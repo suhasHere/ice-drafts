@@ -1,6 +1,6 @@
 = Session Description Protocol (SDP) Offer/Answer procedures for Interactive Connectivity Establishment (ICE)
 Marc Petit-Huguenin <marc@petit-huguenin.org>; Ari Keranen <ari.keranen@ericsson.com>; Suhas Nandakumar <snandaku@cisco.com>
-13, 2017-06-18: draft-ietf-mmusic-ice-sip-sdp
+13, 2017-06-28: draft-ietf-mmusic-ice-sip-sdp
 :backend: rfc
 :abbrev: ICE SDP Usage
 :rfc-obsoletes: 5245

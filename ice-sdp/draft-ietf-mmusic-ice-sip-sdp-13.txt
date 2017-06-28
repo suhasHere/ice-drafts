@@ -6,9 +6,9 @@ MMUSIC                                                 M. Petit-Huguenin
 Internet-Draft                                        Impedance Mismatch
 Obsoletes: 5245 (if approved)                                 A. Keranen
 Intended status: Standards Track                                Ericsson
-Expires: December 20, 2017                                 S. Nandakumar
+Expires: December 30, 2017                                 S. Nandakumar
                                                            Cisco Systems
-                                                           June 18, 2017
+                                                           June 28, 2017
 
 
      Session Description Protocol (SDP) Offer/Answer procedures for
@@ -36,7 +36,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on December 20, 2017.
+   This Internet-Draft will expire on December 30, 2017.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Petit-Huguenin, et al.  Expires December 20, 2017               [Page 1]
+Petit-Huguenin, et al.  Expires December 30, 2017               [Page 1]
 
 Internet-Draft                ICE SDP Usage                    June 2017
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Petit-Huguenin, et al.  Expires December 20, 2017               [Page 2]
+Petit-Huguenin, et al.  Expires December 30, 2017               [Page 2]
 
 Internet-Draft                ICE SDP Usage                    June 2017
 
@@ -165,7 +165,7 @@ Internet-Draft                ICE SDP Usage                    June 2017
 
 
 
-Petit-Huguenin, et al.  Expires December 20, 2017               [Page 3]
+Petit-Huguenin, et al.  Expires December 30, 2017               [Page 3]
 
 Internet-Draft                ICE SDP Usage                    June 2017
 
@@ -221,7 +221,7 @@ Internet-Draft                ICE SDP Usage                    June 2017
 
 
 
-Petit-Huguenin, et al.  Expires December 20, 2017               [Page 4]
+Petit-Huguenin, et al.  Expires December 30, 2017               [Page 4]
 
 Internet-Draft                ICE SDP Usage                    June 2017
 
@@ -277,7 +277,7 @@ Internet-Draft                ICE SDP Usage                    June 2017
 
 
 
-Petit-Huguenin, et al.  Expires December 20, 2017               [Page 5]
+Petit-Huguenin, et al.  Expires December 30, 2017               [Page 5]
 
 Internet-Draft                ICE SDP Usage                    June 2017
 
@@ -333,7 +333,7 @@ Internet-Draft                ICE SDP Usage                    June 2017
 
 
 
-Petit-Huguenin, et al.  Expires December 20, 2017               [Page 6]
+Petit-Huguenin, et al.  Expires December 30, 2017               [Page 6]
 
 Internet-Draft                ICE SDP Usage                    June 2017
 
@@ -389,7 +389,7 @@ Internet-Draft                ICE SDP Usage                    June 2017
 
 
 
-Petit-Huguenin, et al.  Expires December 20, 2017               [Page 7]
+Petit-Huguenin, et al.  Expires December 30, 2017               [Page 7]
 
 Internet-Draft                ICE SDP Usage                    June 2017
 
@@ -445,7 +445,7 @@ Internet-Draft                ICE SDP Usage                    June 2017
 
 
 
-Petit-Huguenin, et al.  Expires December 20, 2017               [Page 8]
+Petit-Huguenin, et al.  Expires December 30, 2017               [Page 8]
 
 Internet-Draft                ICE SDP Usage                    June 2017
 
@@ -501,7 +501,7 @@ Internet-Draft                ICE SDP Usage                    June 2017
 
 
 
-Petit-Huguenin, et al.  Expires December 20, 2017               [Page 9]
+Petit-Huguenin, et al.  Expires December 30, 2017               [Page 9]
 
 Internet-Draft                ICE SDP Usage                    June 2017
 
@@ -557,7 +557,7 @@ Internet-Draft                ICE SDP Usage                    June 2017
 
 
 
-Petit-Huguenin, et al.  Expires December 20, 2017              [Page 10]
+Petit-Huguenin, et al.  Expires December 30, 2017              [Page 10]
 
 Internet-Draft                ICE SDP Usage                    June 2017
 
@@ -613,7 +613,7 @@ Internet-Draft                ICE SDP Usage                    June 2017
 
 
 
-Petit-Huguenin, et al.  Expires December 20, 2017              [Page 11]
+Petit-Huguenin, et al.  Expires December 30, 2017              [Page 11]
 
 Internet-Draft                ICE SDP Usage                    June 2017
 
@@ -669,7 +669,7 @@ Internet-Draft                ICE SDP Usage                    June 2017
 
 
 
-Petit-Huguenin, et al.  Expires December 20, 2017              [Page 12]
+Petit-Huguenin, et al.  Expires December 30, 2017              [Page 12]
 
 Internet-Draft                ICE SDP Usage                    June 2017
 
@@ -725,7 +725,7 @@ Internet-Draft                ICE SDP Usage                    June 2017
 
 
 
-Petit-Huguenin, et al.  Expires December 20, 2017              [Page 13]
+Petit-Huguenin, et al.  Expires December 30, 2017              [Page 13]
 
 Internet-Draft                ICE SDP Usage                    June 2017
 
@@ -781,7 +781,7 @@ Internet-Draft                ICE SDP Usage                    June 2017
 
 
 
-Petit-Huguenin, et al.  Expires December 20, 2017              [Page 14]
+Petit-Huguenin, et al.  Expires December 30, 2017              [Page 14]
 
 Internet-Draft                ICE SDP Usage                    June 2017
 
@@ -837,7 +837,7 @@ Internet-Draft                ICE SDP Usage                    June 2017
 
 
 
-Petit-Huguenin, et al.  Expires December 20, 2017              [Page 15]
+Petit-Huguenin, et al.  Expires December 30, 2017              [Page 15]
 
 Internet-Draft                ICE SDP Usage                    June 2017
 
@@ -893,7 +893,7 @@ Internet-Draft                ICE SDP Usage                    June 2017
 
 
 
-Petit-Huguenin, et al.  Expires December 20, 2017              [Page 16]
+Petit-Huguenin, et al.  Expires December 30, 2017              [Page 16]
 
 Internet-Draft                ICE SDP Usage                    June 2017
 
@@ -949,7 +949,7 @@ Internet-Draft                ICE SDP Usage                    June 2017
 
 
 
-Petit-Huguenin, et al.  Expires December 20, 2017              [Page 17]
+Petit-Huguenin, et al.  Expires December 30, 2017              [Page 17]
 
 Internet-Draft                ICE SDP Usage                    June 2017
 
@@ -1005,7 +1005,7 @@ Internet-Draft                ICE SDP Usage                    June 2017
 
 
 
-Petit-Huguenin, et al.  Expires December 20, 2017              [Page 18]
+Petit-Huguenin, et al.  Expires December 30, 2017              [Page 18]
 
 Internet-Draft                ICE SDP Usage                    June 2017
 
@@ -1061,7 +1061,7 @@ Internet-Draft                ICE SDP Usage                    June 2017
 
 
 
-Petit-Huguenin, et al.  Expires December 20, 2017              [Page 19]
+Petit-Huguenin, et al.  Expires December 30, 2017              [Page 19]
 
 Internet-Draft                ICE SDP Usage                    June 2017
 
@@ -1117,7 +1117,7 @@ Internet-Draft                ICE SDP Usage                    June 2017
 
 
 
-Petit-Huguenin, et al.  Expires December 20, 2017              [Page 20]
+Petit-Huguenin, et al.  Expires December 30, 2017              [Page 20]
 
 Internet-Draft                ICE SDP Usage                    June 2017
 
@@ -1173,7 +1173,7 @@ srflx raddr 10.0.1.1 rport 8998
 
 
 
-Petit-Huguenin, et al.  Expires December 20, 2017              [Page 21]
+Petit-Huguenin, et al.  Expires December 30, 2017              [Page 21]
 
 Internet-Draft                ICE SDP Usage                    June 2017
 
@@ -1229,7 +1229,7 @@ Internet-Draft                ICE SDP Usage                    June 2017
 
 
 
-Petit-Huguenin, et al.  Expires December 20, 2017              [Page 22]
+Petit-Huguenin, et al.  Expires December 30, 2017              [Page 22]
 
 Internet-Draft                ICE SDP Usage                    June 2017
 
@@ -1285,7 +1285,7 @@ Internet-Draft                ICE SDP Usage                    June 2017
 
 
 
-Petit-Huguenin, et al.  Expires December 20, 2017              [Page 23]
+Petit-Huguenin, et al.  Expires December 30, 2017              [Page 23]
 
 Internet-Draft                ICE SDP Usage                    June 2017
 
@@ -1341,7 +1341,7 @@ Internet-Draft                ICE SDP Usage                    June 2017
 
 
 
-Petit-Huguenin, et al.  Expires December 20, 2017              [Page 24]
+Petit-Huguenin, et al.  Expires December 30, 2017              [Page 24]
 
 Internet-Draft                ICE SDP Usage                    June 2017
 
@@ -1397,7 +1397,7 @@ Internet-Draft                ICE SDP Usage                    June 2017
 
 
 
-Petit-Huguenin, et al.  Expires December 20, 2017              [Page 25]
+Petit-Huguenin, et al.  Expires December 30, 2017              [Page 25]
 
 Internet-Draft                ICE SDP Usage                    June 2017
 
@@ -1453,7 +1453,7 @@ Internet-Draft                ICE SDP Usage                    June 2017
 
 
 
-Petit-Huguenin, et al.  Expires December 20, 2017              [Page 26]
+Petit-Huguenin, et al.  Expires December 30, 2017              [Page 26]
 
 Internet-Draft                ICE SDP Usage                    June 2017
 
@@ -1509,7 +1509,7 @@ Internet-Draft                ICE SDP Usage                    June 2017
 
 
 
-Petit-Huguenin, et al.  Expires December 20, 2017              [Page 27]
+Petit-Huguenin, et al.  Expires December 30, 2017              [Page 27]
 
 Internet-Draft                ICE SDP Usage                    June 2017
 
@@ -1565,7 +1565,7 @@ Internet-Draft                ICE SDP Usage                    June 2017
 
 
 
-Petit-Huguenin, et al.  Expires December 20, 2017              [Page 28]
+Petit-Huguenin, et al.  Expires December 30, 2017              [Page 28]
 
 Internet-Draft                ICE SDP Usage                    June 2017
 
@@ -1621,7 +1621,7 @@ Internet-Draft                ICE SDP Usage                    June 2017
 
 
 
-Petit-Huguenin, et al.  Expires December 20, 2017              [Page 29]
+Petit-Huguenin, et al.  Expires December 30, 2017              [Page 29]
 
 Internet-Draft                ICE SDP Usage                    June 2017
 
@@ -1677,7 +1677,7 @@ Internet-Draft                ICE SDP Usage                    June 2017
 
 
 
-Petit-Huguenin, et al.  Expires December 20, 2017              [Page 30]
+Petit-Huguenin, et al.  Expires December 30, 2017              [Page 30]
 
 Internet-Draft                ICE SDP Usage                    June 2017
 
@@ -1733,7 +1733,7 @@ Internet-Draft                ICE SDP Usage                    June 2017
 
 
 
-Petit-Huguenin, et al.  Expires December 20, 2017              [Page 31]
+Petit-Huguenin, et al.  Expires December 30, 2017              [Page 31]
 
 Internet-Draft                ICE SDP Usage                    June 2017
 
@@ -1789,7 +1789,7 @@ Internet-Draft                ICE SDP Usage                    June 2017
 
 
 
-Petit-Huguenin, et al.  Expires December 20, 2017              [Page 32]
+Petit-Huguenin, et al.  Expires December 30, 2017              [Page 32]
 
 Internet-Draft                ICE SDP Usage                    June 2017
 
@@ -1845,7 +1845,7 @@ Internet-Draft                ICE SDP Usage                    June 2017
 
 
 
-Petit-Huguenin, et al.  Expires December 20, 2017              [Page 33]
+Petit-Huguenin, et al.  Expires December 30, 2017              [Page 33]
 
 Internet-Draft                ICE SDP Usage                    June 2017
 
@@ -1901,7 +1901,7 @@ Internet-Draft                ICE SDP Usage                    June 2017
 
 
 
-Petit-Huguenin, et al.  Expires December 20, 2017              [Page 34]
+Petit-Huguenin, et al.  Expires December 30, 2017              [Page 34]
 
 Internet-Draft                ICE SDP Usage                    June 2017
 
@@ -1957,7 +1957,7 @@ Internet-Draft                ICE SDP Usage                    June 2017
 
 
 
-Petit-Huguenin, et al.  Expires December 20, 2017              [Page 35]
+Petit-Huguenin, et al.  Expires December 30, 2017              [Page 35]
 
 Internet-Draft                ICE SDP Usage                    June 2017
 
@@ -2013,7 +2013,7 @@ Internet-Draft                ICE SDP Usage                    June 2017
 
 
 
-Petit-Huguenin, et al.  Expires December 20, 2017              [Page 36]
+Petit-Huguenin, et al.  Expires December 30, 2017              [Page 36]
 
 Internet-Draft                ICE SDP Usage                    June 2017
 
@@ -2069,7 +2069,7 @@ Internet-Draft                ICE SDP Usage                    June 2017
 
 
 
-Petit-Huguenin, et al.  Expires December 20, 2017              [Page 37]
+Petit-Huguenin, et al.  Expires December 30, 2017              [Page 37]
 
 Internet-Draft                ICE SDP Usage                    June 2017
 
@@ -2125,7 +2125,7 @@ Appendix A.  Examples
 
 
 
-Petit-Huguenin, et al.  Expires December 20, 2017              [Page 38]
+Petit-Huguenin, et al.  Expires December 30, 2017              [Page 38]
 
 Internet-Draft                ICE SDP Usage                    June 2017
 
@@ -2181,7 +2181,7 @@ a=candidate:2 1 UDP 1694498815 2001:420:c0e0:1005::61 45664 typ srflx raddr
 
 
 
-Petit-Huguenin, et al.  Expires December 20, 2017              [Page 39]
+Petit-Huguenin, et al.  Expires December 30, 2017              [Page 39]
 
 Internet-Draft                ICE SDP Usage                    June 2017
 
@@ -2237,7 +2237,7 @@ Appendix B.  The remote-candidates Attribute
 
 
 
-Petit-Huguenin, et al.  Expires December 20, 2017              [Page 40]
+Petit-Huguenin, et al.  Expires December 30, 2017              [Page 40]
 
 Internet-Draft                ICE SDP Usage                    June 2017
 
@@ -2293,7 +2293,7 @@ Appendix C.  Why Is the Conflict Resolution Mechanism Needed?
 
 
 
-Petit-Huguenin, et al.  Expires December 20, 2017              [Page 41]
+Petit-Huguenin, et al.  Expires December 30, 2017              [Page 41]
 
 Internet-Draft                ICE SDP Usage                    June 2017
 
@@ -2349,7 +2349,7 @@ Appendix D.  Why Send an Updated Offer?
 
 
 
-Petit-Huguenin, et al.  Expires December 20, 2017              [Page 42]
+Petit-Huguenin, et al.  Expires December 30, 2017              [Page 42]
 
 Internet-Draft                ICE SDP Usage                    June 2017
 
@@ -2405,4 +2405,4 @@ Authors' Addresses
 
 
 
-Petit-Huguenin, et al.  Expires December 20, 2017              [Page 43]
+Petit-Huguenin, et al.  Expires December 30, 2017              [Page 43]
