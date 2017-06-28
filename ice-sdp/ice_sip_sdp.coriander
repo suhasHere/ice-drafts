@@ -52,7 +52,7 @@ A candidate is said to be default if it would be the target of media from a non-
 An agent MUST choose a set of candidates, one for each component of each in-use media stream, to be default. A media stream is in-use if it does not have a port of zero (which is used in RFC 3264 to reject a media stream). Consequently, a media stream is in-use even if it is marked as a=inactive <<RFC4566>> or has a bandwidth value of zero.
 
 
-An ageny may choose any type of the candidate as the default, if the chosen candidates increases the likelihood of success with the peer that is being contacted if ICE is not being used. 
+An agent may choose any type of the candidate as the default, if the chosen candidates increases the likelihood of success with the peer that is being contacted if ICE is not being used. 
 
 It is RECOMMENDED that default candidates be chosen based on the likelihood of those candidates to work with the peer that is being contacted if ICE is not being used. Many factors may influence such a decision in a given agent. In scenarios where the agent is fully aware of its peer's location and can reach the peer directly, choosing the host candidates as the default may well be sufficient. If the network configuration under which the agents operates is static and known beforehand, either the host or the server reflexives candidates can serve as the default candidates (depending on if a given agent is behind NAT and their reachability). If the agent is completely unaware of the peer's location or no assumptions can be made of network characteristics and the connectivity, the relayed candidates might be the only option as the default candidate. Having the decision of choosing the default candidate as a configurable option in the implementations might provide agents the flexibility to take into account the aforementioned criteria. Barring such configuration flexibility, it is RECOMMENDED that the default candidates be the relayed candidates (if relayed candidates are available), server reflexive candidates (if server reflexive candidates are available), and finally host candidates.
 
@@ -76,7 +76,7 @@ The username fragment and password are exchanged in the ice-ufrag and ice-pwd at
 If an agent is a lite implementation, it MUST include an "a=ice-lite" session-level attribute in its SDP to indicate this.
 If an agent is a full implementation, it MUST NOT include this attribute.
 
-Section 7 of <<ICE-BIS>> defines a new ICE option, 'ice2'.
+Section 9 of <<ICE-BIS>> defines a new ICE option, 'ice2'.
 This option is used by ICE Agents to indicate their compliancy with <<ICE-BIS>> specification as compared to the <<RFC5245>>.
 If the Offering agent is a <<ICE-BIS>> compliant implementation, a session level ICE option to indicate the same (via the "a=ice-options:ice2" SDP line) MUST be included.
 
@@ -111,11 +111,11 @@ a=candidate:2 1 UDP 1694498815 192.0.2.3 45664 typ srflx raddr
 ....
 
 Once an agent has sent its offer or its answer, that agent MUST be prepared to receive both STUN and media packets on each candidate.
-As discussed in section 9.1 of <<ICE-BIS>>, media packets can be sent to a candidate prior to its appearance as the default destination for media in an offer or answer.
+As discussed in section 11.1 of <<ICE-BIS>>, media packets can be sent to a candidate prior to its appearance as the default destination for media in an offer or answer.
 
 ==== Receiving the Initial Offer
 
-On receiving the offer, the answerer verifies the support for ICE (section 5.1.1 of <<ICE-BIS>>), determines its role (section 5.1.2 of <<ICE-BIS>>), gathers candidates (section 4 of <<ICE-BIS>>), encodes the candidates in an SDP answer and sends it to its peer, the offerer.
+On receiving the offer, the answerer verifies the support for ICE (section 4.4 of <<ICE-BIS>>), determines its role (section 5.1.1 of <<ICE-BIS>>), gathers candidates (section 4 of <<ICE-BIS>>), encodes the candidates in an SDP answer and sends it to its peer, the offerer.
 The answerer shall then follow the steps defined in sections 5.1.3 and 5.1.4 of <<ICE-BIS>> to schedule the ICE connectivity checks.
 
 The below sub-sections provide additional requirements associated with the processing of the offerer's SDP pertaining to this specification.
@@ -136,7 +136,7 @@ For example, in the case of RTP, the IP address and port in the "c=" and "m=" li
 
 If this condition is not met, the agent MUST process the SDP based on normal RFC 3264 procedures, without using any of the ICE mechanisms described in the remainder of this specification with the following exceptions:
 
-. The agent MUST follow the rules of section 8 of <<ICE-BIS>>, which describe keepalive procedures for all agents.
+. The agent MUST follow the rules of section 10 of <<ICE-BIS>>, which describe keepalive procedures for all agents.
 . If the agent is not proceeding with ICE because there were a=candidate attributes, but none that matched the default destination of the media stream, the agent MUST include an a=ice-mismatch attribute in its answer.
 . If the default candidates were relayed candidates learned through a TURN server, the agent MUST create permissions in the TURN server for the IP addresses learned from its peer in the SDP it just received.
 If this is not done, initial packets in the media stream from the peer may be lost.
@@ -145,11 +145,11 @@ If this is not done, initial packets in the media stream from the peer may be lo
 
 In unusual cases, described in <<sec-glare>>, it is possible for both agents to mistakenly believe they are controlled or controlling.
 To resolve this, each agent MUST select a random number, called the tie-breaker, uniformly distributed between 0 and (2**64) - 1 (that is, a 64-bit positive integer).
-This number is used in connectivity checks to detect and repair this case, as described in section 6.1.2.3 of <<ICE-BIS>>.
+This number is used in connectivity checks to detect and repair this case, as described in section 6.1.3 of <<ICE-BIS>>.
 
 ==== Receipt of the Initial Answer
 
-On receiving the SDP answer,the offerer performs steps similar to answerer's processing of the offer.
+On receiving the SDP answer, the offerer performs steps similar to answerer's processing of the offer.
 The offerer verifies the answerer's ICE support determines, its role, and processes the answerer's candidates to schedule the connectivity checks (section 6 of <<ICE-BIS>>).
 
 If the offerer had included the "ice2" ICE Option in the offer and the SDP answer also includes a similar session level ICE option, then the peers are <<ICE-BIS>> compliant implementations.
@@ -158,7 +158,7 @@ On the other hand, if the SDP Answer lacks such a ICE option, the offerer defaul
 [[sec-overify]]
 ===== Verifying ICE Support
 
-The logic at the offerer is identical to that of the answerer as described in section 5.1.1 of <<ICE-BIS>>, with the exception that an offerer would not ever generate a=ice-mismatch attributes in an SDP.
+The logic at the offerer is identical to that of the answerer as described in section 4.4 of <<ICE-BIS>>, with the exception that an offerer would not ever generate a=ice-mismatch attributes in an SDP.
 
 In some cases, the answer may omit a=candidate attributes for the media streams, and instead include an a=ice-mismatch attribute for one or more of the media streams in the SDP.
 This signals to the offerer that the answerer supports ICE, but that ICE processing was not used for the session because a signaling intermediary modified the default destination for media components without modifying the corresponding candidate attributes.
@@ -168,8 +168,8 @@ This specification provides no guidance on how an agent should proceed in such a
 [[sec-connectivity_check]]
 ==== Performing Connectivity Checks
 
-The possibility for role conflicts described in section 6.1.3.1.1 of <<ICE-BIS>> applies to this usage and hence all full agents MUST implement the role conflict repairing mechanism.
-Also both full and lite agents MUST utilize the ICE-CONTROLLED and ICE-CONTROLLING attributes as described in section 6.1.2.3 of <<ICE-BIS>>.
+The possibility for role conflicts described in section 6.3.1.1 of <<ICE-BIS>> applies to this usage and hence all full agents MUST implement the role conflict repairing mechanism.
+Also both full and lite agents MUST utilize the ICE-CONTROLLED and ICE-CONTROLLING attributes as described in section 6.1.3 of <<ICE-BIS>>.
 
 [[sec-conclude]]
 ==== Concluding ICE
@@ -196,7 +196,7 @@ Should a subsequent offer fail, ICE processing continues as if the subsequent of
 [[sec-suboffer-restarts]]
 ====== ICE Restarts
 
-An agent MAY restart ICE processing for an existing media stream as defined in section 6.3 of <<ICE-BIS>>.
+An agent MAY restart ICE processing for an existing media stream as defined in section 8 of <<ICE-BIS>>.
 
 The rules governing the ICE restart imply that setting the IP address in the "c=" line to 0.0.0.0 will cause an ICE restart.
 Consequently, ICE implementations MUST NOT utilize this mechanism for call hold, and instead MUST use a=inactive and a=sendonly as described in <<RFC3264>>.
@@ -363,7 +363,7 @@ Furthermore, if the agent believed it was controlling, but the offer contained t
 In this case, both would have sent updated offers around the same time.
 However, the signaling protocol carrying the offer/answer exchanges will have resolved this glare condition, so that one agent is always the 'winner' by having its offer received before its peer has sent an offer.
 The winner takes the role of controlling, so that the loser (the answerer under consideration in this section) MUST change its role to controlled.
-Consequently, if the agent was going to send an updated offer since, based on the rules in section 6.2 of <<ICE-BIS>>, it was controlling, it no longer needs to.
+Consequently, if the agent was going to send an updated offer since, based on the rules in section 7.2 of <<ICE-BIS>>, it was controlling, it no longer needs to.
 
 Besides the potential role change, change in the Valid list, and state changes, the construction of the answer is performed identically to the construction of an offer as described in <<sec-sub-lite>>.
 
@@ -400,11 +400,11 @@ If ICE support is indicated in the SDP answer and if ICE is completed and the an
 
 The agent MUST remember the highest-priority nominated pairs in the Valid list for each component of the media stream, called the previous selected pairs, prior to the restart.
 The agent will continue to send media using these pairs, as described in <<sec-send_media>>.
-Once these destinations are noted, the agent MUST flush the valid and check lists, and then recompute the check list and its states as described in section 5.1.3 of <<ICE-BIS>>.
+Once these destinations are noted, the agent MUST flush the valid and check lists, and then recompute the check list and its states as described in section 5.1.2 of <<ICE-BIS>>.
 
 ====== New Media Stream
 
-If the offer/answer exchange added a new media stream, the agent MUST create a new check list for it (and an empty Valid list to start of course), as described in section 5.1.3 of <<ICE-BIS>>.
+If the offer/answer exchange added a new media stream, the agent MUST create a new check list for it (and an empty Valid list to start of course), as described in section 5.1.2 of <<ICE-BIS>>.
 
 ====== Removed Media Stream
 
@@ -418,9 +418,9 @@ An agent MUST remove the check list for that media stream and cancel any pending
 // this makes my head hurt. Is there a way to simplify??
 The valid list is not affected by an updated offer/answer exchange unless ICE is restarting.
 
-If an agent is in the Running state for that media stream, the check list is updated (the check list is irrelevant if the state is completed). To do that, the agent recomputes the check list using the procedures described in section 5.1.3 of <<ICE-BIS>>. If a pair on the new check list was also on the previous check list, and its state was Waiting, In-Progress, Succeeded, or Failed, its state is copied over. Otherwise, its state is set to Frozen.
+If an agent is in the Running state for that media stream, the check list is updated (the check list is irrelevant if the state is completed). To do that, the agent recomputes the check list using the procedures described in section 5.1.2 of <<ICE-BIS>>. If a pair on the new check list was also on the previous check list, and its state was Waiting, In-Progress, Succeeded, or Failed, its state is copied over. Otherwise, its state is set to Frozen.
 
-If none of the check lists are active (meaning that the pairs in each check list are Frozen), the full-mode agent follows steps in Section 5.1.3.6 of <<ICE-BIS>> to place appropriate candidates in the Waiting state to further continue ICE processing.
+If none of the check lists are active (meaning that the pairs in each check list are Frozen), the full-mode agent follows steps in Section 5.1.2.6 of <<ICE-BIS>> to place appropriate candidates in the Waiting state to further continue ICE processing.
 
 ===== Procedures for Lite Implementations
 
@@ -481,11 +481,11 @@ However, extensibility is provided to allow for future transport protocols to be
 
 <foundation>: :: is composed of 1 to 32 <ice-char>s.
 It is an identifier that is equivalent for two candidates that are of the same type, share the same base, and come from the same STUN server.
-The foundation is used to optimize ICE performance in the Frozen algorithm as described in section 5.1.3 of <<ICE-BIS>>
+The foundation is used to optimize ICE performance in the Frozen algorithm as described in section 5.1.2 of <<ICE-BIS>>
 
 <component-id>: :: is a positive integer between 1 and 256 that identifies the specific component of the media stream for which this is a candidate.
 It MUST start at 1 and MUST increment by 1 for each component of a particular candidate. For media streams based on RTP, candidates for the actual RTP media MUST have a component ID of 1, and candidates for RTCP MUST have a component ID of 2.
-See section 10 in <<ICE-BIS>> for additional discussion on extending ICE to new media streams.
+See section 12 in <<ICE-BIS>> for additional discussion on extending ICE to new media streams.
 
 <priority>: :: is a positive integer between 1 and (2**31 - 1). The procedures for computing candidate's priority is described in section 4.1.2 of <<ICE-BIS>>.
 
@@ -589,7 +589,7 @@ a=ice-ufrag:8hhY
 ....
 === "ice-pacing" Attribute
 
-The "ice-pacing" attribute indicates the desired connectivity check pacing, in milliseconds, for this agent (see section 11 of <<ICE-BIS>>).
+The "ice-pacing" attribute indicates the desired connectivity check pacing, in milliseconds, for this agent (see section 13 of <<ICE-BIS>>).
 The syntax is:
 
 ....
@@ -617,7 +617,7 @@ ice-options           = "ice-options:" ice-option-tag
 ice-option-tag        = 1*ice-char
 ....
 
-The existence of an ice-option in an offer indicates that a certain extension is supported by the agent and is willing to use it if the peer agent also includes the same extension in the answer. There might be further extension specific negotiations needed between the agents that determine how the extensions gets used in a given session.
+The existence of an ice-option in an offer indicates that a certain extension is supported by the agent and is willing to use it, if the peer agent also includes the same extension in the answer. There might be further extension specific negotiations needed between the agents that determine how the extensions gets used in a given session. The details of the negotiation procedures, if present, MUST be defined by the specification defining the extension.
 
 ....
 Example shows 'rtp+ecn' ice-option SDP line from <<RFC6679>>:
@@ -629,7 +629,7 @@ a=ice-options:rtp+ecn
 [[sec-keepalive]]
 == Keepalives
 
-All the ICE agents MUST follow the procedures defined in section 9 of <<ICE-BIS>> for sending keepalives.
+All the ICE agents MUST follow the procedures defined in section 10 of <<ICE-BIS>> for sending keepalives.
 The keepalives MUST be sent regardless of whether the media stream is currently inactive, sendonly, recvonly, or sendrecv, and regardless of the presence or value of the bandwidth attribute.
 An agent can determine that its peer supports ICE by the presence of a=candidate attributes for each media session.
 
@@ -646,12 +646,12 @@ Furthermore, in very unusual cases, the default candidates in the updated offer/
 
 ==== Procedures for All Implementations
 
-section 9.1.3 of <<ICE-BIS>> defines procedures for sending media common across Full and Lite implementations.
+Section 11.1.3 of <<ICE-BIS>> defines procedures for sending media common across Full and Lite implementations.
 
 [[sec-recv_media]]
 === Receiving Media
 
-See section 9.2 of <<ICE-BIS>> for procedures on receiving media.
+See section 11.2 of <<ICE-BIS>> for procedures on receiving media.
 
 == SIP Considerations
 
@@ -760,7 +760,7 @@ It is RECOMMENDED that ICE be used in realizing the dual-stack use-cases in agen
 
 During the gathering phase of ICE (section 4.1.1 <<ICE-BIS>>) and while ICE is performing connectivity checks (section 6 <<ICE-BIS>>), an agent sends STUN and TURN transactions.
 These transactions are paced at a rate of one every Ta milliseconds, and utilize a specific RTO.
-See Section 12 of <<ICE-BIS>> for details on how the values of Ta and RTO are computed with a real-time media stream of known maximum bandwidth to rate-control the ICE exchanges.
+See Section 13 of <<ICE-BIS>> for details on how the values of Ta and RTO are computed with a real-time media stream of known maximum bandwidth to rate-control the ICE exchanges.
 
 == Security Considerations
 
@@ -942,7 +942,7 @@ Because aggregation rules depend on the specifics of each option, all new ICE op
 The aggregation rule for this ICE option is that if all aggregated media using ICE contain a media-level "rtp+ecn" ICE option then an "rtp+ecn" ICE option MUST be inserted at the session-level.
 If one of the media does not contain the option, then it MUST NOT be inserted at the session-level.
 
-Section 7 of <<ICE-BIS>> defines "ice2" ICE option.
+Section 9 of <<ICE-BIS>> defines "ice2" ICE option.
 Since "ice2" is a session level ICE option, no aggregation rules apply.
 
 A registration request MUST include the following information:
@@ -962,7 +962,7 @@ Some of the text in this document was taken from <<RFC6336>>, authored by Magnus
 Thanks to Thomas Stach for the text in <<sec-answer-subsequent>>, Roman Shpount for suggesting RTCP candidate handling in <<sec-encoding>> and Simon Perreault for advising on IPV6 address selection when candidate-address includes FQDN.
 
 Thanks to following experts for their reviews and constructive feedback: Christer Holmberg,
-Adam Roach.
+Adam Roach and the MMUSIC WG.
 
 [bibliography]
 == Normative References

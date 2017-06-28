@@ -666,7 +666,7 @@
 </h1>
 <p id="rfc.section.4.1.1.1.p.1">A candidate is said to be default if it would be the target of media from a non-ICE peer; that target is called the DEFAULT DESTINATION. If the default candidates are not selected by the ICE algorithm when communicating with an ICE-aware peer, an updated offer/answer will be required after ICE processing completes in order to "fix up" the SDP so that the default destination for media matches the candidates selected by ICE. If ICE happens to select the default candidates, no updated offer/answer is required.  </p>
 <p id="rfc.section.4.1.1.1.p.2">An agent MUST choose a set of candidates, one for each component of each in-use media stream, to be default. A media stream is in-use if it does not have a port of zero (which is used in RFC 3264 to reject a media stream). Consequently, a media stream is in-use even if it is marked as a=inactive <a href="#RFC4566" class="xref">[RFC4566]</a> or has a bandwidth value of zero.  </p>
-<p id="rfc.section.4.1.1.1.p.3">An ageny may choose any type of the candidate as the default, if the chosen candidates increases the likelihood of success with the peer that is being contacted if ICE is not being used.  </p>
+<p id="rfc.section.4.1.1.1.p.3">An agent may choose any type of the candidate as the default, if the chosen candidates increases the likelihood of success with the peer that is being contacted if ICE is not being used.  </p>
 <p id="rfc.section.4.1.1.1.p.4">It is RECOMMENDED that default candidates be chosen based on the likelihood of those candidates to work with the peer that is being contacted if ICE is not being used. Many factors may influence such a decision in a given agent. In scenarios where the agent is fully aware of its peer&#8217;s location and can reach the peer directly, choosing the host candidates as the default may well be sufficient. If the network configuration under which the agents operates is static and known beforehand, either the host or the server reflexives candidates can serve as the default candidates (depending on if a given agent is behind NAT and their reachability). If the agent is completely unaware of the peer&#8217;s location or no assumptions can be made of network characteristics and the connectivity, the relayed candidates might be the only option as the default candidate. Having the decision of choosing the default candidate as a configurable option in the implementations might provide agents the flexibility to take into account the aforementioned criteria. Barring such configuration flexibility, it is RECOMMENDED that the default candidates be the relayed candidates (if relayed candidates are available), server reflexive candidates (if server reflexive candidates are available), and finally host candidates.  </p>
 <h1 id="rfc.section.4.1.1.2">
 <a href="#rfc.section.4.1.1.2">4.1.1.2.</a> <a href="#sec-encoding" id="sec-encoding">Encoding the SDP</a>
@@ -676,7 +676,7 @@
 <p id="rfc.section.4.1.1.2.p.3">There will be a candidate attribute for each candidate for a particular source stream.  <a href="#sec-grammar" class="xref">Section 5</a> provides detailed rules for constructing this attribute.  </p>
 <p id="rfc.section.4.1.1.2.p.4">STUN connectivity checks between agents are authenticated using the short-term credential mechanism defined for STUN <a href="#RFC5389" class="xref">[RFC5389]</a>.  This mechanism relies on a username and password that are exchanged through protocol machinery between the client and server.  The username fragment and password are exchanged in the ice-ufrag and ice-pwd attributes, respectively.  </p>
 <p id="rfc.section.4.1.1.2.p.5">If an agent is a lite implementation, it MUST include an "a=ice-lite" session-level attribute in its SDP to indicate this.  If an agent is a full implementation, it MUST NOT include this attribute.  </p>
-<p id="rfc.section.4.1.1.2.p.6">Section 7 of <a href="#ICE-BIS" class="xref">[ICE-BIS]</a> defines a new ICE option, 'ice2'.  This option is used by ICE Agents to indicate their compliancy with <a href="#ICE-BIS" class="xref">[ICE-BIS]</a> specification as compared to the <a href="#RFC5245" class="xref">[RFC5245]</a>.  If the Offering agent is a <a href="#ICE-BIS" class="xref">[ICE-BIS]</a> compliant implementation, a session level ICE option to indicate the same (via the "a=ice-options:ice2" SDP line) MUST be included.  </p>
+<p id="rfc.section.4.1.1.2.p.6">Section 9 of <a href="#ICE-BIS" class="xref">[ICE-BIS]</a> defines a new ICE option, 'ice2'.  This option is used by ICE Agents to indicate their compliancy with <a href="#ICE-BIS" class="xref">[ICE-BIS]</a> specification as compared to the <a href="#RFC5245" class="xref">[RFC5245]</a>.  If the Offering agent is a <a href="#ICE-BIS" class="xref">[ICE-BIS]</a> compliant implementation, a session level ICE option to indicate the same (via the "a=ice-options:ice2" SDP line) MUST be included.  </p>
 <p id="rfc.section.4.1.1.2.p.7">The default candidates are added to the SDP as the default destination for media.  For source streams based on RTP, this is done by placing the IP address and port of the RTP candidate into the "c=" and "m=" lines, respectively.  If the agent is utilizing RTCP and if RTCP candidate is present and is not equal to the same address and the next higher port number of the RTP candidate, the agent MUST encode the RTCP candidate using the a=rtcp attribute as defined in <a href="#RFC3605" class="xref">[RFC3605]</a>.  If RTCP is not in use, the agent MUST signal that using b=RS:0 and b=RR:0 as defined in <a href="#RFC3556" class="xref">[RFC3556]</a></p>
 <p id="rfc.section.4.1.1.2.p.8">The transport addresses that will be the default destination for media when communicating with non-ICE peers MUST also be present as candidates in one or more a=candidate lines.  </p>
 <p id="rfc.section.4.1.1.2.p.9">ICE provides for extensibility by allowing an offer or answer to contain a series of tokens that identify the ICE extensions used by that agent.  If an agent supports an ICE extension, it MUST include the token defined for that extension in the ice-options attribute.  </p>
@@ -698,10 +698,10 @@ a=candidate:1 1 UDP 2130706431 10.0.1.1 8998 typ host
 a=candidate:2 1 UDP 1694498815 192.0.2.3 45664 typ srflx raddr
  10.0.1.1 rport 8998
 </pre>
-<p id="rfc.section.4.1.1.2.p.11">Once an agent has sent its offer or its answer, that agent MUST be prepared to receive both STUN and media packets on each candidate.  As discussed in section 9.1 of <a href="#ICE-BIS" class="xref">[ICE-BIS]</a>, media packets can be sent to a candidate prior to its appearance as the default destination for media in an offer or answer.  </p>
+<p id="rfc.section.4.1.1.2.p.11">Once an agent has sent its offer or its answer, that agent MUST be prepared to receive both STUN and media packets on each candidate.  As discussed in section 11.1 of <a href="#ICE-BIS" class="xref">[ICE-BIS]</a>, media packets can be sent to a candidate prior to its appearance as the default destination for media in an offer or answer.  </p>
 <h1 id="rfc.section.4.1.2">
 <a href="#rfc.section.4.1.2">4.1.2.</a> Receiving the Initial Offer</h1>
-<p id="rfc.section.4.1.2.p.1">On receiving the offer, the answerer verifies the support for ICE (section 5.1.1 of <a href="#ICE-BIS" class="xref">[ICE-BIS]</a>), determines its role (section 5.1.2 of <a href="#ICE-BIS" class="xref">[ICE-BIS]</a>), gathers candidates (section 4 of <a href="#ICE-BIS" class="xref">[ICE-BIS]</a>), encodes the candidates in an SDP answer and sends it to its peer, the offerer.  The answerer shall then follow the steps defined in sections 5.1.3 and 5.1.4 of <a href="#ICE-BIS" class="xref">[ICE-BIS]</a> to schedule the ICE connectivity checks.  </p>
+<p id="rfc.section.4.1.2.p.1">On receiving the offer, the answerer verifies the support for ICE (section 4.4 of <a href="#ICE-BIS" class="xref">[ICE-BIS]</a>), determines its role (section 5.1.1 of <a href="#ICE-BIS" class="xref">[ICE-BIS]</a>), gathers candidates (section 4 of <a href="#ICE-BIS" class="xref">[ICE-BIS]</a>), encodes the candidates in an SDP answer and sends it to its peer, the offerer.  The answerer shall then follow the steps defined in sections 5.1.3 and 5.1.4 of <a href="#ICE-BIS" class="xref">[ICE-BIS]</a> to schedule the ICE connectivity checks.  </p>
 <p id="rfc.section.4.1.2.p.2">The below sub-sections provide additional requirements associated with the processing of the offerer&#8217;s SDP pertaining to this specification.  </p>
 <h1 id="rfc.section.4.1.2.1">
 <a href="#rfc.section.4.1.2.1">4.1.2.1.</a> ICE Option "ice2" considerations</h1>
@@ -717,7 +717,7 @@ a=candidate:2 1 UDP 1694498815 192.0.2.3 45664 typ srflx raddr
 <p></p>
 
 <ol>
-<li>The agent MUST follow the rules of section 8 of <a href="#ICE-BIS" class="xref">[ICE-BIS]</a>, which describe keepalive procedures for all agents.  </li>
+<li>The agent MUST follow the rules of section 10 of <a href="#ICE-BIS" class="xref">[ICE-BIS]</a>, which describe keepalive procedures for all agents.  </li>
 <li>If the agent is not proceeding with ICE because there were a=candidate attributes, but none that matched the default destination of the media stream, the agent MUST include an a=ice-mismatch attribute in its answer.  </li>
 <li>If the default candidates were relayed candidates learned through a TURN server, the agent MUST create permissions in the TURN server for the IP addresses learned from its peer in the SDP it just received.  If this is not done, initial packets in the media stream from the peer may be lost.  </li>
 </ol>
@@ -725,20 +725,20 @@ a=candidate:2 1 UDP 1694498815 192.0.2.3 45664 typ srflx raddr
 <p> </p>
 <h1 id="rfc.section.4.1.2.4">
 <a href="#rfc.section.4.1.2.4">4.1.2.4.</a> Determining Role</h1>
-<p id="rfc.section.4.1.2.4.p.1">In unusual cases, described in <a href="#sec-glare" class="xref">Appendix C</a>, it is possible for both agents to mistakenly believe they are controlled or controlling.  To resolve this, each agent MUST select a random number, called the tie-breaker, uniformly distributed between 0 and (2**64) - 1 (that is, a 64-bit positive integer).  This number is used in connectivity checks to detect and repair this case, as described in section 6.1.2.3 of <a href="#ICE-BIS" class="xref">[ICE-BIS]</a>.  </p>
+<p id="rfc.section.4.1.2.4.p.1">In unusual cases, described in <a href="#sec-glare" class="xref">Appendix C</a>, it is possible for both agents to mistakenly believe they are controlled or controlling.  To resolve this, each agent MUST select a random number, called the tie-breaker, uniformly distributed between 0 and (2**64) - 1 (that is, a 64-bit positive integer).  This number is used in connectivity checks to detect and repair this case, as described in section 6.1.3 of <a href="#ICE-BIS" class="xref">[ICE-BIS]</a>.  </p>
 <h1 id="rfc.section.4.1.3">
 <a href="#rfc.section.4.1.3">4.1.3.</a> Receipt of the Initial Answer</h1>
-<p id="rfc.section.4.1.3.p.1">On receiving the SDP answer,the offerer performs steps similar to answerer&#8217;s processing of the offer.  The offerer verifies the answerer&#8217;s ICE support determines, its role, and processes the answerer&#8217;s candidates to schedule the connectivity checks (section 6 of <a href="#ICE-BIS" class="xref">[ICE-BIS]</a>).  </p>
+<p id="rfc.section.4.1.3.p.1">On receiving the SDP answer, the offerer performs steps similar to answerer&#8217;s processing of the offer.  The offerer verifies the answerer&#8217;s ICE support determines, its role, and processes the answerer&#8217;s candidates to schedule the connectivity checks (section 6 of <a href="#ICE-BIS" class="xref">[ICE-BIS]</a>).  </p>
 <p id="rfc.section.4.1.3.p.2">If the offerer had included the "ice2" ICE Option in the offer and the SDP answer also includes a similar session level ICE option, then the peers are <a href="#ICE-BIS" class="xref">[ICE-BIS]</a> compliant implementations.  On the other hand, if the SDP Answer lacks such a ICE option, the offerer defaults to the procedures that are backward compatible with the <a href="#RFC5245" class="xref">[RFC5245]</a> specification.  </p>
 <h1 id="rfc.section.4.1.3.1">
 <a href="#rfc.section.4.1.3.1">4.1.3.1.</a> <a href="#sec-overify" id="sec-overify">Verifying ICE Support</a>
 </h1>
-<p id="rfc.section.4.1.3.1.p.1">The logic at the offerer is identical to that of the answerer as described in section 5.1.1 of <a href="#ICE-BIS" class="xref">[ICE-BIS]</a>, with the exception that an offerer would not ever generate a=ice-mismatch attributes in an SDP.  </p>
+<p id="rfc.section.4.1.3.1.p.1">The logic at the offerer is identical to that of the answerer as described in section 4.4 of <a href="#ICE-BIS" class="xref">[ICE-BIS]</a>, with the exception that an offerer would not ever generate a=ice-mismatch attributes in an SDP.  </p>
 <p id="rfc.section.4.1.3.1.p.2">In some cases, the answer may omit a=candidate attributes for the media streams, and instead include an a=ice-mismatch attribute for one or more of the media streams in the SDP.  This signals to the offerer that the answerer supports ICE, but that ICE processing was not used for the session because a signaling intermediary modified the default destination for media components without modifying the corresponding candidate attributes.  See <a href="#sec-alg-sip" class="xref">Section 11.2.2</a> for a discussion of cases where this can happen.  This specification provides no guidance on how an agent should proceed in such a failure case.  </p>
 <h1 id="rfc.section.4.1.4">
 <a href="#rfc.section.4.1.4">4.1.4.</a> <a href="#sec-connectivity_check" id="sec-connectivity_check">Performing Connectivity Checks</a>
 </h1>
-<p id="rfc.section.4.1.4.p.1">The possibility for role conflicts described in section 6.1.3.1.1 of <a href="#ICE-BIS" class="xref">[ICE-BIS]</a> applies to this usage and hence all full agents MUST implement the role conflict repairing mechanism.  Also both full and lite agents MUST utilize the ICE-CONTROLLED and ICE-CONTROLLING attributes as described in section 6.1.2.3 of <a href="#ICE-BIS" class="xref">[ICE-BIS]</a>.  </p>
+<p id="rfc.section.4.1.4.p.1">The possibility for role conflicts described in section 6.3.1.1 of <a href="#ICE-BIS" class="xref">[ICE-BIS]</a> applies to this usage and hence all full agents MUST implement the role conflict repairing mechanism.  Also both full and lite agents MUST utilize the ICE-CONTROLLED and ICE-CONTROLLING attributes as described in section 6.1.3 of <a href="#ICE-BIS" class="xref">[ICE-BIS]</a>.  </p>
 <h1 id="rfc.section.4.1.5">
 <a href="#rfc.section.4.1.5">4.1.5.</a> <a href="#sec-conclude" id="sec-conclude">Concluding ICE</a>
 </h1>
@@ -756,7 +756,7 @@ a=candidate:2 1 UDP 1694498815 192.0.2.3 45664 typ srflx raddr
 <h1 id="rfc.section.4.2.1.1.1">
 <a href="#rfc.section.4.2.1.1.1">4.2.1.1.1.</a> <a href="#sec-suboffer-restarts" id="sec-suboffer-restarts">ICE Restarts</a>
 </h1>
-<p id="rfc.section.4.2.1.1.1.p.1">An agent MAY restart ICE processing for an existing media stream as defined in section 6.3 of <a href="#ICE-BIS" class="xref">[ICE-BIS]</a>.  </p>
+<p id="rfc.section.4.2.1.1.1.p.1">An agent MAY restart ICE processing for an existing media stream as defined in section 8 of <a href="#ICE-BIS" class="xref">[ICE-BIS]</a>.  </p>
 <p id="rfc.section.4.2.1.1.1.p.2">The rules governing the ICE restart imply that setting the IP address in the "c=" line to 0.0.0.0 will cause an ICE restart.  Consequently, ICE implementations MUST NOT utilize this mechanism for call hold, and instead MUST use a=inactive and a=sendonly as described in <a href="#RFC3264" class="xref">[RFC3264]</a>.  </p>
 <p id="rfc.section.4.2.1.1.1.p.3">To restart ICE, an agent MUST change both the ice-pwd and the ice-ufrag for the media stream in an offer.  Note that it is permissible to use a session-level attribute in one offer, but to provide the same ice-pwd or ice-ufrag as a media-level attribute in a subsequent offer.  This is not a change in password, just a change in its representation, and does not cause an ICE restart.  </p>
 <p id="rfc.section.4.2.1.1.1.p.4">An agent sets the rest of the fields in the SDP for this media stream as it would in an initial offer of this media stream (see <a href="#sec-encoding" class="xref">Section 4.1.1.2</a>).  Consequently, the set of candidates MAY include some, none, or all of the previous candidates for that stream and MAY include a totally new set of candidates.  </p>
@@ -866,7 +866,7 @@ a=candidate:2 1 UDP 1694498815 192.0.2.3 45664 typ srflx raddr
 
 <p> </p>
 <p id="rfc.section.4.2.2.3.p.3">It then places those candidates into the Valid list for the media stream.  The state of ICE processing for that media stream is set to Completed.  </p>
-<p id="rfc.section.4.2.2.3.p.4">Furthermore, if the agent believed it was controlling, but the offer contained the remote-candidates attribute, both agents believe they are controlling.  In this case, both would have sent updated offers around the same time.  However, the signaling protocol carrying the offer/answer exchanges will have resolved this glare condition, so that one agent is always the 'winner' by having its offer received before its peer has sent an offer.  The winner takes the role of controlling, so that the loser (the answerer under consideration in this section) MUST change its role to controlled.  Consequently, if the agent was going to send an updated offer since, based on the rules in section 6.2 of <a href="#ICE-BIS" class="xref">[ICE-BIS]</a>, it was controlling, it no longer needs to.  </p>
+<p id="rfc.section.4.2.2.3.p.4">Furthermore, if the agent believed it was controlling, but the offer contained the remote-candidates attribute, both agents believe they are controlling.  In this case, both would have sent updated offers around the same time.  However, the signaling protocol carrying the offer/answer exchanges will have resolved this glare condition, so that one agent is always the 'winner' by having its offer received before its peer has sent an offer.  The winner takes the role of controlling, so that the loser (the answerer under consideration in this section) MUST change its role to controlled.  Consequently, if the agent was going to send an updated offer since, based on the rules in section 7.2 of <a href="#ICE-BIS" class="xref">[ICE-BIS]</a>, it was controlling, it no longer needs to.  </p>
 <p id="rfc.section.4.2.2.3.p.5">Besides the potential role change, change in the Valid list, and state changes, the construction of the answer is performed identically to the construction of an offer as described in <a href="#sec-sub-lite" class="xref">Section 4.2.1.3</a>.  </p>
 <h1 id="rfc.section.4.2.3">
 <a href="#rfc.section.4.2.3">4.2.3.</a> <a href="#sec-answer-subsequent" id="sec-answer-subsequent">Receiving the Answer for a Subsequent Offer</a>
@@ -888,10 +888,10 @@ a=candidate:2 1 UDP 1694498815 192.0.2.3 45664 typ srflx raddr
 <a href="#rfc.section.4.2.4.1">4.2.4.1.</a> Procedures for Full Implementations</h1>
 <h1 id="rfc.section.4.2.4.1.1">
 <a href="#rfc.section.4.2.4.1.1">4.2.4.1.1.</a> ICE Restarts</h1>
-<p id="rfc.section.4.2.4.1.1.p.1">The agent MUST remember the highest-priority nominated pairs in the Valid list for each component of the media stream, called the previous selected pairs, prior to the restart.  The agent will continue to send media using these pairs, as described in <a href="#sec-send_media" class="xref">Section 7.1</a>.  Once these destinations are noted, the agent MUST flush the valid and check lists, and then recompute the check list and its states as described in section 5.1.3 of <a href="#ICE-BIS" class="xref">[ICE-BIS]</a>.  </p>
+<p id="rfc.section.4.2.4.1.1.p.1">The agent MUST remember the highest-priority nominated pairs in the Valid list for each component of the media stream, called the previous selected pairs, prior to the restart.  The agent will continue to send media using these pairs, as described in <a href="#sec-send_media" class="xref">Section 7.1</a>.  Once these destinations are noted, the agent MUST flush the valid and check lists, and then recompute the check list and its states as described in section 5.1.2 of <a href="#ICE-BIS" class="xref">[ICE-BIS]</a>.  </p>
 <h1 id="rfc.section.4.2.4.1.2">
 <a href="#rfc.section.4.2.4.1.2">4.2.4.1.2.</a> New Media Stream</h1>
-<p id="rfc.section.4.2.4.1.2.p.1">If the offer/answer exchange added a new media stream, the agent MUST create a new check list for it (and an empty Valid list to start of course), as described in section 5.1.3 of <a href="#ICE-BIS" class="xref">[ICE-BIS]</a>.  </p>
+<p id="rfc.section.4.2.4.1.2.p.1">If the offer/answer exchange added a new media stream, the agent MUST create a new check list for it (and an empty Valid list to start of course), as described in section 5.1.2 of <a href="#ICE-BIS" class="xref">[ICE-BIS]</a>.  </p>
 <h1 id="rfc.section.4.2.4.1.3">
 <a href="#rfc.section.4.2.4.1.3">4.2.4.1.3.</a> Removed Media Stream</h1>
 <p id="rfc.section.4.2.4.1.3.p.1">If the offer/answer exchange removed a media stream, or an answer rejected an offered media stream, an agent MUST flush the Valid list for that media stream.  It MUST terminate any STUN transactions in progress for that media stream.  An agent MUST remove the check list for that media stream and cancel any pending ordinary checks for it.  </p>
@@ -899,8 +899,8 @@ a=candidate:2 1 UDP 1694498815 192.0.2.3 45664 typ srflx raddr
 <a href="#rfc.section.4.2.4.1.4">4.2.4.1.4.</a> <a href="#sec-updating-continuing" id="sec-updating-continuing">ICE Continuing for Existing Media Stream</a>
 </h1>
 <p id="rfc.section.4.2.4.1.4.p.1">The valid list is not affected by an updated offer/answer exchange unless ICE is restarting.  </p>
-<p id="rfc.section.4.2.4.1.4.p.2">If an agent is in the Running state for that media stream, the check list is updated (the check list is irrelevant if the state is completed). To do that, the agent recomputes the check list using the procedures described in section 5.1.3 of <a href="#ICE-BIS" class="xref">[ICE-BIS]</a>. If a pair on the new check list was also on the previous check list, and its state was Waiting, In-Progress, Succeeded, or Failed, its state is copied over. Otherwise, its state is set to Frozen.  </p>
-<p id="rfc.section.4.2.4.1.4.p.3">If none of the check lists are active (meaning that the pairs in each check list are Frozen), the full-mode agent follows steps in Section 5.1.3.6 of <a href="#ICE-BIS" class="xref">[ICE-BIS]</a> to place appropriate candidates in the Waiting state to further continue ICE processing.  </p>
+<p id="rfc.section.4.2.4.1.4.p.2">If an agent is in the Running state for that media stream, the check list is updated (the check list is irrelevant if the state is completed). To do that, the agent recomputes the check list using the procedures described in section 5.1.2 of <a href="#ICE-BIS" class="xref">[ICE-BIS]</a>. If a pair on the new check list was also on the previous check list, and its state was Waiting, In-Progress, Succeeded, or Failed, its state is copied over. Otherwise, its state is set to Frozen.  </p>
+<p id="rfc.section.4.2.4.1.4.p.3">If none of the check lists are active (meaning that the pairs in each check list are Frozen), the full-mode agent follows steps in Section 5.1.2.6 of <a href="#ICE-BIS" class="xref">[ICE-BIS]</a> to place appropriate candidates in the Waiting state to further continue ICE processing.  </p>
 <h1 id="rfc.section.4.2.4.2">
 <a href="#rfc.section.4.2.4.2">4.2.4.2.</a> Procedures for Lite Implementations</h1>
 <p id="rfc.section.4.2.4.2.p.1">If ICE is restarting for a media stream, the agent MUST start a new Valid list for that media stream.  It MUST remember the pairs in the previous Valid list for each component of the media stream, called the previous selected pairs, and continue to send media there as described in <a href="#sec-send_media" class="xref">Section 7.1</a>.  The state of ICE processing for each media stream MUST change to Running, and the state of ICE processing MUST change to Running.  </p>
@@ -948,10 +948,10 @@ ice-char              = ALPHA / DIGIT / "+" / "/"
 <dt>&lt;transport&gt;:</dt>
 <dd style="margin-left: 8">indicates the transport protocol for the candidate.  This specification only defines UDP.  However, extensibility is provided to allow for future transport protocols to be used with ICE, such as the Datagram Congestion Control Protocol (DCCP) <a href="#RFC4340" class="xref">[RFC4340]</a>.  </dd>
 <dt>&lt;foundation&gt;:</dt>
-<dd style="margin-left: 8">is composed of 1 to 32 &lt;ice-char&gt;s.  It is an identifier that is equivalent for two candidates that are of the same type, share the same base, and come from the same STUN server.  The foundation is used to optimize ICE performance in the Frozen algorithm as described in section 5.1.3 of <a href="#ICE-BIS" class="xref">[ICE-BIS]</a>
+<dd style="margin-left: 8">is composed of 1 to 32 &lt;ice-char&gt;s.  It is an identifier that is equivalent for two candidates that are of the same type, share the same base, and come from the same STUN server.  The foundation is used to optimize ICE performance in the Frozen algorithm as described in section 5.1.2 of <a href="#ICE-BIS" class="xref">[ICE-BIS]</a>
 </dd>
 <dt>&lt;component-id&gt;:</dt>
-<dd style="margin-left: 8">is a positive integer between 1 and 256 that identifies the specific component of the media stream for which this is a candidate.  It MUST start at 1 and MUST increment by 1 for each component of a particular candidate. For media streams based on RTP, candidates for the actual RTP media MUST have a component ID of 1, and candidates for RTCP MUST have a component ID of 2.  See section 10 in <a href="#ICE-BIS" class="xref">[ICE-BIS]</a> for additional discussion on extending ICE to new media streams.  </dd>
+<dd style="margin-left: 8">is a positive integer between 1 and 256 that identifies the specific component of the media stream for which this is a candidate.  It MUST start at 1 and MUST increment by 1 for each component of a particular candidate. For media streams based on RTP, candidates for the actual RTP media MUST have a component ID of 1, and candidates for RTCP MUST have a component ID of 2.  See section 12 in <a href="#ICE-BIS" class="xref">[ICE-BIS]</a> for additional discussion on extending ICE to new media streams.  </dd>
 <dt>&lt;priority&gt;:</dt>
 <dd style="margin-left: 8">is a positive integer between 1 and (2**31 - 1). The procedures for computing candidate&#8217;s priority is described in section 4.1.2 of <a href="#ICE-BIS" class="xref">[ICE-BIS]</a>.  </dd>
 <dt>&lt;cand-type&gt;:</dt>
@@ -1012,7 +1012,7 @@ a=ice-ufrag:8hhY
 </pre>
 <h1 id="rfc.section.5.5">
 <a href="#rfc.section.5.5">5.5.</a> "ice-pacing" Attribute</h1>
-<p id="rfc.section.5.5.p.1">The "ice-pacing" attribute indicates the desired connectivity check pacing, in milliseconds, for this agent (see section 11 of <a href="#ICE-BIS" class="xref">[ICE-BIS]</a>).  The syntax is: </p>
+<p id="rfc.section.5.5.p.1">The "ice-pacing" attribute indicates the desired connectivity check pacing, in milliseconds, for this agent (see section 13 of <a href="#ICE-BIS" class="xref">[ICE-BIS]</a>).  The syntax is: </p>
 <pre>
 ice-pacing-att            = "ice-pacing:" pacing-value
 pacing-value              = 1*10DIGIT
@@ -1031,7 +1031,7 @@ ice-options           = "ice-options:" ice-option-tag
                           0*(SP ice-option-tag)
 ice-option-tag        = 1*ice-char
 </pre>
-<p id="rfc.section.5.6.p.2">The existence of an ice-option in an offer indicates that a certain extension is supported by the agent and is willing to use it if the peer agent also includes the same extension in the answer. There might be further extension specific negotiations needed between the agents that determine how the extensions gets used in a given session.  </p>
+<p id="rfc.section.5.6.p.2">The existence of an ice-option in an offer indicates that a certain extension is supported by the agent and is willing to use it, if the peer agent also includes the same extension in the answer. There might be further extension specific negotiations needed between the agents that determine how the extensions gets used in a given session. The details of the negotiation procedures, if present, MUST be defined by the specification defining the extension.  </p>
 <pre>
 Example shows 'rtp+ecn' ice-option SDP line from &lt;&lt;RFC6679&gt;&gt;:
 
@@ -1040,7 +1040,7 @@ a=ice-options:rtp+ecn
 <h1 id="rfc.section.6">
 <a href="#rfc.section.6">6.</a> <a href="#sec-keepalive" id="sec-keepalive">Keepalives</a>
 </h1>
-<p id="rfc.section.6.p.1">All the ICE agents MUST follow the procedures defined in section 9 of <a href="#ICE-BIS" class="xref">[ICE-BIS]</a> for sending keepalives.  The keepalives MUST be sent regardless of whether the media stream is currently inactive, sendonly, recvonly, or sendrecv, and regardless of the presence or value of the bandwidth attribute.  An agent can determine that its peer supports ICE by the presence of a=candidate attributes for each media session.  </p>
+<p id="rfc.section.6.p.1">All the ICE agents MUST follow the procedures defined in section 10 of <a href="#ICE-BIS" class="xref">[ICE-BIS]</a> for sending keepalives.  The keepalives MUST be sent regardless of whether the media stream is currently inactive, sendonly, recvonly, or sendrecv, and regardless of the presence or value of the bandwidth attribute.  An agent can determine that its peer supports ICE by the presence of a=candidate attributes for each media session.  </p>
 <h1 id="rfc.section.7">
 <a href="#rfc.section.7">7.</a> Media Handling</h1>
 <h1 id="rfc.section.7.1">
@@ -1049,11 +1049,11 @@ a=ice-options:rtp+ecn
 <p id="rfc.section.7.1.p.1">The selected pair for a component of a media stream might not equal the default pair for that same component from the most recent offer/answer exchange.  When this happens, the selected pair is used for media, not the default pair.  When ICE first completes, if the selected pairs aren&#8217;t a match for the default pairs, the controlling agent sends an updated offer/answer exchange to remedy this disparity.  However, until that updated offer arrives, there will not be a match.  Furthermore, in very unusual cases, the default candidates in the updated offer/answer will not be a match.  </p>
 <h1 id="rfc.section.7.1.1">
 <a href="#rfc.section.7.1.1">7.1.1.</a> Procedures for All Implementations</h1>
-<p id="rfc.section.7.1.1.p.1">section 9.1.3 of <a href="#ICE-BIS" class="xref">[ICE-BIS]</a> defines procedures for sending media common across Full and Lite implementations.  </p>
+<p id="rfc.section.7.1.1.p.1">Section 11.1.3 of <a href="#ICE-BIS" class="xref">[ICE-BIS]</a> defines procedures for sending media common across Full and Lite implementations.  </p>
 <h1 id="rfc.section.7.2">
 <a href="#rfc.section.7.2">7.2.</a> <a href="#sec-recv_media" id="sec-recv_media">Receiving Media</a>
 </h1>
-<p id="rfc.section.7.2.p.1">See section 9.2 of <a href="#ICE-BIS" class="xref">[ICE-BIS]</a> for procedures on receiving media.  </p>
+<p id="rfc.section.7.2.p.1">See section 11.2 of <a href="#ICE-BIS" class="xref">[ICE-BIS]</a> for procedures on receiving media.  </p>
 <h1 id="rfc.section.8">
 <a href="#rfc.section.8">8.</a> SIP Considerations</h1>
 <p id="rfc.section.8.p.1">Note that ICE is not intended for NAT traversal for SIP, which is assumed to be provided via another mechanism <a href="#RFC5626" class="xref">[RFC5626]</a>.  </p>
@@ -1099,7 +1099,7 @@ a=ice-options:rtp+ecn
 <p id="rfc.section.9.p.2">It is RECOMMENDED that ICE be used in realizing the dual-stack use-cases in agents that support ICE.  </p>
 <h1 id="rfc.section.10">
 <a href="#rfc.section.10">10.</a> Setting Ta and RTO for RTP Media Streams</h1>
-<p id="rfc.section.10.p.1">During the gathering phase of ICE (section 4.1.1 <a href="#ICE-BIS" class="xref">[ICE-BIS]</a>) and while ICE is performing connectivity checks (section 6 <a href="#ICE-BIS" class="xref">[ICE-BIS]</a>), an agent sends STUN and TURN transactions.  These transactions are paced at a rate of one every Ta milliseconds, and utilize a specific RTO.  See Section 12 of <a href="#ICE-BIS" class="xref">[ICE-BIS]</a> for details on how the values of Ta and RTO are computed with a real-time media stream of known maximum bandwidth to rate-control the ICE exchanges.  </p>
+<p id="rfc.section.10.p.1">During the gathering phase of ICE (section 4.1.1 <a href="#ICE-BIS" class="xref">[ICE-BIS]</a>) and while ICE is performing connectivity checks (section 6 <a href="#ICE-BIS" class="xref">[ICE-BIS]</a>), an agent sends STUN and TURN transactions.  These transactions are paced at a rate of one every Ta milliseconds, and utilize a specific RTO.  See Section 13 of <a href="#ICE-BIS" class="xref">[ICE-BIS]</a> for details on how the values of Ta and RTO are computed with a real-time media stream of known maximum bandwidth to rate-control the ICE exchanges.  </p>
 <h1 id="rfc.section.11">
 <a href="#rfc.section.11">11.</a> Security Considerations</h1>
 <h1 id="rfc.section.11.1">
@@ -1323,7 +1323,7 @@ a=ice-options:rtp+ecn
 <p id="rfc.section.12.2.p.2">ICE options are of unlimited length according to the syntax in <a href="#sec-ice-options" class="xref">Section 5.6</a>; however, they are RECOMMENDED to be no longer than 20 characters.  This is to reduce message sizes and allow for efficient parsing.  </p>
 <p id="rfc.section.12.2.p.3">In <a href="#RFC5245" class="xref">[RFC5245]</a> ICE options could only be defined at the session level.  ICE options can now also be defined at the media level.  This can be used when aggregating between different ICE agents in the same endpoint, but future options may require to be defined at the media-level.  To ensure compatibility with legacy implementation, the media-level ICE options MUST be aggregated into a session-level ICE option.  Because aggregation rules depend on the specifics of each option, all new ICE options MUST also define in their specification how the media-level ICE option values are aggregated to generate the value of the session-level ICE option.  </p>
 <p><a href="#RFC6679" class="xref">[RFC6679]</a> defines the "rtp+ecn" ICE option.  The aggregation rule for this ICE option is that if all aggregated media using ICE contain a media-level "rtp+ecn" ICE option then an "rtp+ecn" ICE option MUST be inserted at the session-level.  If one of the media does not contain the option, then it MUST NOT be inserted at the session-level.  </p>
-<p id="rfc.section.12.2.p.5">Section 7 of <a href="#ICE-BIS" class="xref">[ICE-BIS]</a> defines "ice2" ICE option.  Since "ice2" is a session level ICE option, no aggregation rules apply.  </p>
+<p id="rfc.section.12.2.p.5">Section 9 of <a href="#ICE-BIS" class="xref">[ICE-BIS]</a> defines "ice2" ICE option.  Since "ice2" is a session level ICE option, no aggregation rules apply.  </p>
 <p id="rfc.section.12.2.p.6">A registration request MUST include the following information: </p>
 <p></p>
 
@@ -1341,7 +1341,7 @@ a=ice-options:rtp+ecn
 <p id="rfc.section.13.p.1">A large part of the text in this document was taken from <a href="#RFC5245" class="xref">[RFC5245]</a>, authored by Jonathan Rosenberg.  </p>
 <p id="rfc.section.13.p.2">Some of the text in this document was taken from <a href="#RFC6336" class="xref">[RFC6336]</a>, authored by Magnus Westerlund and Colin Perkins.  </p>
 <p id="rfc.section.13.p.3">Thanks to Thomas Stach for the text in <a href="#sec-answer-subsequent" class="xref">Section 4.2.3</a>, Roman Shpount for suggesting RTCP candidate handling in <a href="#sec-encoding" class="xref">Section 4.1.1.2</a> and Simon Perreault for advising on IPV6 address selection when candidate-address includes FQDN.  </p>
-<p id="rfc.section.13.p.4">Thanks to following experts for their reviews and constructive feedback: Christer Holmberg, Adam Roach.  </p>
+<p id="rfc.section.13.p.4">Thanks to following experts for their reviews and constructive feedback: Christer Holmberg, Adam Roach and the MMUSIC WG.  </p>
 <h1 id="rfc.references">
 <a href="#rfc.references">14.</a> References</h1>
 <h1 id="rfc.references.1">
