@@ -1,6 +1,6 @@
 = Session Description Protocol (SDP) Offer/Answer procedures for Interactive Connectivity Establishment (ICE)
 Marc Petit-Huguenin <marc@petit-huguenin.org>; Ari Keranen <ari.keranen@ericsson.com>; Suhas Nandakumar <snandaku@cisco.com>
-13, 2017-06-28: draft-ietf-mmusic-ice-sip-sdp
+14, 2017-09-17: draft-ietf-mmusic-ice-sip-sdp
 :backend: rfc
 :abbrev: ICE SDP Usage
 :rfc-obsoletes: 5245
@@ -47,14 +47,36 @@ The offerer shall follow the procedures defined in section 4 of <<ICE-BIS>> to g
 [[sec-inuse]]
 ===== Choosing Default Candidates
 
-A candidate is said to be default if it would be the target of media from a non-ICE peer; that target is called the DEFAULT DESTINATION. If the default candidates are not selected by the ICE algorithm when communicating with an ICE-aware peer, an updated offer/answer will be required after ICE processing completes in order to "fix up" the SDP so that the default destination for media matches the candidates selected by ICE. If ICE happens to select the default candidates, no updated offer/answer is required.
+A candidate is said to be default if it would be the target of media from a non-ICE peer; 
+that target is called the DEFAULT DESTINATION. An agent MUST choose a set of candidates, 
+one for each component of each in-use media stream, to be default. A media stream is 
+in-use if it does not have a port of zero (which is used in RFC 3264 to reject a media stream).
+ Consequently, a media stream is in-use even if it is marked as a=inactive <<RFC4566>> or 
+ has a bandwidth value of zero.
 
-An agent MUST choose a set of candidates, one for each component of each in-use media stream, to be default. A media stream is in-use if it does not have a port of zero (which is used in RFC 3264 to reject a media stream). Consequently, a media stream is in-use even if it is marked as a=inactive <<RFC4566>> or has a bandwidth value of zero.
+An agent may choose any type of the candidate as the default, if the chosen candidates increases 
+the likelihood of success with the peer that is being contacted if ICE is not being used. It 
+is recommended that, when multiple candidates are used, UDP based candidates SHOULD be included 
+wherever possible and default candidate SHOULD be chosen from one of those UDP candidates.  
+The proto value MUST match the transport protocol associated with the default candidate.  
+If UDP transport is used for the default candidate, the 'proto' value MUST include UDP and 
+the 'proto' value MUST be TCP when the transport is TCP for the default candidate.
 
-
-An agent may choose any type of the candidate as the default, if the chosen candidates increases the likelihood of success with the peer that is being contacted if ICE is not being used. 
-
-It is RECOMMENDED that default candidates be chosen based on the likelihood of those candidates to work with the peer that is being contacted if ICE is not being used. Many factors may influence such a decision in a given agent. In scenarios where the agent is fully aware of its peer's location and can reach the peer directly, choosing the host candidates as the default may well be sufficient. If the network configuration under which the agents operates is static and known beforehand, either the host or the server reflexives candidates can serve as the default candidates (depending on if a given agent is behind NAT and their reachability). If the agent is completely unaware of the peer's location or no assumptions can be made of network characteristics and the connectivity, the relayed candidates might be the only option as the default candidate. Having the decision of choosing the default candidate as a configurable option in the implementations might provide agents the flexibility to take into account the aforementioned criteria. Barring such configuration flexibility, it is RECOMMENDED that the default candidates be the relayed candidates (if relayed candidates are available), server reflexive candidates (if server reflexive candidates are available), and finally host candidates.
+Since it is RECOMMENDED that default candidates be chosen based on the likelihood of those 
+candidates to work with the peer that is being contacted if ICE is not being used. Many factors 
+may influence such a decision in a given agent. In scenarios where the agent is fully aware of 
+its peer's location and can reach the peer directly, choosing the host candidates as the default 
+may well be sufficient. If the network configuration under which the agents operates is static 
+and known beforehand, either the host or the server reflexives candidates can serve as the 
+default candidates (depending on if a given agent is behind NAT and their reachability). 
+If the agent is completely unaware of the peer's location or no assumptions can be made of 
+network characteristics and the connectivity, the relayed candidates might be the only option 
+as the default candidate. Having the decision of choosing the default candidate as a configurable 
+option in the implementations might provide agents the flexibility to take into account the 
+aforementioned criteria. Barring such configuration flexibility, it is RECOMMENDED that the 
+default candidates be the relayed candidates (if relayed candidates are available), 
+server reflexive candidates (if server reflexive candidates are available), and finally 
+host candidates.
 
 [[sec-encoding]]
 ===== Encoding the SDP
@@ -174,17 +196,21 @@ Also both full and lite agents MUST utilize the ICE-CONTROLLED and ICE-CONTROLLI
 [[sec-conclude]]
 ==== Concluding ICE
 
-Once the state of each check list is Completed, If an agent is controlling, it examines the highest-priority nominated candidate pair for each component of each media stream.
-If any of those candidate pairs differ from the default candidate pairs in the most recent offer/answer exchange, the controlling agent MUST generate an updated offer as described in <<sec-subsequent>>.
+Once the state of each check list is Completed, If an agent is controlling, it examines the highest-priority 
+nominated candidate pair for each component of each media stream. If any of those candidate pairs differ 
+from the default candidate pairs in the most recent offer/answer exchange, the controlling agent MUST 
+generate an updated offer as described in <<sec-subsequent>>.
+
+However, If the support for 'ice2' ICE Option is in use, the highest-priority nominated candidate is noted 
+and sent in the subsequent offer/answer exchange as the default candidate and no updated offer is needed 
+to fix the default candidate.
 
 
 [[sec-subsequent]]
 === Subsequent Offer/Answer Exchanges
 
-Either agent MAY generate a subsequent offer at any time allowed by <<RFC3264>>.
-The rules in <<sec-conclude>> will cause the controlling agent to send an updated offer at the conclusion of ICE processing when ICE has selected different candidate
-pairs from the default pairs.
-This section defines rules for construction of subsequent offers and answers.
+Either agent MAY generate a subsequent offer at any time allowed by <<RFC3264>>. This section 
+defines rules for construction of subsequent offers and answers.
 
 Should a subsequent offer fail, ICE processing continues as if the subsequent offer had never been made.
 
@@ -207,7 +233,6 @@ This is not a change in password, just a change in its representation, and does 
 
 An agent sets the rest of the fields in the SDP for this media stream as it would in an initial offer of this media stream (see <<sec-encoding>>).
 Consequently, the set of candidates MAY include some, none, or all of the previous candidates for that stream and MAY include a totally new set of candidates.
-// TODO: gathered as described in <<sec-gathering>>
 
 ====== Removing a Media Stream
 
@@ -241,8 +266,8 @@ As with initial offers, there MUST be a set of candidate attributes in the offer
 
 If an agent generates an updated offer including a media stream that was previously established, and for which ICE checks are in the Completed state, the agent follows the procedures defined here.
 
-The default destination for media (i.e., the values of the IP addresses and ports in the "m=" and "c=" lines used for that media stream) MUST be the local candidate from the highest-priority nominated pair in the valid list for each component.
-This "fixes" the default destination for media to equal the destination ICE has selected for media.
+The default destination for media (i.e., the values of the IP addresses and ports in the "m=" and "c=" lines used for 
+that media stream) MUST be the local candidate from the highest-priority nominated pair in the valid list for each component.
 
 The agent MUST include candidate attributes for candidates matching the default destination for each component of the media stream, and MUST NOT include any other candidates.
 
