@@ -64,6 +64,7 @@ set of candidates <<ICE-BIS>>, the candidate exchange with the peer agent begins
 
 === Generic Procedures
 
+[[sec-encoding]]
 ==== Encoding
 
 ===== Data Streams
@@ -270,7 +271,7 @@ a candidate pair for a data stream, the agent MUST NOT nominate another pair
 for that data stream during the lifetime of the ICE session.
 
 
-=== Subsequent Offer/Answer Exchange
+=== Subsequent Offer/Answer Exchanges
 
 Either agent MAY generate a subsequent offer at any time allowed by
 <<RFC3264>>. This section defines rules for construction of subsequent 
@@ -282,15 +283,55 @@ subsequent offer had never been made.
 [[sec-send-subsequent-offer]]
 ==== Sending Subsequent Offer
 
+===== Procedures for All Implementations
+
+[[sec-suboffer-restarts]]
+====== ICE Restarts
+
+An agent MAY restart ICE processing for an existing data stream <<ICE-BIS>>.
+
+The rules governing the ICE restart imply that setting the IP address in the 
+"c=" line to 0.0.0.0 will cause an ICE restart.
+Consequently, ICE implementations MUST NOT utilize this mechanism for call hold, 
+and instead MUST use a=inactive and a=sendonly as described in <<RFC3264>>.
+
+To restart ICE, an agent MUST change both the ice-pwd and the ice-ufrag for 
+the data stream in an offer. Note that it is permissible to use a session-level 
+attribute in one offer, but to provide the same ice-pwd or ice-ufrag as a 
+media-level attribute in a subsequent offer. This is not a change in password, 
+just a change in its representation, and does not cause an ICE restart.
+
+An agent sets the rest of the fields in the SDP for this data stream as it 
+would in an initial offer of this media stream (see <<sec-encoding>>).
+Consequently, the set of candidates MAY include some, none, or all of the 
+previous candidates for that data stream and MAY include a totally new set of 
+candidates.
+
+====== Removing a Data Stream
+
+If an agent removes a data stream by setting its port to zero, it MUST NOT 
+include any candidate attributes for that data stream and SHOULD NOT include 
+any other ICE-related attributes defined in <<sec-grammar>> for that media stream.
+
+====== Adding a Data Stream
+
+If an agent wishes to add a new data stream, it sets the fields in the SDP for 
+this data stream as if this was an initial offer for that data stream 
+(see <<sec-encoding>>). This will cause ICE processing to begin for this data stream.
+
+===== Procedures for Full Implementations
+
+This section describes additional procedures for full implementations, 
+covering existing media streams.
+
 ===== Before Nomination
 
 When an offerer sends a subsequent offer, each "m=" section for which a 
 candidate pair has not yet been nominated, the offer MUST include the 
 same set of ICE-related information that the offerer included in the 
 previous offer or answer. The agent MAY include additional candidates 
-it did not offer previously (see section 4.2.4.1.1), but which it has 
-gathered since the last offer/ answer exchange, including peer 
-reflexive candidates.
+it did not offer previously, but which it has  gathered since the last 
+offer/ answer exchange, including peer reflexive candidates.
 
 The agent MAY change the default destination for media. As with initial 
 offers, there MUST be a set of candidate attributes in the offer matching 
@@ -309,16 +350,40 @@ candidates in the subsequent offer.
 
 
 In addition, if the agent is controlling, it MUST include the 
-a=remote-candidates attribute for each media stream whose check list 
+a=remote-candidates attribute for each data stream whose check list 
 is in the Completed state.  The attribute contains the remote candidates 
-from the highest-priority nominated pair in the valid list for each 
-component of that media stream.  It is needed to avoid a race condition 
+corresponding to the nominated pair in the valid list for each 
+component of that data stream.  It is needed to avoid a race condition 
 whereby the controlling agent chooses its pairs, but the updated offer 
 beats the connectivity checks to the controlled agent, which doesn't 
 even know these pairs are valid, let alone selected.  See Appendix B 
 for elaboration on this race condition.
 
+===== Procedures for Lite Implementations
 
+If the ICE state is running, a lite implementation MUST include all of 
+its candidates for each component of each data stream in a=candidate 
+attribute in any subsequent offer. The candidates are formed identical 
+to the procedures for initial offers.
+
+A lite implementation MUST NOT add additional host candidates or change
+username fragments, password in a subsequent offer. Otherwsise, it 
+MUST restart ICE.
+
+If ICE has completed for a data stream and if the agent is controlled, 
+the default destination for that data stream MUST be set to the 
+remote candidate of the candidate pair for that component in the valid list.
+For a lite implementation, there is always just a single candidate pair in 
+the valid list for each component of a data stream. Additionally, the agent 
+MUST include a candidate attribute for each default destination.
+
+If ICE state is completed and if the agent is controlling (which only 
+happens when both agents are lite), the agent MUST include the 
+a=remote-candidates attribute for each data stream.  The attribute 
+contains the remote candidates from the candidate pairs in the 
+valid list (one pair for each component of each data stream).
+
+[[sec-subsequent-answer]]
 ==== Sending Subsequent Answer
 
 If ICE is Completed for a data stream, and the offer for that data 
@@ -327,7 +392,7 @@ of the answer are identical to those for the offerer, except that the
 answerer MUST NOT include the a=remote-candidates attribute in the answer.
 
 A controlled agent will receive an offer with the a=remote-candidates 
-attribute for a media stream when its peer has concluded ICE processing 
+attribute for a data stream when its peer has concluded ICE processing 
 for that media stream.  This attribute is present in the 
 offer to deal with a race condition between the receipt of the offer, 
 and the receipt of the Binding Response that tells the answerer the 
@@ -335,15 +400,15 @@ candidate that will be selected by ICE.  See Appendix B for an
 explanation of this race condition.  Consequently, processing of an 
 offer with this attribute depends on the winner of the race.
 
-The agent forms a candidate pair for each component of the media stream by:
+The agent forms a candidate pair for each component of the data stream by:
 
    - Setting the remote candidate equal to the offerer's default
-      destination for that component (e.g., the contents of the "m=" and
-      "c=" lines for RTP, and the a=rtcp attribute for RTCP)
+   destination for that component (e.g., the contents of the "m=" and
+   "c=" lines for RTP, and the a=rtcp attribute for RTCP)
 
    - Setting the local candidate equal to the transport address for
-      that same component in the a=remote-candidates attribute in the
-      offer.
+   that same component in the a=remote-candidates attribute in the
+   offer.
 
 The agent then sees if each of these candidate pairs is present 
 in the valid list.  If a particular pair is not in the valid list, 
@@ -353,15 +418,15 @@ The agent finds all the pairs in the check list whose remote
 candidates equal the remote candidate in the losing pair:
 
    - If none of the pairs are In-Progress, and at least one is Failed,
-      it is most likely that a network failure, such as a network
-      partition or serious packet loss, has occurred.  The agent SHOULD
-      generate an answer for this media stream as if the remote-
-      candidates attribute had not been present, and then restart ICE
-      for this stream.
+   it is most likely that a network failure, such as a network
+   partition or serious packet loss, has occurred.  The agent SHOULD
+   generate an answer for this data stream as if the remote-
+   candidates attribute had not been present, and then restart ICE
+   for this stream.
 
    - If at least one of the pairs is In-Progress, the agent SHOULD wait
-      for those checks to complete, and as each completes, redo the
-      processing in this section until there are no losing pairs.
+   for those checks to complete, and as each completes, redo the
+   processing in this section until there are no losing pairs.
 
 Once there are no losing pairs, the agent can generate the answer. 
 It MUST set the default destination for media to the candidates in
@@ -382,6 +447,40 @@ candidates that were used in the previous ICE session, but
 it MUST change the SDP ice-pwd and ice-ufrag attribute 
 values.
 
+===== Lite Implementation specific procedures
+
+If the received offer contains the remote-candidates attribute for a 
+media stream, the agent forms a candidate pair for each component of the 
+media stream by:
+
+- Setting the remote candidate equal to the offerer's default destination 
+for that component (e.g., the contents of the "m=" and "c=" lines for RTP, 
+and the a=rtcp attribute for RTCP).
+
+- Setting the local candidate equal to the transport address for that same 
+component in the a=remote-candidates attribute in the offer.
+
+The state of ICE processing for that media stream is set to Completed.
+
+Furthermore, if the agent believed it was controlling, but the offer contained 
+the a=remote-candidates attribute, both agents believe they are controlling.
+In this case, both would have sent updated offers around the same time.
+
+However, the signaling protocol carrying the offer/answer exchanges 
+will have resolved this glare condition, so that one agent is always 
+the 'winner' by having its offer received before its peer has sent 
+an offer. The winner takes the role of controlling, so that the 
+loser (the answerer under consideration in this section) MUST 
+change its role to controlled.
+
+Consequently, if the agent was going to send an updated offer since, 
+based on the rules in section 8.2 of <<ICE-BIS>>, it was controlling, 
+it no longer needs to.
+
+Besides the potential role change, change in the Valid list, and 
+state changes, the construction of the answer is performed identically to 
+the construction of an offer.
+
 
 ==== Receiving Answer for a Subsequent Offer
 
@@ -391,9 +490,9 @@ There may be certain situations where the offerer might receive
 SDP answer that lacks ICE candidates although the initial answer 
 did. One example of such an "unexpected" answer might be
 experienced appears when such a B2BUA introduces a media server
-during call hold using 3rd party call-control procedures.  Omitting
+during call hold using 3rd party call-control procedures. Omitting
 further details how this is done this could result in an answer being
-received at the holding UA that was constructed by the B2BUA.  With
+received at the holding UA that was constructed by the B2BUA. With
 the B2BUA being ICE-unaware, that answer would not include ICE
 candidates.
 
@@ -426,10 +525,11 @@ offer performs on of the following actions:
 	procedures in <<ICE-BIS>>> are performed to move candidate(s) 
 	to the Waiting state to further continue ICE processing.
 
-	- If ICE state is completed and the SDP answer conforms to TODO, 
-	the agent MUST reman in the ICE completed state.
+	- If ICE state is completed and the SDP answer conforms to 
+   <<sec-subsequent-answer>>, the agent MUST reman in the ICE 
+   completed state.
 
-However, the ICE support is no longer indicated in the SDP answer, 
+However, if the ICE support is no longer indicated in the SDP answer, 
 the agent MUST fall-back to <<RFC3264>> procedures and SHOULD NOT 
 drop the dialog because of the missing ICE support or unexpected answer. 
 Once the agent sends a new offer later on, it MUST perform an ICE restart.
@@ -439,7 +539,7 @@ Once the agent sends a new offer later on, it MUST perform an ICE restart.
 
 The agent MUST remember the nominated pair in the Valid list for each 
 component of the data stream, called the previous selected pair prior 
-to the restart.The agent will continue to send media using this pair, 
+to the restart. The agent will continue to send media using this pair, 
 as described in <<sec-send_media>>. Once these destinations are noted, 
 the agent MUST flush the valid and check lists, and then recompute the 
 check list and its states triggering the ICE Candidte Processing 
@@ -460,7 +560,11 @@ change to Running
 [[sec-grammar]]
 == Grammar
 
-This specification defines eight new SDP attributes -- the "candidate", "remote-candidates", "ice-lite", "ice-mismatch", "ice-ufrag", "ice-pwd", "ice-pacing", and "ice-options" attributes. This section also provides non-normative examples of the attributes defined.
+This specification defines eight new SDP attributes -- the "candidate", 
+"remote-candidates", "ice-lite", "ice-mismatch", "ice-ufrag", "ice-pwd", "ice-pacing", 
+and "ice-options" attributes. 
+
+This section also provides non-normative examples of the attributes defined.
 
 The syntax for the attributes follow Augmented BNF as defined in <<RFC5234>>.
 
