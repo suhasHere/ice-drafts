@@ -73,61 +73,61 @@ Each data stream <<ICE-BIS>> is represented by an SDP media description ("m=" se
 ===== Candidates
 
 With in a "m=" section, each candidate (including the default candidate) associated
- with the data stream is represented by an SDP candidate attribute.
+with the data stream is represented by an SDP candidate attribute. <<sec-grammar>> 
+provides detailed rules for constructing this attribute.
+
 
 Prior to nomination, the "c=" line associated with an "m=" section contains 
 the IP address of the default candidate, while the "m=" line contains the port 
 and transport corresponding to the default candidate.
 
 After nomination, the "c=" line for a given  "m=" section contains the IP address
- of the nominated candidate (the local candidate of the nominated candidate pair) 
- associated with that "m=" section and the "m=" line contains the port and transport 
- corresponding to the nominated candidate.
+of the nominated candidate (the local candidate of the nominated candidate pair) 
+associated with that "m=" section and the "m=" line contains the port and transport 
+corresponding to the nominated candidate.
 
 ===== Username and Password
 
 The ICE username is represented by an SDP ice-ufrag attribute and the ICE 
-password is represented by an
-SDP ice-pwd attribute.
+password is represented by an SDP ice-pwd attribute.
 
 ===== Lite Implementations
 
 An ICE lite implementaton <<ICE-BIS>> MUST include an SDP ice-lite attribute. 
-A full implementation MUST NOT
-include that attribute.
+A full implementation MUST NOT include that attribute.
 
 
 ===== ICE Extensions
 
-An agent uses the SDP ice-options to indicate support of ICE extensions.
+An agent uses the SDP ice-options attribute to indicate support of ICE extensions.
 
 An agent compliant to this specification MUST include an SDP ice-options 
 attribute with an "ice2" attribute value. If an agent receives an SDP offer 
 or answer that does not include the attribute value, the agent assumes that 
-the peer is compliant to RFC 5245.
+the peer is compliant to <<RFC5245>>.
 
 
 ===== Inactive and Disabled Data Streams
 
-If an "m="" section is marked as inactive <<RFC4566>>, or has a bandwidth 
-value of zero <<RFC4566>>, the agent MUST still include ICE related SDP attributes, 
-according to the procedures in the previous sections.
+If an "m=" section is marked as inactive <<RFC4566>>, or has a bandwidth 
+value of zero <<RFC4566>>, the agent MUST still include ICE related SDP attributes.
 
-If the port value associated with an "m="" section is set to zero, the agent 
-SHOULD not include ICE related SDP candidate attributes in that "m="" section, 
-unless an SDP extension specifying otherwise is used. 
+If the port value associated with an "m=" section is set to zero (implying a 
+disabled stream), the agent SHOULD NOT include ICE related SDP candidate attributes 
+in that "m=" section, unless an SDP extension specifying otherwise is used. 
 
 
 ==== RTP/RTCP Considerations
 
 If an agent utilizes both RTP and RTCP, the agent MUST include SDP candidate
 attributes for both the RTP and RTCP components in the "m=" section associated
- with the RTP stream.
+with the RTP stream.
 
 If an agent uses separate ports for RTP and RTCP, the agent MUST include an 
-SDP rtcp attribute in the "m=" section associated with the RTP stream, as 
-described in <<RFC3605>>.  In the cases where the port number for the RTCP 
-is one higher than the RTP port, the SDP rtcp attribute MUST not be included.
+SDP rtcp attribute in the "m=" section, as described in <<RFC3605>>. In the cases 
+where the port number for the RTCP is one higher than the RTP port and RTCP component
+address is same as the address of the RTP component, the SDP rtcp attribute MUST 
+not be included.
 
 If the agent does not utilize RTCP, it indicates that by including b=RS:0 
 and b=RR:0 SDP attributes, as described in <<RFC3556>>.
@@ -145,12 +145,12 @@ Once an agent has provided its local candidates to its peer, within an SDP
 offer or answer, the agent MUST be prepared to receive STUN connectivity 
 check Binding requests on those candidates.
 
-
+[[sec-ice-mismatch]]
 ==== ICE Mismatch
 
 The agent will proceed with the ICE procedures defined in <<ICE-BIS>> and 
 this specification if, for each data stream in the SDP it received, the 
-default destination for each component of that media stream appears in
+default destination for each component of that data stream appears in
 a candidate attribute. For example, in the case of RTP, the IP address
 and port in the "c=" and "m=" lines, respectively, appear in a candidate
 attribute and the value in the rtcp attribute appears in a candidate
@@ -166,15 +166,41 @@ describe keepalive procedures for all agents.
 
 . If the agent is not proceeding with ICE because there were 
 a=candidate attributes, but none that matched the default destination 
-of the media stream, the agent MUST include an a=ice-mismatch attribute 
+of the data stream, the agent MUST include an a=ice-mismatch attribute 
 in its answer and may omit a=candidate attributes for such data streams. 
 See Section 11.2.2 for a discussion of cases where this can happen. 
+This specification provides no guidance on how an agent should proceed 
+in such a failure case.
 
 . If the default candidates were relayed candidates learned through a 
 TURN server, the agent MUST create permissions in the TURN server for 
 the IP addresses learned from its peer in the SDP it just received.
 If this is not done, initial packets in the media stream from the peer 
 may be lost.
+
+==== SDP Example
+
+The following is an example SDP message that includes ICE attributes 
+(lines folded for readability):
+
+....
+v=0
+o=jdoe 2890844526 2890842807 IN IP4 10.0.1.1
+s=
+c=IN IP4 192.0.2.3
+t=0 0
+a=ice-options:ice2
+a=ice-pwd:asd88fgpdd777uzjYhagZg
+a=ice-ufrag:8hhY
+m=audio 45664 RTP/AVP 0
+b=RS:0
+b=RR:0
+a=rtpmap:0 PCMU/8000
+a=candidate:1 1 UDP 2130706431 10.0.1.1 8998 typ host
+a=candidate:2 1 UDP 1694498815 192.0.2.3 45664 typ srflx raddr
+ 10.0.1.1 rport 8998
+....
+
 
 === Initial Offer/Answer Exchange
 
@@ -197,7 +223,7 @@ with data streams where ICE is used.
 
 When an answerer receives an initial offer that indicates that the offerer 
 supports ICE, and if the answerer accepts the offer and the usage of ICE, 
-in each "m=" section within the answer, it  MUST include SDP candidate 
+in each "m=" section within the answer, it MUST include SDP candidate 
 attributes for each available candidate associated with the "m=" section. 
 In addition, the answerer MUST include an SDP ice-ufrag and an SDP ice-pwd 
 attribute in the answer.
@@ -206,10 +232,11 @@ Once the answerer has sent the answer, it can start performing connectivity
 checks towards the peer candidates that were provided in the offer.
 
 If the offer does not indicate support of ICE, or if the answerer detects
-a possibility of the ICE mismatch, the answerer MUST NOT accept usage of ICE. 
-If the answerer still accepts the offer, the answerer MUST NOT include any 
-ICE related SDP attributes in the answer. Instead the answerer will generate 
-the answer according to normal offer/answer procedures <<RFC3264>>.
+a possibility of the ICE mismatch (<<sec-ice-mismatch>>), the answerer 
+MUST NOT accept the usage of ICE. If the answerer still accepts the offer, 
+the answerer MUST NOT include any ICE related SDP attributes in the answer. 
+Instead the answerer will generate  the answer according to normal 
+offer/answer procedures <<RFC3264>>.
 
 
 ==== Receiving the Initial Answer
@@ -230,7 +257,7 @@ Once the state of each list is Completed, and the controlling agent nominates a
 candidate pair <<ICE-BIS>>, it checks for each data stream whether the 
 nominated pair matches the default candidate pair. If there are one or more 
 data streams with a match, the controlling agent MUST generate a subsequent 
-offer (TODO Add a reference), in which the IP address, port and transport 
+offer (<<sec-send-subsequent-offer>>), in which the IP address, port and transport 
 in the "c=" and "m=" lines associated with each data stream match the 
 corresponding local information of the nominated pair for that data stream.
 
@@ -252,6 +279,7 @@ offers and answers.
 Should a subsequent offer fail, ICE processing continues as if the 
 subsequent offer had never been made.
 
+[[sec-send-subsequent-offer]]
 ==== Sending Subsequent Offer
 
 ===== Before Nomination

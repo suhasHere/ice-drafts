@@ -10,27 +10,6 @@
 
 	<email>marc@petit-huguenin.org</email>
 </author>
-
-<author>
-	<personname>
-		<firstname>Ari</firstname>
-		<surname>Keranen</surname>
-	</personname>
-
-	<affiliation>
-		<orgname>Ericsson</orgname>
-
-		<address>
-			<street></street>
-			<city>Jorvas</city>
-			<postcode>02420</postcode>
-			<country>Finland</country>
-		</address>
-	</affiliation>
-
-	<email>ari.keranen@ericsson.com</email>
-</author>
-
 <author>
 	<personname>
 		<firstname>Suhas</firstname>
@@ -50,5 +29,24 @@
 	</affiliation>
 
 	<email>snandaku@cisco.com</email>
+</author>
+<author>
+	<personname>
+		<firstname>Ari</firstname>
+		<surname>Keranen</surname>
+	</personname>
+
+	<affiliation>
+		<orgname>Ericsson</orgname>
+
+		<address>
+			<street></street>
+			<city>Jorvas</city>
+			<postcode>02420</postcode>
+			<country>Finland</country>
+		</address>
+	</affiliation>
+
+	<email>ari.keranen@ericsson.com</email>
 </author>
 
