@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="US-ASCII"?>
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 <?rfc toc='yes' ?>
-<rfc category="std" docName="draft-ietf-mmusic-ice-sip-sdp-18" ipr="pre5378Trust200902" obsoletes="5245">
+<rfc category="std" docName="draft-ietf-mmusic-ice-sip-sdp-19" ipr="pre5378Trust200902" obsoletes="5245">
   <front>
     <title abbrev="ICE SDP Usage">Session Description Protocol (SDP) Offer/Answer procedures for Interactive Connectivity Establishment (ICE)</title>
     <author surname="Petit-Huguenin" initials="M.P." fullname="Marc Petit-Huguenin">
@@ -35,7 +35,7 @@
         <email>ari.keranen@ericsson.com</email>
       </address>
     </author>
-    <date day="30" month="March" year="2018"/>
+    <date day="1" month="April" year="2018"/>
     <area>RAI</area>
     <workgroup>MMUSIC</workgroup>
     <abstract>
@@ -141,8 +141,8 @@ extensions.
             <t>
 An agent compliant to this specification MUST include an SDP ice-options
 attribute with an "ice2" attribute value. If an agent receives an SDP offer
-or answer that does not include the attribute value, the agent assumes that
-the peer is compliant to <xref target="RFC5245"/>.
+or answer with ICE attributes but without the "ice2" ice-options attribute value,
+the agent assumes that the peer is compliant to <xref target="RFC5245"/>.
 </t>
           </section>
           <section title="Inactive and Disabled Data Streams">
@@ -185,7 +185,7 @@ using the procedures in <xref target="ICE-BIS"/>.
         </section>
         <section title="STUN Considerations">
           <t>
-Once an agent has provided its local candidates to its peer, within an SDP
+Once an agent has provided its local candidates to its peer in an SDP
 offer or answer, the agent MUST be prepared to receive STUN connectivity
 check Binding requests on those candidates.
 </t>
@@ -217,7 +217,7 @@ describe keepalive procedures for all agents.
 If the agent is not proceeding with ICE because there were
 a=candidate attributes, but none that matched the default destination
 of the data stream, the agent MUST include an a=ice-mismatch attribute
-in its answer and may omit a=candidate attributes for such data streams.
+in its answer and MAY omit a=candidate attributes for such data streams.
 See <xref target="sec-alg-sip"/> for a discussion of cases where this can happen.
 This specification provides no guidance on how an agent should proceed
 in such a failure case.
@@ -327,9 +327,10 @@ implementation dependent and are out of the scope of this specification.
         <section title="Concluding ICE">
           <t>
 Once the state of each check list is Completed, and if the agent is
-the controlling, it nominates a candidate pair <xref target="ICE-BIS"/>, it checks
-for each data stream whether the nominated pair matches the default
-candidate pair. If there are one or more data streams with a match,
+the controlling agent, it nominates a candidate pair <xref target="ICE-BIS"/> and
+checks for each data stream whether the nominated pair matches the default
+candidate pair. If there are one or more data streams with a match, and
+the peer did not indicate support for the 'ice2' ice-option,
 the controlling agent MUST generate a subsequent offer
 (<xref target="sec-send-subsequent-offer"/>), in which the IP address, port and
 transport in the "c=" and "m=" lines associated
@@ -345,7 +346,8 @@ candidate.
           <t>
 Also as described in <xref target="ICE-BIS"/>, once the controlling agent has nominated
 a candidate pair for a data stream, the agent MUST NOT nominate another pair
-for that data stream during the lifetime of the ICE session.
+for that data stream during the lifetime of the ICE session (i.e. until
+ICE is restarted).
 </t>
         </section>
       </section>
@@ -408,7 +410,7 @@ covering existing data streams.
 </t>
             <section title="Before Nomination">
               <t>
-When an offerer sends a subsequent offer, each "m=" section for which a
+When an offerer sends a subsequent offer; in each "m=" section for which a
 candidate pair has not yet been nominated, the offer MUST include the
 same set of ICE-related information that the offerer included in the
 previous offer or answer. The agent MAY include additional candidates
@@ -453,7 +455,7 @@ to the procedures for initial offers.
 </t>
             <t>
 A lite implementation MUST NOT add additional host candidates or change
-username fragments, password in a subsequent offer. Otherwise, it
+username fragments or passwords in a subsequent offer. Otherwise, it
 MUST restart ICE.
 </t>
             <t>
@@ -498,7 +500,7 @@ The agent forms a candidate pair for each component of the data stream by:
             <list style="symbols">
               <t>
 Setting the remote candidate equal to the offerer&#8217;s default
-destination for that component (e.g., the contents of the "m=" and
+destination for that component (i.e. the contents of the "m=" and
 "c=" lines for RTP, and the a=rtcp attribute for RTCP)
 
 </t>
@@ -569,7 +571,7 @@ data stream by:
               <list style="symbols">
                 <t>
 Setting the remote candidate equal to the offerer&#8217;s default destination
-for that component (e.g., the contents of the "m=" and "c=" lines for RTP,
+for that component (i.e., the contents of the "m=" and "c=" lines for RTP,
 and the a=rtcp attribute for RTCP).
 
 </t>
@@ -611,10 +613,10 @@ to the construction of an offer.
         <section title="Receiving Answer for a Subsequent Offer">
           <section title="Procedures for Full Implementations">
             <t>
-There may be certain situations where the offerer might receive
-SDP answer that lacks ICE candidates although the initial answer
+There may be certain situations where the offerer receives
+an SDP answer that lacks ICE candidates although the initial answer
 did. One example of such an "unexpected" answer might be
-happen when a ICE-unaware B2BUA introduces a media server during
+happen when an ICE-unaware B2BUA introduces a media server during
 call hold using 3rd party call-control procedures. Omitting
 further details how this is done, this could result in an answer being
 received at the holding UA that was constructed by the B2BUA. With
@@ -805,7 +807,7 @@ useful for diagnostics and other purposes.
 and relayed candidates. If a candidate is server or peer reflexive, &lt;rel-addr&gt; and
 &lt;rel-port&gt; are equal to the base for that server or peer reflexive candidate. If the
 candidate is relayed, &lt;rel-addr&gt; and &lt;rel-port&gt; are equal to the mapped address in the
-Allocate response that provided the client with that relayed candidate (see section
+Allocate response that provided the client with that relayed candidate (see
 Appendix B.3 of <xref target="ICE-BIS"/> for a discussion of its purpose).
 If the candidate is a host candidate, &lt;rel-addr&gt; and &lt;rel-port&gt; MUST be omitted.
 </t>
@@ -829,8 +831,7 @@ An implementation MUST ignore any name/value pairs it doesn&#8217;t understand.
           <artwork><![CDATA[
 Example: SDP line for UDP server reflexive candidate attribute for the RTP component
 
-a=candidate:2 1 UDP 1694498815 192.0.2.3 45664 typ
-srflx raddr 10.0.1.1 rport 8998
+a=candidate:2 1 UDP 1694498815 192.0.2.3 45664 typ srflx raddr 10.0.1.1 rport 8998
 ]]></artwork>
         </figure>
       </section>
@@ -902,7 +903,7 @@ If two data streams have identical ice-ufrag&#8217;s, they MUST have identical i
 </t>
         <t>
 The ice-ufrag and ice-pwd attributes MUST be chosen randomly at the beginning of
-a session (the same applies when ICE is restarting for an agent.).
+a session (the same applies when ICE is restarting for an agent).
 </t>
         <t>
 The ice-ufrag attribute MUST contain at least 24 bits of randomness, and the ice-pwd
@@ -954,10 +955,6 @@ Also the larger of the ice-pacing attribute values between the offer and
 the answer (determined either by the one provided in the ice-pacing attribute
 or by picking the default value) MUST be considered for a given ICE session.
 </t>
-        <t>
-The mux category <xref target="I-D.ietf-mmusic-sdp-mux-attributes"/> for the
-'ice-pacing' attribute is 'TRANSPORT'.
-</t>
         <figure>
           <artwork><![CDATA[
 Example shows ice-pacing value of 5 ms:
@@ -983,7 +980,7 @@ ice-option-tag        = 1*ice-char
 The existence of an ice-option in an offer indicates that a certain extension
 is supported by the agent and is willing to use it, if the peer agent also includes
 the same extension in the answer. There might be further extension specific
-negotiations needed between the agents that determine how the extensions gets used
+negotiation needed between the agents that determine how the extensions gets used
 in a given session. The details of the negotiation procedures, if present, MUST be
 defined by the specification defining the extension (see <xref target="sec-iana-ice-options"/>).
 </t>
@@ -1236,8 +1233,8 @@ Unfortunately, ICE doesn&#8217;t help if it&#8217;s not used, in which case an a
 However, in environments where the set of clients is known, and is limited to ones that support ICE, the server can reject any offers or answers that don&#8217;t indicate ICE support.
 </t>
           <t>
-User Agents that are not willing to receive non-ICE answers MUST include an "ice" Option Tag in the Require Header Field in their offer.
-Clients that rejects non-ICE offers SHOULD use a 421 response code, together with an Option Tag "ice" in the Require Header Field in the response.
+SIP User Agents (UA) <xref target="RFC3261"/> that are not willing to receive non-ICE answers MUST include an "ice" Option Tag in the SIP Require Header Field in their offer.
+UAs that rejects non-ICE offers SHOULD use a 421 response code, together with an Option Tag "ice" in the Require Header Field in the response.
 </t>
         </section>
         <section anchor="sec-alg-sip" title="Interactions with Application Layer Gateways and SIP">
@@ -1661,6 +1658,9 @@ handling and Simon Perreault for advising on IPV6 address selection when candida
 includes FQDN.
 </t>
       <t>
+Many thanks to Flemming Andreasen for shepherd review feedback.
+</t>
+      <t>
 Thanks to following experts for their reviews and constructive feedback: Christer Holmberg,
 Adam Roach and the MMUSIC WG.
 </t>
@@ -2021,47 +2021,6 @@ ICE can be used by any protocol utilizing the offer/answer model, such as the Se
           </abstract>
         </front>
         <seriesInfo name="RFC" value="6724"/>
-      </reference>
-      <reference anchor="RFC7656" target="http://www.rfc-editor.org/info/rfc7656">
-        <front>
-          <title>A Taxonomy of Semantics and Mechanisms for Real-Time Transport Protocol (RTP) Sources</title>
-          <author initials="J." surname="Lennox" fullname="J. Lennox">
-            <organization/>
-          </author>
-          <author initials="K." surname="Gross" fullname="K. Gross">
-            <organization/>
-          </author>
-          <author initials="S." surname="Nandakumar" fullname="S. Nandakumar">
-            <organization/>
-          </author>
-          <author initials="G." surname="Salgueiro" fullname="G. Salgueiro">
-            <organization/>
-          </author>
-          <author initials="B." surname="Burman" fullname="B. Burman" role="editor">
-            <organization/>
-          </author>
-          <date year="2015" month="November"/>
-          <abstract>
-            <t>The terminology about, and associations among, Real-time Transport Protocol (RTP) sources can be complex and somewhat opaque.  This document describes a number of existing and proposed properties and relationships among RTP sources and defines common terminology for discussing protocol entities and their relationships.</t>
-          </abstract>
-        </front>
-        <seriesInfo name="RFC" value="7656"/>
-        <seriesInfo name="DOI" value="10.17487/RFC7656"/>
-      </reference>
-      <reference anchor="I-D.ietf-mmusic-sdp-mux-attributes" target="http://www.rfc-editor.org/info/rfc7656">
-        <front>
-          <title>A Framework for SDP Attributes when Multiplexing</title>
-          <author initials="S" surname="Nandakumar" fullname="Suhas Nandakumar">
-            <organization/>
-          </author>
-          <date month="February" day="28" year="2018"/>
-          <abstract>
-            <t>
-The purpose of this specification is to provide a framework for analyzing the multiplexing characteristics of Session Description Protocol (SDP) attributes when SDP is used to negotiate the usage of single 5-tuple for sending and receiving media associated with multiple media descriptions. This specification also categorizes the existing SDP attributes based on the framework described herein.
-</t>
-          </abstract>
-        </front>
-        <seriesInfo name="Internet-Draft" value="draft-ietf-mmusic-sdp-mux-attributes-17"/>
       </reference>
     </references>
     <references title="Informative References">
