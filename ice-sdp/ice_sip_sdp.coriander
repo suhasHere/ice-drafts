@@ -1,6 +1,6 @@
 = Session Description Protocol (SDP) Offer/Answer procedures for Interactive Connectivity Establishment (ICE)
 Marc Petit-Huguenin <marc@petit-huguenin.org>; Suhas Nandakumar <snandaku@cisco.com>; Ari Keranen <ari.keranen@ericsson.com>;
-17, 2018-03-26: draft-ietf-mmusic-ice-sip-sdp
+18, 2018-03-30: draft-ietf-mmusic-ice-sip-sdp
 :backend: rfc
 :abbrev: ICE SDP Usage
 :rfc-obsoletes: 5245
@@ -332,7 +332,7 @@ this data stream as if this was an initial offer for that data stream
 This section describes additional procedures for full implementations, 
 covering existing data streams.
 
-===== Before Nomination
+====== Before Nomination
 
 When an offerer sends a subsequent offer, each "m=" section for which a 
 candidate pair has not yet been nominated, the offer MUST include the 
@@ -346,7 +346,7 @@ offers, there MUST be a set of candidate attributes in the offer matching
 this default destination.
 
 
-===== After Nomination
+====== After Nomination
 
 Once a candidate pair has been nominated for a data stream, the IP address, 
 port and transport in each "c=" and "m=" line associated with that data 
@@ -530,7 +530,7 @@ offer performs on of the following actions:
 	Succeeded, or Failed, its state is copied over. Otherwise, its state 
 	is set to Frozen. If none of the check lists are active (meaning 
 	that the pairs in each check list are Frozen), appropriate 
-	procedures in <<ICE-BIS>>> are performed to move candidate(s) 
+	procedures in <<ICE-BIS>> are performed to move candidate(s) 
 	to the Waiting state to further continue ICE processing.
 
 	- If ICE state is completed and the SDP answer conforms to 
@@ -771,8 +771,8 @@ a=ice-ufrag:8hhY
 ....
 === "ice-pacing" Attribute
 
-The "ice-pacing" attribute indicates the desired connectivity check pacing, 
-in milliseconds, for this agent (see section 14 of <<ICE-BIS>>).
+The "ice-pacing" is a session level attribute that indicates the desired connectivity 
+check pacing, in milliseconds, for this agent (see section 14 of <<ICE-BIS>>).
 The syntax is:
 
 ....
@@ -780,19 +780,18 @@ ice-pacing-att            = "ice-pacing:" pacing-value
 pacing-value              = 1*10DIGIT
 ....
 
-Following the procedures defined in <<ICE-BIS>>, a default value of 50 ms
+Following the procedures defined in <<ICE-BIS>>, a default value of 50ms
 is used for an agent when ice-pacing attribute is omitted in the offer or
 the answer. 
 
 The same rule applies for ice-pacing attribute values lower than 
-50ms. This mandates that, if an agent includes ice-pacing attribute,
+50ms. This mandates that, if an agent includes the ice-pacing attribute,
 its value MUST be greater than 50ms or else a value of 50ms
 is considered by default for that agent. 
 
-Also the larger of the ice-pacing attribute value between the offer and
-the answer (determined either via default procedures above or the one provided 
-in a=ice-pacing attribute in the "m=" section) MUST be considered for a 
-given ICE session.
+Also the larger of the ice-pacing attribute values between the offer and
+the answer (determined either by the one provided in the ice-pacing attribute 
+or by picking the default value) MUST be considered for a given ICE session.
 
 The mux category <<I-D.ietf-mmusic-sdp-mux-attributes>> for the
 'ice-pacing' attribute is 'TRANSPORT'.
@@ -1212,7 +1211,7 @@ to the following data:
 
 [horizontal]
 Attribute Name: :: ice-pacing
-Type of Attribute: :: media-level
+Type of Attribute: :: session-level
 Subject to charset: :: No
 Purpose: :: This attribute is used with Interactive Connectivity Establishment (ICE) 
 to indicate desired connectivity check pacing values.
@@ -1269,7 +1268,8 @@ Jonathan Rosenberg.
 Some of the text in this document was taken from <<RFC6336>>, authored by Magnus Westerlund 
 and Colin Perkins.
 
-Many thanks to Christer Holmberg for providing text suggestions in Section 4
+Many thanks to Christer Holmberg for providing text suggestions in Section 4 that aligns
+with <<ICE-BIS>>
 
 Thanks to Thomas Stach for text help, Roman Shpount for suggesting RTCP candidate 
 handling and Simon Perreault for advising on IPV6 address selection when candidate-address 
@@ -1857,3 +1857,18 @@ These include entities performing off-path QoS reservations, NAT traversal compo
 For these tools to continue to function without change, the core property of SDP -- that the existing, pre-ICE definitions of the addresses used for media -- the "m=" and "c=" lines and the rtcp attribute -- must be retained.
 For this reason, an updated offer must be sent.
 
+[appendix]
+== Contributors
+Following experts have contributed a textual and structural suggestions for this work
+
+. Christer Holmberg
+  - Ericsson
+  - Email: christer.holmberg@ericsson.com
+
+
+. Roman Shpount
+  - TurboBridge
+  - rshpount@turbobridge.com
+
+. Thomas Stach
+  - thomass.stach@gmail.com

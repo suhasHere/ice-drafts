@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="US-ASCII"?>
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 <?rfc toc='yes' ?>
-<rfc category="std" docName="draft-ietf-mmusic-ice-sip-sdp-17" ipr="pre5378Trust200902" obsoletes="5245">
+<rfc category="std" docName="draft-ietf-mmusic-ice-sip-sdp-18" ipr="pre5378Trust200902" obsoletes="5245">
   <front>
     <title abbrev="ICE SDP Usage">Session Description Protocol (SDP) Offer/Answer procedures for Interactive Connectivity Establishment (ICE)</title>
     <author surname="Petit-Huguenin" initials="M.P." fullname="Marc Petit-Huguenin">
@@ -35,7 +35,7 @@
         <email>ari.keranen@ericsson.com</email>
       </address>
     </author>
-    <date day="26" month="March" year="2018"/>
+    <date day="30" month="March" year="2018"/>
     <area>RAI</area>
     <workgroup>MMUSIC</workgroup>
     <abstract>
@@ -406,9 +406,8 @@ this data stream as if this was an initial offer for that data stream
 This section describes additional procedures for full implementations,
 covering existing data streams.
 </t>
-          </section>
-          <section title="Before Nomination">
-            <t>
+            <section title="Before Nomination">
+              <t>
 When an offerer sends a subsequent offer, each "m=" section for which a
 candidate pair has not yet been nominated, the offer MUST include the
 same set of ICE-related information that the offerer included in the
@@ -416,14 +415,14 @@ previous offer or answer. The agent MAY include additional candidates
 it did not offer previously, but which it has gathered since the last
 offer/ answer exchange, including peer reflexive candidates.
 </t>
-            <t>
+              <t>
 The agent MAY change the default destination for media. As with initial
 offers, there MUST be a set of candidate attributes in the offer matching
 this default destination.
 </t>
-          </section>
-          <section title="After Nomination">
-            <t>
+            </section>
+            <section title="After Nomination">
+              <t>
 Once a candidate pair has been nominated for a data stream, the IP address,
 port and transport in each "c=" and "m=" line associated with that data
 stream MUST match the data associated with the nominated pair for that
@@ -432,7 +431,7 @@ representing the local candidates of the nominated candidate pair. The
 offerer MUST NOT include any other SDP candidate attributes in the
 subsequent offer.
 </t>
-            <t>
+              <t>
 In addition, if the agent is controlling, it MUST include the
 a=remote-candidates attribute for each data stream whose check list
 is in the completed state. The attribute contains the remote candidates
@@ -443,6 +442,7 @@ beats the connectivity checks to the controlled agent, which doesn&#8217;t
 even know these pairs are valid, let alone selected.  See Appendix B
 for elaboration on this race condition.
 </t>
+            </section>
           </section>
           <section title="Procedures for Lite Implementations">
             <t>
@@ -655,7 +655,7 @@ also on the previous check list, and its state was Waiting, In-Progress,
 Succeeded, or Failed, its state is copied over. Otherwise, its state
 is set to Frozen. If none of the check lists are active (meaning
 that the pairs in each check list are Frozen), appropriate
-procedures in <xref target="ICE-BIS"/>&gt; are performed to move candidate(s)
+procedures in <xref target="ICE-BIS"/> are performed to move candidate(s)
 to the Waiting state to further continue ICE processing.
 
 </t>
@@ -928,8 +928,8 @@ a=ice-ufrag:8hhY
       </section>
       <section title="&quot;ice-pacing&quot; Attribute">
         <t>
-The "ice-pacing" attribute indicates the desired connectivity check pacing,
-in milliseconds, for this agent (see section 14 of <xref target="ICE-BIS"/>).
+The "ice-pacing" is a session level attribute that indicates the desired connectivity
+check pacing, in milliseconds, for this agent (see section 14 of <xref target="ICE-BIS"/>).
 The syntax is:
 </t>
         <figure>
@@ -939,21 +939,20 @@ pacing-value              = 1*10DIGIT
 ]]></artwork>
         </figure>
         <t>
-Following the procedures defined in <xref target="ICE-BIS"/>, a default value of 50 ms
+Following the procedures defined in <xref target="ICE-BIS"/>, a default value of 50ms
 is used for an agent when ice-pacing attribute is omitted in the offer or
 the answer.
 </t>
         <t>
 The same rule applies for ice-pacing attribute values lower than
-50ms. This mandates that, if an agent includes ice-pacing attribute,
+50ms. This mandates that, if an agent includes the ice-pacing attribute,
 its value MUST be greater than 50ms or else a value of 50ms
 is considered by default for that agent.
 </t>
         <t>
-Also the larger of the ice-pacing attribute value between the offer and
-the answer (determined either via default procedures above or the one provided
-in a=ice-pacing attribute in the "m=" section) MUST be considered for a
-given ICE session.
+Also the larger of the ice-pacing attribute values between the offer and
+the answer (determined either by the one provided in the ice-pacing attribute
+or by picking the default value) MUST be considered for a given ICE session.
 </t>
         <t>
 The mux category <xref target="I-D.ietf-mmusic-sdp-mux-attributes"/> for the
@@ -1554,7 +1553,7 @@ to the following data:
 ice-pacing
 </t>
               <t hangText="Type of Attribute:">
-media-level
+session-level
 </t>
               <t hangText="Subject to charset:">
 No
@@ -1654,8 +1653,8 @@ Some of the text in this document was taken from <xref target="RFC6336"/>, autho
 and Colin Perkins.
 </t>
       <t>
-Many thanks to Christer Holmberg for providing text suggestions in Section 4
-</t>
+Many thanks to Christer Holmberg for providing text suggestions in Section 4 that aligns
+with <xref target="ICE-BIS"/></t>
       <t>
 Thanks to Thomas Stach for text help, Roman Shpount for suggesting RTCP candidate
 handling and Simon Perreault for advising on IPV6 address selection when candidate-address
@@ -2328,6 +2327,31 @@ These include entities performing off-path QoS reservations, NAT traversal compo
 For these tools to continue to function without change, the core property of SDP&#8201;&#8212;&#8201;that the existing, pre-ICE definitions of the addresses used for media&#8201;&#8212;&#8201;the "m=" and "c=" lines and the rtcp attribute&#8201;&#8212;&#8201;must be retained.
 For this reason, an updated offer must be sent.
 </t>
+    </section>
+    <section title="Contributors">
+      <t>
+Following experts have contributed a textual and structural suggestions for this work
+</t>
+      <t>
+        <list style="numbers">
+          <t>
+Christer Holmberg
+<list style="symbols"><t>
+Ericsson
+
+</t><t>
+Email: <eref target="mailto:christer.holmberg@ericsson.com">christer.holmberg@ericsson.com</eref></t></list></t>
+          <t>
+Roman Shpount
+<list style="symbols"><t>
+TurboBridge
+
+</t><t><eref target="mailto:rshpount@turbobridge.com">rshpount@turbobridge.com</eref></t></list></t>
+          <t>
+Thomas Stach
+<list style="symbols"><t><eref target="mailto:thomass.stach@gmail.com">thomass.stach@gmail.com</eref></t></list></t>
+        </list>
+      </t>
     </section>
   </back>
 </rfc>

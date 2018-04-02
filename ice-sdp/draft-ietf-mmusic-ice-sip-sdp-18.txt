@@ -6,14 +6,14 @@ MMUSIC                                                 M. Petit-Huguenin
 Internet-Draft                                        Impedance Mismatch
 Obsoletes: 5245 (if approved)                              S. Nandakumar
 Intended status: Standards Track                           Cisco Systems
-Expires: September 27, 2018                                   A. Keranen
+Expires: October 1, 2018                                      A. Keranen
                                                                 Ericsson
-                                                          March 26, 2018
+                                                          March 30, 2018
 
 
      Session Description Protocol (SDP) Offer/Answer procedures for
               Interactive Connectivity Establishment (ICE)
-                    draft-ietf-mmusic-ice-sip-sdp-17
+                    draft-ietf-mmusic-ice-sip-sdp-18
 
 Abstract
 
@@ -36,7 +36,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on September 27, 2018.
+   This Internet-Draft will expire on October 1, 2018.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Petit-Huguenin, et al. Expires September 27, 2018               [Page 1]
+Petit-Huguenin, et al.   Expires October 1, 2018                [Page 1]
 
 Internet-Draft                ICE SDP Usage                   March 2018
 
@@ -76,7 +76,7 @@ Internet-Draft                ICE SDP Usage                   March 2018
 Table of Contents
 
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   3
-   2.  Terminology . . . . . . . . . . . . . . . . . . . . . . . . .   3
+   2.  Terminology . . . . . . . . . . . . . . . . . . . . . . . . .   4
    3.  SDP Offer/Answer Procedures . . . . . . . . . . . . . . . . .   4
      3.1.  Introduction  . . . . . . . . . . . . . . . . . . . . . .   4
      3.2.  Generic Procedures  . . . . . . . . . . . . . . . . . . .   4
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Petit-Huguenin, et al. Expires September 27, 2018               [Page 2]
+Petit-Huguenin, et al.   Expires October 1, 2018                [Page 2]
 
 Internet-Draft                ICE SDP Usage                   March 2018
 
@@ -143,10 +143,11 @@ Internet-Draft                ICE SDP Usage                   March 2018
      12.1.  Normative References . . . . . . . . . . . . . . . . . .  33
      12.2.  Informative References . . . . . . . . . . . . . . . . .  35
      12.3.  URIs . . . . . . . . . . . . . . . . . . . . . . . . . .  36
-   Appendix A.  Examples . . . . . . . . . . . . . . . . . . . . . .  36
+   Appendix A.  Examples . . . . . . . . . . . . . . . . . . . . . .  37
    Appendix B.  The remote-candidates Attribute  . . . . . . . . . .  38
    Appendix C.  Why Is the Conflict Resolution Mechanism Needed? . .  39
    Appendix D.  Why Send an Updated Offer? . . . . . . . . . . . . .  40
+   Appendix E.  Contributors . . . . . . . . . . . . . . . . . . . .  41
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  41
 
 1.  Introduction
@@ -157,19 +158,22 @@ Internet-Draft                ICE SDP Usage                   March 2018
    are common to all usages of ICE and this document gives the
    additional details needed to use ICE with SDP offer/answer.
 
-2.  Terminology
-
-   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
-   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
 
 
 
 
-Petit-Huguenin, et al. Expires September 27, 2018               [Page 3]
+
+
+
+Petit-Huguenin, et al.   Expires October 1, 2018                [Page 3]
 
 Internet-Draft                ICE SDP Usage                   March 2018
 
 
+2.  Terminology
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
    "OPTIONAL" in this document are to be interpreted as described in RFC
    2119 [RFC2119].
 
@@ -211,20 +215,21 @@ Internet-Draft                ICE SDP Usage                   March 2018
    Section 4 provides detailed rules for constructing various SDP
    attributes defined in this specification.
 
+
+
+
+
+
+
+Petit-Huguenin, et al.   Expires October 1, 2018                [Page 4]
+
+Internet-Draft                ICE SDP Usage                   March 2018
+
+
 3.2.1.1.  Data Streams
 
    Each data stream [ICE-BIS] is represented by an SDP media description
    ("m=" section).
-
-
-
-
-
-
-Petit-Huguenin, et al. Expires September 27, 2018               [Page 4]
-
-Internet-Draft                ICE SDP Usage                   March 2018
-
 
 3.2.1.2.  Candidates
 
@@ -250,7 +255,7 @@ Internet-Draft                ICE SDP Usage                   March 2018
 
 3.2.1.4.  Lite Implementations
 
-   An ICE lite implementaton [ICE-BIS] MUST include an SDP ice-lite
+   An ICE lite implementation [ICE-BIS] MUST include an SDP ice-lite
    attribute.  A full implementation MUST NOT include that attribute.
 
 3.2.1.5.  ICE Extensions
@@ -269,18 +274,18 @@ Internet-Draft                ICE SDP Usage                   March 2018
    bandwidth value of zero [RFC4566], the agent MUST still include ICE
    related SDP attributes.
 
+
+
+
+Petit-Huguenin, et al.   Expires October 1, 2018                [Page 5]
+
+Internet-Draft                ICE SDP Usage                   March 2018
+
+
    If the port value associated with an "m=" section is set to zero
    (implying a disabled stream), the agent SHOULD NOT include ICE
    related SDP candidate attributes in that "m=" section, unless an SDP
    extension specifying otherwise is used.
-
-
-
-
-Petit-Huguenin, et al. Expires September 27, 2018               [Page 5]
-
-Internet-Draft                ICE SDP Usage                   March 2018
-
 
 3.2.2.  RTP/RTCP Considerations
 
@@ -325,19 +330,19 @@ Internet-Draft                ICE SDP Usage                   March 2018
    described in the remainder of this specification with the following
    exceptions:
 
+
+
+
+Petit-Huguenin, et al.   Expires October 1, 2018                [Page 6]
+
+Internet-Draft                ICE SDP Usage                   March 2018
+
+
    1.  The agent MUST follow the rules of section 11 of [ICE-BIS], which
        describe keepalive procedures for all agents.
 
    2.  If the agent is not proceeding with ICE because there were
        a=candidate attributes, but none that matched the default
-
-
-
-Petit-Huguenin, et al. Expires September 27, 2018               [Page 6]
-
-Internet-Draft                ICE SDP Usage                   March 2018
-
-
        destination of the data stream, the agent MUST include an a=ice-
        mismatch attribute in its answer and may omit a=candidate
        attributes for such data streams.  See Section 9.2.2 for a
@@ -381,18 +386,18 @@ Internet-Draft                ICE SDP Usage                   March 2018
    associated with the "m=" section.  In addition, the offerer MUST
    include an SDP ice-ufrag and an SDP ice-pwd attribute in the offer.
 
+
+
+
+Petit-Huguenin, et al.   Expires October 1, 2018                [Page 7]
+
+Internet-Draft                ICE SDP Usage                   March 2018
+
+
    Note:  Within the scope of this document, "Initial Offer" refers to
       the first SDP offer that is sent in order to negotiate usage of
       ICE.  It might, or might not, be the initial SDP offer of the SDP
       session.
-
-
-
-
-Petit-Huguenin, et al. Expires September 27, 2018               [Page 7]
-
-Internet-Draft                ICE SDP Usage                   March 2018
-
 
    Note:  The procedures in this document only consider "m=" sections
       associated with data streams where ICE is used.
@@ -437,18 +442,19 @@ Internet-Draft                ICE SDP Usage                   March 2018
    the controlling, it nominates a candidate pair [ICE-BIS], it checks
    for each data stream whether the nominated pair matches the default
    candidate pair.  If there are one or more data streams with a match,
+
+
+
+Petit-Huguenin, et al.   Expires October 1, 2018                [Page 8]
+
+Internet-Draft                ICE SDP Usage                   March 2018
+
+
    the controlling agent MUST generate a subsequent offer
    (Section 3.4.1), in which the IP address, port and transport in the
    "c=" and "m=" lines associated with each data stream match the
    corresponding local information of the nominated pair for that data
    stream.
-
-
-
-Petit-Huguenin, et al. Expires September 27, 2018               [Page 8]
-
-Internet-Draft                ICE SDP Usage                   March 2018
-
 
    However, If the support for 'ice2' ice-option is in use, the
    nominated candidate is noted and sent in the subsequent offer/answer
@@ -491,20 +497,20 @@ Internet-Draft                ICE SDP Usage                   March 2018
    offer.  This is not a change in password, just a change in its
    representation, and does not cause an ICE restart.
 
+
+
+
+
+Petit-Huguenin, et al.   Expires October 1, 2018                [Page 9]
+
+Internet-Draft                ICE SDP Usage                   March 2018
+
+
    An agent sets the rest of the ice related fields in the SDP for this
    data stream as it would in an initial offer of this data stream (see
    Section 3.2.1).  Consequently, the set of candidates MAY include
    some, none, or all of the previous candidates for that data stream
    and MAY include a totally new set of candidates.
-
-
-
-
-
-Petit-Huguenin, et al. Expires September 27, 2018               [Page 9]
-
-Internet-Draft                ICE SDP Usage                   March 2018
-
 
 3.4.1.1.2.  Removing a Data Stream
 
@@ -525,7 +531,7 @@ Internet-Draft                ICE SDP Usage                   March 2018
    This section describes additional procedures for full
    implementations, covering existing data streams.
 
-3.4.1.3.  Before Nomination
+3.4.1.2.1.  Before Nomination
 
    When an offerer sends a subsequent offer, each "m=" section for which
    a candidate pair has not yet been nominated, the offer MUST include
@@ -539,7 +545,7 @@ Internet-Draft                ICE SDP Usage                   March 2018
    initial offers, there MUST be a set of candidate attributes in the
    offer matching this default destination.
 
-3.4.1.4.  After Nomination
+3.4.1.2.2.  After Nomination
 
    Once a candidate pair has been nominated for a data stream, the IP
    address, port and transport in each "c=" and "m=" line associated
@@ -549,25 +555,24 @@ Internet-Draft                ICE SDP Usage                   March 2018
    nominated candidate pair.  The offerer MUST NOT include any other SDP
    candidate attributes in the subsequent offer.
 
+
+
+Petit-Huguenin, et al.   Expires October 1, 2018               [Page 10]
+
+Internet-Draft                ICE SDP Usage                   March 2018
+
+
    In addition, if the agent is controlling, it MUST include the
    a=remote-candidates attribute for each data stream whose check list
    is in the completed state.  The attribute contains the remote
    candidates corresponding to the nominated pair in the valid list for
    each component of that data stream.  It is needed to avoid a race
-
-
-
-Petit-Huguenin, et al. Expires September 27, 2018              [Page 10]
-
-Internet-Draft                ICE SDP Usage                   March 2018
-
-
    condition whereby the controlling agent chooses its pairs, but the
    updated offer beats the connectivity checks to the controlled agent,
    which doesn't even know these pairs are valid, let alone selected.
    See Appendix B for elaboration on this race condition.
 
-3.4.1.5.  Procedures for Lite Implementations
+3.4.1.3.  Procedures for Lite Implementations
 
    If the ICE state is running, a lite implementation MUST include all
    of its candidates for each component of each data stream in
@@ -576,7 +581,7 @@ Internet-Draft                ICE SDP Usage                   March 2018
 
    A lite implementation MUST NOT add additional host candidates or
    change username fragments, password in a subsequent offer.
-   Otherwsise, it MUST restart ICE.
+   Otherwise, it MUST restart ICE.
 
    If ICE has completed for a data stream and if the agent is
    controlled, the default destination for that data stream MUST be set
@@ -605,18 +610,17 @@ Internet-Draft                ICE SDP Usage                   March 2018
    processing for that data stream.  This attribute is present in the
    offer to deal with a race condition between the receipt of the offer,
    and the receipt of the Binding Response that tells the answerer the
-   candidate that will be selected by ICE.  See Appendix B for an
-   explanation of this race condition.  Consequently, processing of an
-   offer with this attribute depends on the winner of the race.
 
 
 
-
-
-Petit-Huguenin, et al. Expires September 27, 2018              [Page 11]
+Petit-Huguenin, et al.   Expires October 1, 2018               [Page 11]
 
 Internet-Draft                ICE SDP Usage                   March 2018
 
+
+   candidate that will be selected by ICE.  See Appendix B for an
+   explanation of this race condition.  Consequently, processing of an
+   offer with this attribute depends on the winner of the race.
 
    The agent forms a candidate pair for each component of the data
    stream by:
@@ -654,25 +658,25 @@ Internet-Draft                ICE SDP Usage                   March 2018
    It MUST include a candidate attribute in the answer for each
    candidate in the remote-candidates attribute in the offer.
 
-3.4.2.1.  Detectng ICE Restart
+3.4.2.1.  Detecting ICE Restart
 
    If the offerer in a subsequent offer requested an ICE restart for a
    data stream, and if the answerer accepts the offer, the answerer
    follows the procedures for generating an initial answer.
 
-   For a given data stream, the answerer MAY include the same candidates
-   that were used in the previous ICE session, but it MUST change the
-   SDP ice-pwd and ice-ufrag attribute values.
 
 
 
 
 
-
-Petit-Huguenin, et al. Expires September 27, 2018              [Page 12]
+Petit-Huguenin, et al.   Expires October 1, 2018               [Page 12]
 
 Internet-Draft                ICE SDP Usage                   March 2018
 
+
+   For a given data stream, the answerer MAY include the same candidates
+   that were used in the previous ICE session, but it MUST change the
+   SDP ice-pwd and ice-ufrag attribute values.
 
 3.4.2.2.  Lite Implementation specific procedures
 
@@ -718,17 +722,18 @@ Internet-Draft                ICE SDP Usage                   March 2018
    answer that lacks ICE candidates although the initial answer did.
    One example of such an "unexpected" answer might be happen when a
    ICE-unaware B2BUA introduces a media server during call hold using
+
+
+
+Petit-Huguenin, et al.   Expires October 1, 2018               [Page 13]
+
+Internet-Draft                ICE SDP Usage                   March 2018
+
+
    3rd party call-control procedures.  Omitting further details how this
    is done, this could result in an answer being received at the holding
    UA that was constructed by the B2BUA.  With the B2BUA being ICE-
    unaware, that answer would not include ICE candidates.
-
-
-
-Petit-Huguenin, et al. Expires September 27, 2018              [Page 13]
-
-Internet-Draft                ICE SDP Usage                   March 2018
-
 
    Receiving an answer without ICE attributes in this situation might be
    unexpected, but would not necessarily impair the user experience.
@@ -755,7 +760,7 @@ Internet-Draft                ICE SDP Usage                   March 2018
       Progress, Succeeded, or Failed, its state is copied over.
       Otherwise, its state is set to Frozen.  If none of the check lists
       are active (meaning that the pairs in each check list are Frozen),
-      apporpriate procedures in [ICE-BIS]> are performed to move
+      appropriate procedures in [ICE-BIS] are performed to move
       candidate(s) to the Waiting state to further continue ICE
       processing.
 
@@ -773,18 +778,18 @@ Internet-Draft                ICE SDP Usage                   March 2018
    The agent MUST remember the nominated pair in the Valid list for each
    component of the data stream, called the previous selected pair prior
    to the restart.  The agent will continue to send media using this
+
+
+
+Petit-Huguenin, et al.   Expires October 1, 2018               [Page 14]
+
+Internet-Draft                ICE SDP Usage                   March 2018
+
+
    pair, as described in section 12 of [ICE-BIS].  Once these
    destinations are noted, the agent MUST flush the valid and check
    lists, and then recompute the check list and its states, thus
    triggering the candidate processing procedures [ICE-BIS]
-
-
-
-
-Petit-Huguenin, et al. Expires September 27, 2018              [Page 14]
-
-Internet-Draft                ICE SDP Usage                   March 2018
-
 
 3.4.3.2.  Procedures for Lite Implementations
 
@@ -832,12 +837,7 @@ Internet-Draft                ICE SDP Usage                   March 2018
 
 
 
-
-
-
-
-
-Petit-Huguenin, et al. Expires September 27, 2018              [Page 15]
+Petit-Huguenin, et al.   Expires October 1, 2018               [Page 15]
 
 Internet-Draft                ICE SDP Usage                   March 2018
 
@@ -893,7 +893,7 @@ Internet-Draft                ICE SDP Usage                   March 2018
 
 
 
-Petit-Huguenin, et al. Expires September 27, 2018              [Page 16]
+Petit-Huguenin, et al.   Expires October 1, 2018               [Page 16]
 
 Internet-Draft                ICE SDP Usage                   March 2018
 
@@ -949,7 +949,7 @@ Internet-Draft                ICE SDP Usage                   March 2018
 
 
 
-Petit-Huguenin, et al. Expires September 27, 2018              [Page 17]
+Petit-Huguenin, et al.   Expires October 1, 2018               [Page 17]
 
 Internet-Draft                ICE SDP Usage                   March 2018
 
@@ -1005,7 +1005,7 @@ srflx raddr 10.0.1.1 rport 8998
 
 
 
-Petit-Huguenin, et al. Expires September 27, 2018              [Page 18]
+Petit-Huguenin, et al.   Expires October 1, 2018               [Page 18]
 
 Internet-Draft                ICE SDP Usage                   March 2018
 
@@ -1061,33 +1061,33 @@ Internet-Draft                ICE SDP Usage                   March 2018
 
 
 
-Petit-Huguenin, et al. Expires September 27, 2018              [Page 19]
+Petit-Huguenin, et al.   Expires October 1, 2018               [Page 19]
 
 Internet-Draft                ICE SDP Usage                   March 2018
 
 
 4.5.  "ice-pacing" Attribute
 
-   The "ice-pacing" attribute indicates the desired connectivity check
-   pacing, in milliseconds, for this agent (see section 14 of
-   [ICE-BIS]).  The syntax is:
+   The "ice-pacing" is a session level attribute that indicates the
+   desired connectivity check pacing, in milliseconds, for this agent
+   (see section 14 of [ICE-BIS]).  The syntax is:
 
    ice-pacing-att            = "ice-pacing:" pacing-value
    pacing-value              = 1*10DIGIT
 
-   Following the procedures defined in [ICE-BIS], a default value of 50
-   ms is used for an agent when ice-pacing attribute is omitted in the
+   Following the procedures defined in [ICE-BIS], a default value of
+   50ms is used for an agent when ice-pacing attribute is omitted in the
    offer or the answer.
 
    The same rule applies for ice-pacing attribute values lower than
-   50ms.  This mandates that, if an agent includes ice-pacing attribute,
-   its value MUST be greater than 50ms or else a value of 50ms is
-   considered by default for that agent.
+   50ms.  This mandates that, if an agent includes the ice-pacing
+   attribute, its value MUST be greater than 50ms or else a value of
+   50ms is considered by default for that agent.
 
-   Also the larger of the ice-pacing attribute value between the offer
-   and the answer (determined either via default procedures above or the
-   one provided in a=ice-pacing attribute in the "m=" section) MUST be
-   considered for a given ICE session.
+   Also the larger of the ice-pacing attribute values between the offer
+   and the answer (determined either by the one provided in the ice-
+   pacing attribute or by picking the default value) MUST be considered
+   for a given ICE session.
 
    The mux category [I-D.ietf-mmusic-sdp-mux-attributes] for the 'ice-
    pacing' attribute is 'TRANSPORT'.
@@ -1117,7 +1117,7 @@ Internet-Draft                ICE SDP Usage                   March 2018
 
 
 
-Petit-Huguenin, et al. Expires September 27, 2018              [Page 20]
+Petit-Huguenin, et al.   Expires October 1, 2018               [Page 20]
 
 Internet-Draft                ICE SDP Usage                   March 2018
 
@@ -1173,7 +1173,7 @@ Internet-Draft                ICE SDP Usage                   March 2018
 
 
 
-Petit-Huguenin, et al. Expires September 27, 2018              [Page 21]
+Petit-Huguenin, et al.   Expires October 1, 2018               [Page 21]
 
 Internet-Draft                ICE SDP Usage                   March 2018
 
@@ -1192,7 +1192,7 @@ Internet-Draft                ICE SDP Usage                   March 2018
    such as activity on a keypad or the phone going off-hook.
 
    On the receipt of the offer, the answerer SHOULD generate an answer
-   in a provisional response once it has compelted candidate gathering.
+   in a provisional response once it has completed candidate gathering.
    ICE requires that a provisional response with an SDP be transmitted
    reliably.  This can be done through the existing Provisional Response
    Acknowledgment (PRACK) mechanism [RFC3262] or through an ICE specific
@@ -1229,7 +1229,7 @@ Internet-Draft                ICE SDP Usage                   March 2018
 
 
 
-Petit-Huguenin, et al. Expires September 27, 2018              [Page 22]
+Petit-Huguenin, et al.   Expires October 1, 2018               [Page 22]
 
 Internet-Draft                ICE SDP Usage                   March 2018
 
@@ -1285,7 +1285,7 @@ Internet-Draft                ICE SDP Usage                   March 2018
 
 
 
-Petit-Huguenin, et al. Expires September 27, 2018              [Page 23]
+Petit-Huguenin, et al.   Expires October 1, 2018               [Page 23]
 
 Internet-Draft                ICE SDP Usage                   March 2018
 
@@ -1341,7 +1341,7 @@ Internet-Draft                ICE SDP Usage                   March 2018
 
 
 
-Petit-Huguenin, et al. Expires September 27, 2018              [Page 24]
+Petit-Huguenin, et al.   Expires October 1, 2018               [Page 24]
 
 Internet-Draft                ICE SDP Usage                   March 2018
 
@@ -1397,7 +1397,7 @@ Internet-Draft                ICE SDP Usage                   March 2018
 
 
 
-Petit-Huguenin, et al. Expires September 27, 2018              [Page 25]
+Petit-Huguenin, et al.   Expires October 1, 2018               [Page 25]
 
 Internet-Draft                ICE SDP Usage                   March 2018
 
@@ -1453,7 +1453,7 @@ Internet-Draft                ICE SDP Usage                   March 2018
 
 
 
-Petit-Huguenin, et al. Expires September 27, 2018              [Page 26]
+Petit-Huguenin, et al.   Expires October 1, 2018               [Page 26]
 
 Internet-Draft                ICE SDP Usage                   March 2018
 
@@ -1509,7 +1509,7 @@ Internet-Draft                ICE SDP Usage                   March 2018
 
 
 
-Petit-Huguenin, et al. Expires September 27, 2018              [Page 27]
+Petit-Huguenin, et al.   Expires October 1, 2018               [Page 27]
 
 Internet-Draft                ICE SDP Usage                   March 2018
 
@@ -1565,7 +1565,7 @@ Internet-Draft                ICE SDP Usage                   March 2018
 
 
 
-Petit-Huguenin, et al. Expires September 27, 2018              [Page 28]
+Petit-Huguenin, et al.   Expires October 1, 2018               [Page 28]
 
 Internet-Draft                ICE SDP Usage                   March 2018
 
@@ -1621,7 +1621,7 @@ Internet-Draft                ICE SDP Usage                   March 2018
 
 
 
-Petit-Huguenin, et al. Expires September 27, 2018              [Page 29]
+Petit-Huguenin, et al.   Expires October 1, 2018               [Page 29]
 
 Internet-Draft                ICE SDP Usage                   March 2018
 
@@ -1677,7 +1677,7 @@ Internet-Draft                ICE SDP Usage                   March 2018
 
 
 
-Petit-Huguenin, et al. Expires September 27, 2018              [Page 30]
+Petit-Huguenin, et al.   Expires October 1, 2018               [Page 30]
 
 Internet-Draft                ICE SDP Usage                   March 2018
 
@@ -1706,14 +1706,14 @@ Internet-Draft                ICE SDP Usage                   March 2018
 
    Mux Category:  NORMAL
 
+10.1.8.  ice-pacing Attribute
+
    This specification also defines a new SDP attribute, "ice-pacing"
    according to the following data:
 
-10.1.8.  ice-pacing Attribute
-
    Attribute Name:  ice-pacing
 
-   Type of Attribute:  media-level
+   Type of Attribute:  session-level
 
    Subject to charset:  No
 
@@ -1733,7 +1733,7 @@ Internet-Draft                ICE SDP Usage                   March 2018
 
 
 
-Petit-Huguenin, et al. Expires September 27, 2018              [Page 31]
+Petit-Huguenin, et al.   Expires October 1, 2018               [Page 31]
 
 Internet-Draft                ICE SDP Usage                   March 2018
 
@@ -1789,7 +1789,7 @@ Internet-Draft                ICE SDP Usage                   March 2018
 
 
 
-Petit-Huguenin, et al. Expires September 27, 2018              [Page 32]
+Petit-Huguenin, et al.   Expires October 1, 2018               [Page 32]
 
 Internet-Draft                ICE SDP Usage                   March 2018
 
@@ -1803,7 +1803,7 @@ Internet-Draft                ICE SDP Usage                   March 2018
    by Magnus Westerlund and Colin Perkins.
 
    Many thanks to Christer Holmberg for providing text suggestions in
-   Section 4
+   Section 4 that aligns with [ICE-BIS]
 
    Thanks to Thomas Stach for text help, Roman Shpount for suggesting
    RTCP candidate handling and Simon Perreault for advising on IPV6
@@ -1845,7 +1845,7 @@ Internet-Draft                ICE SDP Usage                   March 2018
 
 
 
-Petit-Huguenin, et al. Expires September 27, 2018              [Page 33]
+Petit-Huguenin, et al.   Expires October 1, 2018               [Page 33]
 
 Internet-Draft                ICE SDP Usage                   March 2018
 
@@ -1901,7 +1901,7 @@ Internet-Draft                ICE SDP Usage                   March 2018
 
 
 
-Petit-Huguenin, et al. Expires September 27, 2018              [Page 34]
+Petit-Huguenin, et al.   Expires October 1, 2018               [Page 34]
 
 Internet-Draft                ICE SDP Usage                   March 2018
 
@@ -1957,7 +1957,7 @@ Internet-Draft                ICE SDP Usage                   March 2018
 
 
 
-Petit-Huguenin, et al. Expires September 27, 2018              [Page 35]
+Petit-Huguenin, et al.   Expires October 1, 2018               [Page 35]
 
 Internet-Draft                ICE SDP Usage                   March 2018
 
@@ -2003,20 +2003,25 @@ Internet-Draft                ICE SDP Usage                   March 2018
 
    [8] mailto:iesg@ietf.org
 
+   [9] mailto:christer.holmberg@ericsson.com
+
+   [10] mailto:rshpount@turbobridge.com
+
+   [11] mailto:thomass.stach@gmail.com
+
+
+
+
+
+Petit-Huguenin, et al.   Expires October 1, 2018               [Page 36]
+
+Internet-Draft                ICE SDP Usage                   March 2018
+
+
 Appendix A.  Examples
 
    For the example shown in section 16 of [ICE-BIS] the resulting offer
    (message 5) encoded in SDP looks like:
-
-
-
-
-
-
-Petit-Huguenin, et al. Expires September 27, 2018              [Page 36]
-
-Internet-Draft                ICE SDP Usage                   March 2018
-
 
    v=0
    o=jdoe 2890844526 2890842807 IN IP6 $L-PRIV-1.IP
@@ -2053,6 +2058,22 @@ a=candidate:2 1 UDP 1694498815 2001:420:c0e0:1005::61 45664 typ srflx raddr
 
    The resulting answer looks like:
 
+
+
+
+
+
+
+
+
+
+
+
+Petit-Huguenin, et al.   Expires October 1, 2018               [Page 37]
+
+Internet-Draft                ICE SDP Usage                   March 2018
+
+
    v=0
    o=bob 2808844564 2808844564 IN IP4 $R-PUB-1.IP
    s=
@@ -2065,14 +2086,6 @@ a=candidate:2 1 UDP 1694498815 2001:420:c0e0:1005::61 45664 typ srflx raddr
    b=RR:0
    a=rtpmap:0 PCMU/8000
    a=candidate:1 1 UDP 2130706431 $R-PUB-1.IP $R-PUB-1.PORT typ host
-
-
-
-
-Petit-Huguenin, et al. Expires September 27, 2018              [Page 37]
-
-Internet-Draft                ICE SDP Usage                   March 2018
-
 
    With the variables filled in:
 
@@ -2112,20 +2125,7 @@ Appendix B.  The remote-candidates Attribute
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-Petit-Huguenin, et al. Expires September 27, 2018              [Page 38]
+Petit-Huguenin, et al.   Expires October 1, 2018               [Page 38]
 
 Internet-Draft                ICE SDP Usage                   March 2018
 
@@ -2181,7 +2181,7 @@ Appendix C.  Why Is the Conflict Resolution Mechanism Needed?
 
 
 
-Petit-Huguenin, et al. Expires September 27, 2018              [Page 39]
+Petit-Huguenin, et al.   Expires October 1, 2018               [Page 39]
 
 Internet-Draft                ICE SDP Usage                   March 2018
 
@@ -2237,7 +2237,7 @@ Appendix D.  Why Send an Updated Offer?
 
 
 
-Petit-Huguenin, et al. Expires September 27, 2018              [Page 40]
+Petit-Huguenin, et al.   Expires October 1, 2018               [Page 40]
 
 Internet-Draft                ICE SDP Usage                   March 2018
 
@@ -2249,6 +2249,27 @@ Internet-Draft                ICE SDP Usage                   March 2018
    existing, pre-ICE definitions of the addresses used for media -- the
    "m=" and "c=" lines and the rtcp attribute -- must be retained.  For
    this reason, an updated offer must be sent.
+
+Appendix E.  Contributors
+
+   Following experts have contributed a textual and structural
+   suggestions for this work
+
+   1.  Christer Holmberg
+
+       *  Ericsson
+
+       *  Email: christer.holmberg@ericsson.com [9]
+
+   2.  Roman Shpount
+
+       *  TurboBridge
+
+       *  rshpount@turbobridge.com [10]
+
+   3.  Thomas Stach
+
+       *  thomass.stach@gmail.com [11]
 
 Authors' Addresses
 
@@ -2265,6 +2286,16 @@ Authors' Addresses
    USA
 
    Email: snandaku@cisco.com
+
+
+
+
+
+
+
+Petit-Huguenin, et al.   Expires October 1, 2018               [Page 41]
+
+Internet-Draft                ICE SDP Usage                   March 2018
 
 
    Ari Keranen
@@ -2293,4 +2324,29 @@ Authors' Addresses
 
 
 
-Petit-Huguenin, et al. Expires September 27, 2018              [Page 41]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Petit-Huguenin, et al.   Expires October 1, 2018               [Page 42]

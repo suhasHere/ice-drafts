@@ -436,6 +436,7 @@
 <link href="#rfc.appendix.B" rel="Chapter" title="B The remote-candidates Attribute">
 <link href="#rfc.appendix.C" rel="Chapter" title="C Why Is the Conflict Resolution Mechanism Needed?">
 <link href="#rfc.appendix.D" rel="Chapter" title="D Why Send an Updated Offer?">
+<link href="#rfc.appendix.E" rel="Chapter" title="E Contributors">
 <link href="#rfc.authors" rel="Chapter">
 
 
@@ -443,8 +444,8 @@
   <link rel="schema.dct" href="http://purl.org/dc/terms/" />
 
   <meta name="dct.creator" content="Petit-Huguenin, M., Nandakumar, S., and A. Keranen" />
-  <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-mmusic-ice-sip-sdp-17" />
-  <meta name="dct.issued" scheme="ISO8601" content="2018-3-26" />
+  <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-mmusic-ice-sip-sdp-18" />
+  <meta name="dct.issued" scheme="ISO8601" content="2018-3-30" />
   <meta name="dct.abstract" content="This document describes Session Description Protocol (SDP) Offer/Answer procedures for carrying out Interactive Connectivity Establishment (ICE) between the agents.  " />
   <meta name="description" content="This document describes Session Description Protocol (SDP) Offer/Answer procedures for carrying out Interactive Connectivity Establishment (ICE) between the agents.  " />
 
@@ -472,7 +473,7 @@
 <td class="right">Cisco Systems</td>
 </tr>
 <tr>
-<td class="left">Expires: September 27, 2018</td>
+<td class="left">Expires: October 1, 2018</td>
 <td class="right">A. Keranen</td>
 </tr>
 <tr>
@@ -481,7 +482,7 @@
 </tr>
 <tr>
 <td class="left"></td>
-<td class="right">March 26, 2018</td>
+<td class="right">March 30, 2018</td>
 </tr>
 
     	
@@ -489,7 +490,7 @@
   </table>
 
   <p class="title">Session Description Protocol (SDP) Offer/Answer procedures for Interactive Connectivity Establishment (ICE)<br />
-  <span class="filename">draft-ietf-mmusic-ice-sip-sdp-17</span></p>
+  <span class="filename">draft-ietf-mmusic-ice-sip-sdp-18</span></p>
   
   <h1 id="rfc.abstract"><a href="#rfc.abstract">Abstract</a></h1>
 <p>This document describes Session Description Protocol (SDP) Offer/Answer procedures for carrying out Interactive Connectivity Establishment (ICE) between the agents.  </p>
@@ -497,7 +498,7 @@
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on September 27, 2018.</p>
+<p>This Internet-Draft will expire on October 1, 2018.</p>
 <h1 id="rfc.copyrightnotice"><a href="#rfc.copyrightnotice">Copyright Notice</a></h1>
 <p>Copyright (c) 2018 IETF Trust and the persons identified as the document authors.  All rights reserved.</p>
 <p>This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (http://trustee.ietf.org/license-info) in effect on the date of publication of this document.  Please review these documents carefully, as they describe your rights and restrictions with respect to this document.  Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.</p>
@@ -631,6 +632,8 @@
 <li>Appendix C.   <a href="#rfc.appendix.C">Why Is the Conflict Resolution Mechanism Needed?</a>
 </li>
 <li>Appendix D.   <a href="#rfc.appendix.D">Why Send an Updated Offer?</a>
+</li>
+<li>Appendix E.   <a href="#rfc.appendix.E">Contributors</a>
 </li>
 <li><a href="#rfc.authors">Authors' Addresses</a>
 </li>
@@ -794,20 +797,20 @@ a=candidate:2 1 UDP 1694498815 192.0.2.3 45664 typ srflx raddr
 <h1 id="rfc.section.3.4.1.2">
 <a href="#rfc.section.3.4.1.2">3.4.1.2.</a> Procedures for Full Implementations</h1>
 <p id="rfc.section.3.4.1.2.p.1">This section describes additional procedures for full implementations, covering existing data streams.  </p>
+<h1 id="rfc.section.3.4.1.2.1">
+<a href="#rfc.section.3.4.1.2.1">3.4.1.2.1.</a> Before Nomination</h1>
+<p id="rfc.section.3.4.1.2.1.p.1">When an offerer sends a subsequent offer, each "m=" section for which a candidate pair has not yet been nominated, the offer MUST include the same set of ICE-related information that the offerer included in the previous offer or answer. The agent MAY include additional candidates it did not offer previously, but which it has gathered since the last offer/ answer exchange, including peer reflexive candidates.  </p>
+<p id="rfc.section.3.4.1.2.1.p.2">The agent MAY change the default destination for media. As with initial offers, there MUST be a set of candidate attributes in the offer matching this default destination.  </p>
+<h1 id="rfc.section.3.4.1.2.2">
+<a href="#rfc.section.3.4.1.2.2">3.4.1.2.2.</a> After Nomination</h1>
+<p id="rfc.section.3.4.1.2.2.p.1">Once a candidate pair has been nominated for a data stream, the IP address, port and transport in each "c=" and "m=" line associated with that data stream MUST match the data associated with the nominated pair for that data stream. In addition, the offerer only includes SDP candidates representing the local candidates of the nominated candidate pair. The offerer MUST NOT include any other SDP candidate attributes in the subsequent offer.  </p>
+<p id="rfc.section.3.4.1.2.2.p.2">In addition, if the agent is controlling, it MUST include the a=remote-candidates attribute for each data stream whose check list is in the completed state. The attribute contains the remote candidates corresponding to the nominated pair in the valid list for each component of that data stream. It is needed to avoid a race condition whereby the controlling agent chooses its pairs, but the updated offer beats the connectivity checks to the controlled agent, which doesn&#8217;t even know these pairs are valid, let alone selected.  See Appendix B for elaboration on this race condition.  </p>
 <h1 id="rfc.section.3.4.1.3">
-<a href="#rfc.section.3.4.1.3">3.4.1.3.</a> Before Nomination</h1>
-<p id="rfc.section.3.4.1.3.p.1">When an offerer sends a subsequent offer, each "m=" section for which a candidate pair has not yet been nominated, the offer MUST include the same set of ICE-related information that the offerer included in the previous offer or answer. The agent MAY include additional candidates it did not offer previously, but which it has gathered since the last offer/ answer exchange, including peer reflexive candidates.  </p>
-<p id="rfc.section.3.4.1.3.p.2">The agent MAY change the default destination for media. As with initial offers, there MUST be a set of candidate attributes in the offer matching this default destination.  </p>
-<h1 id="rfc.section.3.4.1.4">
-<a href="#rfc.section.3.4.1.4">3.4.1.4.</a> After Nomination</h1>
-<p id="rfc.section.3.4.1.4.p.1">Once a candidate pair has been nominated for a data stream, the IP address, port and transport in each "c=" and "m=" line associated with that data stream MUST match the data associated with the nominated pair for that data stream. In addition, the offerer only includes SDP candidates representing the local candidates of the nominated candidate pair. The offerer MUST NOT include any other SDP candidate attributes in the subsequent offer.  </p>
-<p id="rfc.section.3.4.1.4.p.2">In addition, if the agent is controlling, it MUST include the a=remote-candidates attribute for each data stream whose check list is in the completed state. The attribute contains the remote candidates corresponding to the nominated pair in the valid list for each component of that data stream. It is needed to avoid a race condition whereby the controlling agent chooses its pairs, but the updated offer beats the connectivity checks to the controlled agent, which doesn&#8217;t even know these pairs are valid, let alone selected.  See Appendix B for elaboration on this race condition.  </p>
-<h1 id="rfc.section.3.4.1.5">
-<a href="#rfc.section.3.4.1.5">3.4.1.5.</a> Procedures for Lite Implementations</h1>
-<p id="rfc.section.3.4.1.5.p.1">If the ICE state is running, a lite implementation MUST include all of its candidates for each component of each data stream in a=candidate attribute in any subsequent offer. The candidates are formed identical to the procedures for initial offers.  </p>
-<p id="rfc.section.3.4.1.5.p.2">A lite implementation MUST NOT add additional host candidates or change username fragments, password in a subsequent offer. Otherwise, it MUST restart ICE.  </p>
-<p id="rfc.section.3.4.1.5.p.3">If ICE has completed for a data stream and if the agent is controlled, the default destination for that data stream MUST be set to the remote candidate of the candidate pair for that component in the valid list.  For a lite implementation, there is always just a single candidate pair in the valid list for each component of a data stream. Additionally, the agent MUST include a candidate attribute for each default destination.  </p>
-<p id="rfc.section.3.4.1.5.p.4">If ICE state is completed and if the agent is controlling (which only happens when both agents are lite), the agent MUST include the a=remote-candidates attribute for each data stream.  The attribute contains the remote candidates from the candidate pairs in the valid list (one pair for each component of each data stream).  </p>
+<a href="#rfc.section.3.4.1.3">3.4.1.3.</a> Procedures for Lite Implementations</h1>
+<p id="rfc.section.3.4.1.3.p.1">If the ICE state is running, a lite implementation MUST include all of its candidates for each component of each data stream in a=candidate attribute in any subsequent offer. The candidates are formed identical to the procedures for initial offers.  </p>
+<p id="rfc.section.3.4.1.3.p.2">A lite implementation MUST NOT add additional host candidates or change username fragments, password in a subsequent offer. Otherwise, it MUST restart ICE.  </p>
+<p id="rfc.section.3.4.1.3.p.3">If ICE has completed for a data stream and if the agent is controlled, the default destination for that data stream MUST be set to the remote candidate of the candidate pair for that component in the valid list.  For a lite implementation, there is always just a single candidate pair in the valid list for each component of a data stream. Additionally, the agent MUST include a candidate attribute for each default destination.  </p>
+<p id="rfc.section.3.4.1.3.p.4">If ICE state is completed and if the agent is controlling (which only happens when both agents are lite), the agent MUST include the a=remote-candidates attribute for each data stream.  The attribute contains the remote candidates from the candidate pairs in the valid list (one pair for each component of each data stream).  </p>
 <h1 id="rfc.section.3.4.2">
 <a href="#rfc.section.3.4.2">3.4.2.</a> <a href="#sec-subsequent-answer" id="sec-subsequent-answer">Sending Subsequent Answer</a>
 </h1>
@@ -867,7 +870,7 @@ a=candidate:2 1 UDP 1694498815 192.0.2.3 45664 typ srflx raddr
 </li>
 <li>If the offer/answer exchange removed a data stream, or an answer rejected an offered data stream, an agent MUST flush the Valid list for that data stream. It MUST also terminate any STUN transactions in progress for that data stream.  </li>
 <li>If the offer/answer exchange added a new data stream, the agent MUST create a new check list for it (and an empty Valid list to start of course) which in turn triggers the candidate processing procedures <a href="#ICE-BIS" class="xref">[ICE-BIS]</a>.  </li>
-<li>If ICE state is running for a given data stream, the agent recomputes the check list. If a pair on the new check list was also on the previous check list, and its state was Waiting, In-Progress, Succeeded, or Failed, its state is copied over. Otherwise, its state is set to Frozen. If none of the check lists are active (meaning that the pairs in each check list are Frozen), appropriate procedures in <a href="#ICE-BIS" class="xref">[ICE-BIS]</a>&gt; are performed to move candidate(s) to the Waiting state to further continue ICE processing.  </li>
+<li>If ICE state is running for a given data stream, the agent recomputes the check list. If a pair on the new check list was also on the previous check list, and its state was Waiting, In-Progress, Succeeded, or Failed, its state is copied over. Otherwise, its state is set to Frozen. If none of the check lists are active (meaning that the pairs in each check list are Frozen), appropriate procedures in <a href="#ICE-BIS" class="xref">[ICE-BIS]</a> are performed to move candidate(s) to the Waiting state to further continue ICE processing.  </li>
 <li>If ICE state is completed and the SDP answer conforms to <a href="#sec-subsequent-answer" class="xref">Section 3.4.2</a>, the agent MUST reman in the ICE completed state.  </li>
 </ul>
 
@@ -991,14 +994,14 @@ a=ice-ufrag:8hhY
 </pre>
 <h1 id="rfc.section.4.5">
 <a href="#rfc.section.4.5">4.5.</a> "ice-pacing" Attribute</h1>
-<p id="rfc.section.4.5.p.1">The "ice-pacing" attribute indicates the desired connectivity check pacing, in milliseconds, for this agent (see section 14 of <a href="#ICE-BIS" class="xref">[ICE-BIS]</a>).  The syntax is: </p>
+<p id="rfc.section.4.5.p.1">The "ice-pacing" is a session level attribute that indicates the desired connectivity check pacing, in milliseconds, for this agent (see section 14 of <a href="#ICE-BIS" class="xref">[ICE-BIS]</a>).  The syntax is: </p>
 <pre>
 ice-pacing-att            = "ice-pacing:" pacing-value
 pacing-value              = 1*10DIGIT
 </pre>
-<p id="rfc.section.4.5.p.2">Following the procedures defined in <a href="#ICE-BIS" class="xref">[ICE-BIS]</a>, a default value of 50 ms is used for an agent when ice-pacing attribute is omitted in the offer or the answer.  </p>
-<p id="rfc.section.4.5.p.3">The same rule applies for ice-pacing attribute values lower than 50ms. This mandates that, if an agent includes ice-pacing attribute, its value MUST be greater than 50ms or else a value of 50ms is considered by default for that agent.  </p>
-<p id="rfc.section.4.5.p.4">Also the larger of the ice-pacing attribute value between the offer and the answer (determined either via default procedures above or the one provided in a=ice-pacing attribute in the "m=" section) MUST be considered for a given ICE session.  </p>
+<p id="rfc.section.4.5.p.2">Following the procedures defined in <a href="#ICE-BIS" class="xref">[ICE-BIS]</a>, a default value of 50ms is used for an agent when ice-pacing attribute is omitted in the offer or the answer.  </p>
+<p id="rfc.section.4.5.p.3">The same rule applies for ice-pacing attribute values lower than 50ms. This mandates that, if an agent includes the ice-pacing attribute, its value MUST be greater than 50ms or else a value of 50ms is considered by default for that agent.  </p>
+<p id="rfc.section.4.5.p.4">Also the larger of the ice-pacing attribute values between the offer and the answer (determined either by the one provided in the ice-pacing attribute or by picking the default value) MUST be considered for a given ICE session.  </p>
 <p id="rfc.section.4.5.p.5">The mux category <a href="#I-D.ietf-mmusic-sdp-mux-attributes" class="xref">[I-D.ietf-mmusic-sdp-mux-attributes]</a> for the 'ice-pacing' attribute is 'TRANSPORT'.  </p>
 <pre>
 Example shows ice-pacing value of 5 ms:
@@ -1311,7 +1314,7 @@ a=ice-options:rtp+ecn
 <dt>Attribute Name:</dt>
 <dd style="margin-left: 8">ice-pacing </dd>
 <dt>Type of Attribute:</dt>
-<dd style="margin-left: 8">media-level </dd>
+<dd style="margin-left: 8">session-level </dd>
 <dt>Subject to charset:</dt>
 <dd style="margin-left: 8">No </dd>
 <dt>Purpose:</dt>
@@ -1354,7 +1357,7 @@ a=ice-options:rtp+ecn
 <a href="#rfc.section.11">11.</a> Acknowledgments</h1>
 <p id="rfc.section.11.p.1">A large part of the text in this document was taken from <a href="#RFC5245" class="xref">[RFC5245]</a>, authored by Jonathan Rosenberg.  </p>
 <p id="rfc.section.11.p.2">Some of the text in this document was taken from <a href="#RFC6336" class="xref">[RFC6336]</a>, authored by Magnus Westerlund and Colin Perkins.  </p>
-<p id="rfc.section.11.p.3">Many thanks to Christer Holmberg for providing text suggestions in Section 4 </p>
+<p id="rfc.section.11.p.3">Many thanks to Christer Holmberg for providing text suggestions in Section 4 that aligns with <a href="#ICE-BIS" class="xref">[ICE-BIS]</a></p>
 <p id="rfc.section.11.p.4">Thanks to Thomas Stach for text help, Roman Shpount for suggesting RTCP candidate handling and Simon Perreault for advising on IPV6 address selection when candidate-address includes FQDN.  </p>
 <p id="rfc.section.11.p.5">Thanks to following experts for their reviews and constructive feedback: Christer Holmberg, Adam Roach and the MMUSIC WG.  </p>
 <h1 id="rfc.references">
@@ -1619,6 +1622,28 @@ Agent L               Network               Agent R
 <a href="#rfc.appendix.D">Appendix D.</a> Why Send an Updated Offer?</h1>
 <p id="rfc.section.D.p.1">Section 11.1 describes rules for sending media.  Both agents can send media once ICE checks complete, without waiting for an updated offer.  Indeed, the only purpose of the updated offer is to "correct" the SDP so that the default destination for media matches where media is being sent based on ICE procedures (which will be the highest-priority nominated candidate pair).  </p>
 <p id="rfc.section.D.p.2">This begs the question&#8201;&#8212;&#8201;why is the updated offer/answer exchange needed at all? Indeed, in a pure offer/answer environment, it would not be.  The offerer and answerer will agree on the candidates to use through ICE, and then can begin using them.  As far as the agents themselves are concerned, the updated offer/answer provides no new information.  However, in practice, numerous components along the signaling path look at the SDP information.  These include entities performing off-path QoS reservations, NAT traversal components such as ALGs and Session Border Controllers (SBCs), and diagnostic tools that passively monitor the network.  For these tools to continue to function without change, the core property of SDP&#8201;&#8212;&#8201;that the existing, pre-ICE definitions of the addresses used for media&#8201;&#8212;&#8201;the "m=" and "c=" lines and the rtcp attribute&#8201;&#8212;&#8201;must be retained.  For this reason, an updated offer must be sent.  </p>
+<h1 id="rfc.appendix.E">
+<a href="#rfc.appendix.E">Appendix E.</a> Contributors</h1>
+<p id="rfc.section.E.p.1">Following experts have contributed a textual and structural suggestions for this work </p>
+<p></p>
+
+<ol>
+<li>Christer Holmberg <ul>
+<li>Ericsson </li>
+<li>Email: <a href="mailto:christer.holmberg@ericsson.com">christer.holmberg@ericsson.com</a>
+</li>
+</ul>
+</li>
+<li>Roman Shpount <ul>
+<li>TurboBridge </li>
+<li><a href="mailto:rshpount@turbobridge.com">rshpount@turbobridge.com</a></li>
+</ul>
+</li>
+<li>Thomas Stach <ul><li><a href="mailto:thomass.stach@gmail.com">thomass.stach@gmail.com</a></li></ul>
+</li>
+</ol>
+
+<p> </p>
 <h1 id="rfc.authors"><a href="#rfc.authors">Authors' Addresses</a></h1>
 <div class="avoidbreak">
   <address class="vcard">
