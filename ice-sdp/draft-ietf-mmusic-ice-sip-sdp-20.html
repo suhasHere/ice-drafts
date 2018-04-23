@@ -383,7 +383,7 @@
 <link href="#rfc.section.3.2.2" rel="Chapter" title="3.2.2 RTP/RTCP Considerations">
 <link href="#rfc.section.3.2.3" rel="Chapter" title="3.2.3 Determining Role">
 <link href="#rfc.section.3.2.4" rel="Chapter" title="3.2.4 STUN Considerations">
-<link href="#rfc.section.3.2.5" rel="Chapter" title="3.2.5 ICE Mismatch">
+<link href="#rfc.section.3.2.5" rel="Chapter" title="3.2.5 Verifying ICE Support Procedures">
 <link href="#rfc.section.3.2.6" rel="Chapter" title="3.2.6 SDP Example">
 <link href="#rfc.section.3.3" rel="Chapter" title="3.3 Initial Offer/Answer Exchange">
 <link href="#rfc.section.3.3.1" rel="Chapter" title="3.3.1 Sending the Initial Offer">
@@ -444,7 +444,7 @@
   <link rel="schema.dct" href="http://purl.org/dc/terms/" />
 
   <meta name="dct.creator" content="Petit-Huguenin, M., Nandakumar, S., and A. Keranen" />
-  <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-mmusic-ice-sip-sdp-19" />
+  <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-mmusic-ice-sip-sdp-20" />
   <meta name="dct.issued" scheme="ISO8601" content="2018-4-1" />
   <meta name="dct.abstract" content="This document describes Session Description Protocol (SDP) Offer/Answer procedures for carrying out Interactive Connectivity Establishment (ICE) between the agents.  " />
   <meta name="description" content="This document describes Session Description Protocol (SDP) Offer/Answer procedures for carrying out Interactive Connectivity Establishment (ICE) between the agents.  " />
@@ -490,7 +490,7 @@
   </table>
 
   <p class="title">Session Description Protocol (SDP) Offer/Answer procedures for Interactive Connectivity Establishment (ICE)<br />
-  <span class="filename">draft-ietf-mmusic-ice-sip-sdp-19</span></p>
+  <span class="filename">draft-ietf-mmusic-ice-sip-sdp-20</span></p>
   
   <h1 id="rfc.abstract"><a href="#rfc.abstract">Abstract</a></h1>
 <p>This document describes Session Description Protocol (SDP) Offer/Answer procedures for carrying out Interactive Connectivity Establishment (ICE) between the agents.  </p>
@@ -527,7 +527,7 @@
 </li>
 <li>3.2.4.   <a href="#rfc.section.3.2.4">STUN Considerations</a>
 </li>
-<li>3.2.5.   <a href="#rfc.section.3.2.5">ICE Mismatch</a>
+<li>3.2.5.   <a href="#rfc.section.3.2.5">Verifying ICE Support Procedures</a>
 </li>
 <li>3.2.6.   <a href="#rfc.section.3.2.6">SDP Example</a>
 </li>
@@ -694,7 +694,7 @@
 <h1 id="rfc.section.3.2.2">
 <a href="#rfc.section.3.2.2">3.2.2.</a> RTP/RTCP Considerations</h1>
 <p id="rfc.section.3.2.2.p.1">If an agent utilizes both RTP and RTCP, the agent MUST include SDP candidate attributes for both the RTP and RTCP components in the "m=" section.  </p>
-<p id="rfc.section.3.2.2.p.2">If an agent uses separate ports for RTP and RTCP, the agent MUST include an SDP rtcp attribute in the "m=" section, as described in <a href="#RFC3605" class="xref">[RFC3605]</a>. In the cases where the port number for the RTCP is one higher than the RTP port and RTCP component address is same as the address of the RTP component, the SDP rtcp attribute MUST not be included.  </p>
+<p id="rfc.section.3.2.2.p.2">If an agent uses separate ports for RTP and RTCP, the agent MUST include an SDP rtcp attribute in the "m=" section, as described in <a href="#RFC3605" class="xref">[RFC3605]</a>. In the cases where the port number for the RTCP is one higher than the RTP port and RTCP component address is same as the address of the RTP component, the SDP rtcp attribute MAY be omitted.  </p>
 <p id="rfc.section.3.2.2.p.3">If the agent does not utilize RTCP, it indicates that by including b=RS:0 and b=RR:0 SDP attributes, as described in <a href="#RFC3556" class="xref">[RFC3556]</a>.  </p>
 <h1 id="rfc.section.3.2.3">
 <a href="#rfc.section.3.2.3">3.2.3.</a> Determining Role</h1>
@@ -703,16 +703,15 @@
 <a href="#rfc.section.3.2.4">3.2.4.</a> STUN Considerations</h1>
 <p id="rfc.section.3.2.4.p.1">Once an agent has provided its local candidates to its peer in an SDP offer or answer, the agent MUST be prepared to receive STUN connectivity check Binding requests on those candidates.  </p>
 <h1 id="rfc.section.3.2.5">
-<a href="#rfc.section.3.2.5">3.2.5.</a> <a href="#sec-ice-mismatch" id="sec-ice-mismatch">ICE Mismatch</a>
+<a href="#rfc.section.3.2.5">3.2.5.</a> <a href="#sec-ice-mismatch" id="sec-ice-mismatch">Verifying ICE Support Procedures</a>
 </h1>
-<p id="rfc.section.3.2.5.p.1">The agent will proceed with the ICE procedures defined in <a href="#ICE-BIS" class="xref">[ICE-BIS]</a> and this specification if, for each data stream in the SDP it received, the default destination for each component of that data stream appears in a candidate attribute. For example, in the case of RTP, the IP address and port in the "c=" and "m=" lines, respectively, appear in a candidate attribute and the value in the rtcp attribute appears in a candidate attribute.  </p>
-<p id="rfc.section.3.2.5.p.2">If this condition is not met, the agent MUST process the SDP based on normal <a href="#RFC3264" class="xref">[RFC3264]</a> procedures, without using any of the ICE mechanisms described in the remainder of this specification with the following exceptions: </p>
+<p id="rfc.section.3.2.5.p.1">The agents will proceed with the ICE procedures defined in <a href="#ICE-BIS" class="xref">[ICE-BIS]</a> and this specification if, for each data stream in the SDP it received, the default destination for each component of that data stream appears in a candidate attribute. For example, in the case of RTP, the IP address and port in the "c=" and "m=" lines, respectively, appear in a candidate attribute and the value in the rtcp attribute appears in a candidate attribute.  </p>
+<p id="rfc.section.3.2.5.p.2">If this condition is not met, the agents MUST process the SDP based on normal <a href="#RFC3264" class="xref">[RFC3264]</a> procedures, without using any of the ICE mechanisms described in the remainder of this specification with the following exceptions: </p>
 <p></p>
 
 <ol>
-<li>The agent MUST follow the rules of section 11 of <a href="#ICE-BIS" class="xref">[ICE-BIS]</a>, which describe keepalive procedures for all agents.  </li>
-<li>If the agent is not proceeding with ICE because there were a=candidate attributes, but none that matched the default destination of the data stream, the agent MUST include an a=ice-mismatch attribute in its answer and MAY omit a=candidate attributes for such data streams.  See <a href="#sec-alg-sip" class="xref">Section 9.2.2</a> for a discussion of cases where this can happen.  This specification provides no guidance on how an agent should proceed in such a failure case.  </li>
-<li>If the default candidates were relayed candidates learned through a TURN server, the agent MUST create permissions in the TURN server for the IP addresses learned from its peer in the SDP it just received.  If this is not done, initial packets in the data stream from the peer may be lost.  </li>
+<li>A controlled/responding agent MUST follow the rules of section 11 of <a href="#ICE-BIS" class="xref">[ICE-BIS]</a>, which describe keepalive procedures for all agents. Also, If the default candidates were relayed candidates learned through a TURN server, the controlled agent MUST create permissions in the TURN server for the IP addresses learned from its peer in the offer SDP it just received. If this is not done, initial packets in the data stream from the peer may be lost.  </li>
+<li>On the other hand, If the controlled agent is not proceeding with ICE because there were a=candidate attributes, but none that matched the default destination of the data stream, the agent MUST include an a=ice-mismatch attribute in its answer and MAY omit a=candidate attributes for such data streams. See <a href="#sec-alg-sip" class="xref">Section 9.2.2</a> for a discussion of cases where this can happen. This specification provides no guidance on how an controlling/initiator agent should proceed in such a failure case.  </li>
 </ol>
 
 <p> </p>
@@ -1111,7 +1110,7 @@ a=ice-options:rtp+ecn
 </h1>
 <h1 id="rfc.section.10.1">
 <a href="#rfc.section.10.1">10.1.</a> SDP Attributes</h1>
-<p id="rfc.section.10.1.p.1">The original ICE specification defined seven new SDP attributes per the procedures of Section 8.2.4 of <a href="#RFC4566" class="xref">[RFC4566]</a>. The registration information from the original specification is included here with modifications to include Mux Category and to align with the recent recommendations for populating Contact information.  </p>
+<p id="rfc.section.10.1.p.1">The original ICE specification defined seven new SDP attributes per the procedures of Section 8.2.4 of <a href="#RFC4566" class="xref">[RFC4566]</a>. The registration information from the original specification is included here with modifications to include Mux Category and also defines a new SDP attribute 'ice-pacing'.  </p>
 <h1 id="rfc.section.10.1.1">
 <a href="#rfc.section.10.1.1">10.1.1.</a> candidate Attribute</h1>
 <p></p>
@@ -1327,7 +1326,7 @@ a=ice-options:rtp+ecn
 <dt>Reference:</dt>
 <dd style="margin-left: 8">RFCXXXX </dd>
 <dt>Mux Category:</dt>
-<dd style="margin-left: 8">TRANSPORT </dd>
+<dd style="margin-left: 8">NORMAL </dd>
 </dl>
 
 <p> </p>
@@ -1613,7 +1612,7 @@ Agent L               Network               Agent R
 <p id="rfc.section.D.p.2">This begs the question&#8201;&#8212;&#8201;why is the updated offer/answer exchange needed at all? Indeed, in a pure offer/answer environment, it would not be.  The offerer and answerer will agree on the candidates to use through ICE, and then can begin using them.  As far as the agents themselves are concerned, the updated offer/answer provides no new information.  However, in practice, numerous components along the signaling path look at the SDP information.  These include entities performing off-path QoS reservations, NAT traversal components such as ALGs and Session Border Controllers (SBCs), and diagnostic tools that passively monitor the network.  For these tools to continue to function without change, the core property of SDP&#8201;&#8212;&#8201;that the existing, pre-ICE definitions of the addresses used for media&#8201;&#8212;&#8201;the "m=" and "c=" lines and the rtcp attribute&#8201;&#8212;&#8201;must be retained.  For this reason, an updated offer must be sent.  </p>
 <h1 id="rfc.appendix.E">
 <a href="#rfc.appendix.E">Appendix E.</a> Contributors</h1>
-<p id="rfc.section.E.p.1">Following experts have contributed a textual and structural suggestions for this work </p>
+<p id="rfc.section.E.p.1">Following experts have contributed textual and structural improvements for this work </p>
 <p></p>
 
 <ol>

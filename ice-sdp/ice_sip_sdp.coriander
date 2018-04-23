@@ -1,6 +1,6 @@
 = Session Description Protocol (SDP) Offer/Answer procedures for Interactive Connectivity Establishment (ICE)
 Marc Petit-Huguenin <marc@petit-huguenin.org>; Suhas Nandakumar <snandaku@cisco.com>; Ari Keranen <ari.keranen@ericsson.com>;
-19, 2018-04-01: draft-ietf-mmusic-ice-sip-sdp
+20, 2018-04-01: draft-ietf-mmusic-ice-sip-sdp
 :backend: rfc
 :abbrev: ICE SDP Usage
 :rfc-obsoletes: 5245
@@ -131,7 +131,7 @@ If an agent uses separate ports for RTP and RTCP, the agent MUST include an
 SDP rtcp attribute in the "m=" section, as described in <<RFC3605>>. In the cases 
 where the port number for the RTCP is one higher than the RTP port and RTCP 
 component address is same as the address of the RTP component, the SDP rtcp 
-attribute MUST not be included.
+attribute MAY be omitted.
 
 If the agent does not utilize RTCP, it indicates that by including b=RS:0 
 and b=RR:0 SDP attributes, as described in <<RFC3556>>.
@@ -150,9 +150,9 @@ offer or answer, the agent MUST be prepared to receive STUN connectivity
 check Binding requests on those candidates.
 
 [[sec-ice-mismatch]]
-==== ICE Mismatch
+==== Verifying ICE Support Procedures
 
-The agent will proceed with the ICE procedures defined in <<ICE-BIS>> and 
+The agents will proceed with the ICE procedures defined in <<ICE-BIS>> and 
 this specification if, for each data stream in the SDP it received, the 
 default destination for each component of that data stream appears in
 a candidate attribute. For example, in the case of RTP, the IP address
@@ -160,27 +160,27 @@ and port in the "c=" and "m=" lines, respectively, appear in a candidate
 attribute and the value in the rtcp attribute appears in a candidate
 attribute.
 
-If this condition is not met, the agent MUST process the SDP based on 
+If this condition is not met, the agents MUST process the SDP based on 
 normal <<RFC3264>> procedures, without using any of the ICE mechanisms 
 described in the remainder of this specification with the following 
 exceptions:
 
-. The agent MUST follow the rules of section 11 of <<ICE-BIS>>, which 
-describe keepalive procedures for all agents.
+. A controlled/responding agent MUST follow the rules of section 11 of 
+<<ICE-BIS>>, which describe keepalive procedures for all agents. Also, 
+If the default candidates were relayed candidates learned through a 
+TURN server, the controlled agent MUST create permissions in the 
+TURN server for the IP addresses learned from its peer in the offer 
+SDP it just received. If this is not done, initial packets in the 
+data stream from the peer may be lost.
 
-. If the agent is not proceeding with ICE because there were 
-a=candidate attributes, but none that matched the default destination 
-of the data stream, the agent MUST include an a=ice-mismatch attribute 
-in its answer and MAY omit a=candidate attributes for such data streams. 
-See <<sec-alg-sip>> for a discussion of cases where this can happen. 
-This specification provides no guidance on how an agent should proceed 
-in such a failure case.
+. On the other hand, If the controlled agent is not proceeding with 
+ICE because there were a=candidate attributes, but none that matched 
+the default destination of the data stream, the agent MUST include an 
+a=ice-mismatch attribute in its answer and MAY omit a=candidate attributes 
+for such data streams. See <<sec-alg-sip>> for a discussion of cases where 
+this can happen. This specification provides no guidance on how an 
+controlling/initiator agent should proceed in such a failure case.
 
-. If the default candidates were relayed candidates learned through a 
-TURN server, the agent MUST create permissions in the TURN server for 
-the IP addresses learned from its peer in the SDP it just received.
-If this is not done, initial packets in the data stream from the peer 
-may be lost.
 
 ==== SDP Example
 
@@ -1092,8 +1092,8 @@ If one is present, ICE will not be used and the SBC techniques take precedence.
 
 The original ICE specification defined seven new SDP attributes per the procedures of 
 Section 8.2.4 of <<RFC4566>>. The registration information from the original specification 
-is included here with modifications to include Mux Category and to align with 
-the recent recommendations for populating Contact information.
+is included here with modifications to include Mux Category and also defines 
+a new SDP attribute 'ice-pacing'.
 
 ==== candidate Attribute
 
@@ -1217,7 +1217,7 @@ Appropriate Values: :: See <<sec-grammar>> of RFC XXXX.
 Contact Name: ::  IESG
 Contact e-mail: :: iesg@ietf.org
 Reference: :: RFCXXXX
-Mux Category: :: TRANSPORT
+Mux Category: :: NORMAL
 
 [[sec-iana-ice-options]]
 === Interactive Connectivity Establishment (ICE) Options Registry
@@ -1824,12 +1824,11 @@ For this reason, an updated offer must be sent.
 
 [appendix]
 == Contributors
-Following experts have contributed a textual and structural suggestions for this work
+Following experts have contributed textual and structural improvements for this work
 
 . Christer Holmberg
   - Ericsson
   - Email: christer.holmberg@ericsson.com
-
 
 . Roman Shpount
   - TurboBridge
